@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="copyright" content="AN Psixoloji Dəstək və Reabilitasiya Mərkəzi">
+    <title>AN Psixoloji Dəstək və Reabilitasiya Mərkəzi - TTAP Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Comic Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #b8e1fc 0%, #d4f0ff 100%);
+            margin: 0;
+            padding: 16px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 20px 24px;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .container { padding: 16px; border-radius: 24px; }
+            h2 { font-size: 1.3rem; }
+            h3 { font-size: 1.1rem; }
+            button { padding: 10px 14px; font-size: 0.85rem; width: 100%; margin-right: 0; margin-bottom: 8px; }
+            .flex-row { flex-direction: column; }
+            .card { flex-direction: column; align-items: stretch; }
+            th, td { font-size: 0.7rem; padding: 6px 3px; }
+        }
+        
+        h2 {
+            background: linear-gradient(135deg, #FFB347, #FF8C42);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border-left: 6px solid #FFB347;
+            padding-left: 16px;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            color: #2c6e9e;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            border-bottom: 3px dotted #FFD966;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding: 12px;
+            background: #f0e6d2;
+            border-radius: 40px;
+            color: #8B5E3C;
+            font-size: 0.75rem;
+            border: 1px solid #FFD966;
+        }
+        
+        input, select {
+            padding: 12px 16px;
+            width: 100%;
+            border: 2px solid #FFD966;
+            border-radius: 50px;
+            font-size: 1rem;
+            background: #FFFEF7;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #66BB6A, #43A047);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        button:hover { transform: scale(0.98); }
+        button.danger { background: linear-gradient(135deg, #FF8A80, #E57373); }
+        button.secondary { background: linear-gradient(135deg, #FFB74D, #FF9800); }
+        button.word-btn { background: linear-gradient(135deg, #1E88E5, #1565C0); font-size: 0.7rem; padding: 5px 10px; width: auto; display: inline-block; }
+        button.image-btn { background: linear-gradient(135deg, #9C27B0, #7B1FA2); font-size: 0.7rem; padding: 5px 10px; width: auto; display: inline-block; }
+        
+        .card {
+            background: #FFF9E6;
+            border-left: 10px solid #FFD966;
+            padding: 14px 18px;
+            margin: 12px 0;
+            border-radius: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .patient-name {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #2c6e9e;
+            background: #E8F0FE;
+            padding: 6px 18px;
+            border-radius: 50px;
+        }
+        
+        .test-card {
+            background: #F0F9FF;
+            border-left-color: #7CB342;
+            display: block;
+        }
+        
+        .test-question { font-weight: 700; margin-bottom: 10px; color: #2c6e9e; font-size: 0.95rem; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 24px;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        th, td {
+            border-bottom: 1px solid #FFE0A3;
+            padding: 10px 6px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        
+        th { background: #FFE8B5; color: #5D3A1A; font-size: 0.85rem; }
+        td { font-size: 0.8rem; }
+        
+        .result-badge {
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            padding: 20px;
+            border-radius: 28px;
+            margin: 20px 0;
+            border: 2px solid #A5D6A7;
+        }
+        
+        .detail-box {
+            background: #FFF3E0;
+            padding: 14px 18px;
+            border-radius: 24px;
+            margin-top: 12px;
+            border-left: 6px solid #FFB74D;
+        }
+        
+        .flex-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .section-header {
+            background: linear-gradient(135deg, #FFE0B5, #FFD966);
+            padding: 10px 18px;
+            border-radius: 40px;
+            margin: 20px 0 15px 0;
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #5D3A1A;
+        }
+        
+        .progress-bar { background: #E8E0C8; border-radius: 30px; height: 10px; overflow: hidden; margin: 6px 0; }
+        .progress-fill { background: linear-gradient(90deg, #66BB6A, #2E7D32); height: 100%; transition: width 0.3s; border-radius: 30px; }
+        
+        .strength-item { background: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 30px; display: inline-block; margin: 3px; font-size: 0.75rem; }
+        .weakness-item { background: #FFEBEE; color: #C62828; padding: 4px 10px; border-radius: 30px; display: inline-block; margin: 3px; font-size: 0.75rem; }
+        
+        .delete-test-btn { background: #ff8a65; color: white; border: none; padding: 5px 12px; border-radius: 30px; cursor: pointer; font-size: 0.7rem; }
+        .welcome-emoji { font-size: 1.8rem; text-align: center; margin-bottom: 5px; }
+        
+        .career-category {
+            margin: 15px 0;
+            padding: 12px;
+            background: #FFF8E1;
+            border-radius: 16px;
+            border-left: 4px solid #FF9800;
+        }
+        .career-title {
+            font-weight: bold;
+            color: #E65100;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        .profession-list {
+            margin: 8px 0 0 20px;
+            font-size: 0.85rem;
+            color: #2c6e9e;
+            line-height: 1.6;
+        }
+        .profession-list li {
+            margin: 5px 0;
+        }
+        .level-note {
+            background: #FFF9C4;
+            padding: 10px 15px;
+            border-radius: 12px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            border-left: 4px solid #FF9800;
+        }
+        .education-box {
+            background: #E3F2FD;
+            padding: 12px 16px;
+            border-radius: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #2196F3;
+        }
+        .education-title {
+            font-weight: bold;
+            color: #1565C0;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        .higher-edu-box {
+            background: #E8EAF6;
+            padding: 12px 16px;
+            border-radius: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #3F51B5;
+        }
+        .higher-edu-title {
+            font-weight: bold;
+            color: #283593;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        .university-item {
+            background: #FFF;
+            border-radius: 12px;
+            padding: 8px 12px;
+            margin: 8px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .university-name {
+            font-weight: bold;
+            color: #1e466e;
+        }
+        .university-field {
+            font-size: 0.8rem;
+            color: #5D3A1A;
+        }
+        .warning-box {
+            background: #FFEBEE;
+            padding: 12px;
+            border-radius: 12px;
+            border-left: 5px solid #F44336;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="welcome-emoji">🌈🧸🌸</div>
+    <h2>🧸 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h2>
+    <p style="font-size: 0.9rem; color: #5D3A1A;"><strong>✨ TTAP Pro – Yeniyetmələr üçün Peşə Yönümlü Qiymətləndirmə ✨</strong><br>Xüsusi qayğıya ehtiyacı olan uşaqlar üçün | Məlumatlar cihazınızda saxlanılır</p>
+
+    <div style="background: #FFF0D4; border-radius: 40px; padding: 14px 20px; margin-bottom: 24px;">
+        <h3 style="margin-top: 4px; border-bottom: none; font-size: 1.1rem;">➕ Yeni pasiyent</h3>
+        <div class="flex-row">
+            <input type="text" id="patientName" placeholder="👧 Ad Soyad" style="flex: 2;">
+            <input type="number" id="patientAge" placeholder="🎂 Yaş" style="flex: 1;">
+            <button onclick="addNewPatient()">➕ Əlavə et</button>
+        </div>
+    </div>
+
+    <h3>📋 Pasiyentlər</h3>
+    <div id="patientsList"></div>
+
+    <div id="testPanel" style="display: none; margin-top: 24px;">
+        <hr>
+        <div class="flex-row" style="justify-content: space-between;">
+            <h3 id="testPatientTitle" style="margin:0; font-size: 1.1rem;">🧪 Test:</h3>
+            <button class="secondary" onclick="cancelTest()">✖ Bağla</button>
+        </div>
+        
+        <div class="detail-box" style="background:#FFF0D4;">
+            <label>📅 Test tarixi:</label>
+            <input type="datetime-local" id="testDateInput" style="width: auto; min-width: 200px;">
+        </div>
+
+        <div id="dynamicQuestions"></div>
+        <button onclick="submitCurrentTest()" style="width: auto; margin: 15px 0;">💾 Nəticəni yadda saxla</button>
+        
+        <div id="lastResultArea"></div>
+        
+        <h3>📜 Keçmiş testlər</h3>
+        <div style="overflow-x: auto;">
+            <table id="testHistoryTable">
+                <thead><tr><th>📅 Tarix</th><th>🏆 Bal</th><th>📊 Səviyyə</th><th>⭐ Güclü tərəflər</th><th>📝 Word</th><th>📸 Şəkil</th><th>🗑️</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        🧸© 2025 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi | Bütün hüquqları qorunur.<br>
+        Məlumatlar cihazınızda lokal olaraq saxlanılır.
+    </div>
+</div>
+
+<script>
+    // ========== AN MƏRKƏZİ - DİNAMİK ALİ TƏHSİL TÖVSİYƏLİ SİSTEM (DÜZƏLDİLMİŞ) ==========
+    let patientsArray = [];
+    let activePatientIndex = null;
+    
+    const SECTION1_QUESTIONS = [
+        "Tapşırığı sona qədər yerinə yetirir", "10-15 dəqiqə fasiləsiz işləyir", "Əşyaları düzgün sıralayır",
+        "Müstəqil işləyir", "Kömək istəməyi bacarır", "Göz kontaktı saxlayır",
+        "Vizual tapşırığı dəqiq yerinə yetirir", "Sosial qaydalara uyğun hərəkət edir", "Təlimatları bir dəfədən sonra başa düşür"
+    ];
+    const SECTION2_QUESTIONS = [
+        "Emosiyalarını ifadə edə bilir", "Qrup içində ünsiyyət qurur", "Əməkdaşlıq edir",
+        "Xətasını etiraf edə bilir", "Qaydalara uyğunlaşır", "Gözləməyi bacarır",
+        "Yeni şeylərə uyğunlaşır", "Məsuliyyət hissi daşıyır", "Diqqətini cəmləyə bilir",
+        "Stress altında işləyə bilir", "Tənqidi qəbul edir"
+    ];
+    const SECTION3_QUESTIONS = [
+        "Təşəbbüskarlıq göstərir", "Zamanı idarə edir", "Təhlükəsizlik qaydalarına riayət edir",
+        "Problem həll edir", "Motor bacarıqları", "Yaddaş",
+        "Sayma və yazma", "Öz qərarını verir", "Səhvlərdən öyrənir", "İş etikası"
+    ];
+    
+    const ALL_SECTIONS = [
+        { name: "Əsas İş Bacarıqları", questions: SECTION1_QUESTIONS, maxScore: SECTION1_QUESTIONS.length * 2 },
+        { name: "Psixososial Müşahidə", questions: SECTION2_QUESTIONS, maxScore: SECTION2_QUESTIONS.length * 2 },
+        { name: "İnkişaf və Davranış İndeksi", questions: SECTION3_QUESTIONS, maxScore: SECTION3_QUESTIONS.length * 2 }
+    ];
+    
+    // Universitetlər siyahısı (yalnız ümumi bal 45% və yuxarı olanlar üçün)
+    const UNIVERSITIES = [
+        { name: "Bakı Dövlət Universiteti (BDU)", field: "Sosial iş, Psixologiya, İnformasiya texnologiyaları", minSec1: 70, minSec2: 65, minSec3: 60, desc: "Güclü akademik hazırlıq və müstəqil iş bacarığı tələb olunur." },
+        { name: "Azərbaycan Dövlət İqtisad Universiteti (UNEC)", field: "Biznesin idarə olunması, Marketinq, Logistika", minSec1: 75, minSec2: 60, minSec3: 65, desc: "Analitik düşüncə və təşkilatçılıq bacarığı önəmlidir." },
+        { name: "Azərbaycan Texnologiya Universiteti", field: "İnformasiya texnologiyaları, Kompyuter elmləri", minSec1: 80, minSec2: 55, minSec3: 70, desc: "Texniki yönümlü, diqqət və dəqiqlik tələb edir." },
+        { name: "Azərbaycan Dövlət Aqrar Universiteti", field: "Aqronomiya, Bağçılıq, Landşaft dizaynı", minSec1: 50, minSec2: 45, minSec3: 55, desc: "Təbiətə yaxın, praktiki bacarıqlar üstünlük təşkil edir." },
+        { name: "Azərbaycan Dövlət Rəssamlıq Akademiyası", field: "Tətbiqi incəsənət, Dekorativ sənət, Rəssamlıq", minSec1: 40, minSec2: 50, minSec3: 45, desc: "Yaradıcılıq və incəsənətə maraq tələb olunur." },
+        { name: "Azərbaycan Turizm və Menecment Universiteti", field: "Turizm, Otelçilik, Qonaqpərvərlik", minSec1: 55, minSec2: 60, minSec3: 50, desc: "Ünsiyyət bacarıqları və müştəri xidməti önəmlidir." },
+        { name: "Bakı Musiqi Akademiyası", field: "Musiqi terapiyası, Musiqi təhsili, İfaçılıq", minSec1: 35, minSec2: 45, minSec3: 40, desc: "İncəsənətə həssaslıq və emosional ifadə bacarığı tələb olunur." },
+        { name: "Azərbaycan Dövlət Bədən Tərbiyəsi və İdman Akademiyası", field: "Reabilitasiya, Adaptiv bədən tərbiyəsi", minSec1: 45, minSec2: 55, minSec3: 50, desc: "Motor bacarıqları və fiziki fəaliyyət önəmlidir." },
+        { name: "Naxçıvan Dövlət Universiteti", field: "Sosial iş, Psixologiya, Pedaqogika", minSec1: 50, minSec2: 50, minSec3: 45, desc: "İnsanlarla işləmə və empatiya bacarığı tələb olunur." },
+        { name: "Gəncə Dövlət Universiteti", field: "Təhsil, Psixologiya, İbtidai sinif müəllimliyi", minSec1: 45, minSec2: 55, minSec3: 50, desc: "Ünsiyyət və təlim bacarıqları önəmlidir." },
+        { name: "Lənkəran Dövlət Universiteti", field: "Aqrar sahə, Ekologiya, Turizm", minSec1: 40, minSec2: 45, minSec3: 40, desc: "Təbiət və ətraf mühitə maraq tələb olunur." },
+        { name: "Sumqayıt Dövlət Universiteti", field: "Mühəndislik, Kimya, Texnologiya", minSec1: 60, minSec2: 50, minSec3: 55, desc: "Texniki düşüncə və dəqiqlik tələb olunur." },
+        { name: "Mingəçevir Turizm Kolleci (Ali təhsil proqramları)", field: "Turizm, Otel menecmenti", minSec1: 45, minSec2: 50, minSec3: 40, desc: "Xidmət sektoruna maraq və ünsiyyət bacarığı." },
+        { name: "Azərbaycan Kooperasiya Universiteti", field: "İqtisadiyyat, Ticarət, Marketinq", minSec1: 55, minSec2: 50, minSec3: 45, desc: "Təşkilatçılıq və analitik bacarıqlar." },
+        { name: "Odlar Yurdu Universiteti (Özəl)", field: "Psixologiya, Sosial iş, Biznes idarəetməsi", minSec1: 50, minSec2: 55, minSec3: 50, desc: "İnsan yönümlü ixtisaslar üçün uyğundur." }
+    ];
+    
+    let currentAnswers = [];
+
+    function loadData() {
+        const stored = localStorage.getItem('an_ttap_pro_dynamic_fixed');
+        if (stored) patientsArray = JSON.parse(stored);
+        else patientsArray = [];
+        renderPatientsList();
+    }
+
+    function saveToLocal() { localStorage.setItem('an_ttap_pro_dynamic_fixed', JSON.stringify(patientsArray)); }
+
+    function renderPatientsList() {
+        const container = document.getElementById('patientsList');
+        if (!container) return;
+        if (!patientsArray.length) { container.innerHTML = '<div class="card">🧸 Hələ pasiyent yoxdur. Yeni əlavə edin.</div>'; return; }
+        let html = '';
+        patientsArray.forEach((p, idx) => {
+            html += `<div class="card"><div class="patient-name">🧸 ${escapeHtml(p.name)} (${p.age} yaş) • ${p.tests?.length || 0} test</div>
+                    <div><button onclick="startTestForPatient(${idx})">📝 Test</button><button class="danger" onclick="deletePatient(${idx})">🗑 Sil</button></div></div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    function deletePatient(idx) {
+        if (confirm(`"${patientsArray[idx].name}" silinsin?`)) {
+            patientsArray.splice(idx, 1);
+            saveToLocal();
+            renderPatientsList();
+            if (activePatientIndex === idx) cancelTest();
+            else if (activePatientIndex > idx) activePatientIndex--;
+        }
+    }
+
+    function addNewPatient() {
+        const name = document.getElementById('patientName').value.trim();
+        const age = document.getElementById('patientAge').value.trim();
+        if (!name || !age) { alert('Ad və yaş daxil edin!'); return; }
+        if (isNaN(age) || parseInt(age) <= 0 || parseInt(age) > 110) { alert('Yaş 1-110 arası!'); return; }
+        patientsArray.push({ name, age: parseInt(age), tests: [] });
+        saveToLocal();
+        renderPatientsList();
+        document.getElementById('patientName').value = '';
+        document.getElementById('patientAge').value = '';
+        alert(`✅ ${name} əlavə olundu!`);
+    }
+
+    function startTestForPatient(idx) {
+        activePatientIndex = idx;
+        document.getElementById('testPanel').style.display = 'block';
+        document.getElementById('testPatientTitle').innerHTML = `🧪 Test: <strong>${escapeHtml(patientsArray[idx].name)}</strong>`;
+        document.getElementById('testDateInput').value = new Date().toISOString().slice(0, 16);
+        
+        let qHtml = '', gIdx = 0;
+        ALL_SECTIONS.forEach(section => {
+            qHtml += `<div class="section-header">🎯 ${section.name}</div>`;
+            section.questions.forEach(q => {
+                qHtml += `<div class="card test-card"><div class="test-question">❓ ${q}</div>
+                        <select id="q_${gIdx}"><option value="0">0 - Hələ bacarmır</option><option value="1">1 - Bəzən bacarır</option><option value="2">2 - Həmişə bacarır</option></select></div>`;
+                gIdx++;
+            });
+        });
+        document.getElementById('dynamicQuestions').innerHTML = qHtml;
+        const totalQ = SECTION1_QUESTIONS.length + SECTION2_QUESTIONS.length + SECTION3_QUESTIONS.length;
+        currentAnswers = new Array(totalQ).fill(0);
+        for (let i = 0; i < totalQ; i++) {
+            let sel = document.getElementById(`q_${i}`);
+            if (sel) { sel.addEventListener('change', (e) => { currentAnswers[i] = parseInt(e.target.value); }); currentAnswers[i] = parseInt(sel.value); }
+        }
+        renderHistoryForCurrent();
+        document.getElementById('lastResultArea').innerHTML = '';
+    }
+
+    function calculateSectionPercentages(answers) {
+        let start = 0;
+        let percentages = [];
+        ALL_SECTIONS.forEach(section => {
+            let secAns = answers.slice(start, start + section.questions.length);
+            let secTotal = secAns.reduce((a,b)=>a+b,0);
+            let secMax = section.questions.length * 2;
+            let percent = Math.round((secTotal / secMax) * 100);
+            percentages.push(percent);
+            start += section.questions.length;
+        });
+        return percentages;
+    }
+
+    // Dinamik ali təhsil tövsiyəsi - YALNIZ ümumi bal >= 45% olduqda
+    function getDynamicHigherEducation(sectionPercentages, overallPercent) {
+        // Əgər ümumi bal 45% -dən aşağıdırsa, ali təhsil tövsiyə edilmir
+        if (overallPercent < 45) {
+            return {
+                title: "🏛 Ali təhsil tövsiyəsi",
+                isEligible: false,
+                message: "⚠️ Test nəticələrinə əsasən ali təhsil tövsiyə edilmir. İlk növbədə gündəlik həyat bacarıqları, təməl iş vərdişləri və peşə hazırlığı proqramları tövsiyə olunur. Daha yüksək nəticə əldə etdikdən sonra ali təhsil variantlarına baxılması məsləhətdir."
+            };
+        }
+        
+        // Ümumi bal 45% və yuxarı olduqda universitetləri skorla
+        let scored = UNIVERSITIES.map(univ => {
+            let score1 = Math.max(0, sectionPercentages[0] - univ.minSec1);
+            let score2 = Math.max(0, sectionPercentages[1] - univ.minSec2);
+            let score3 = Math.max(0, sectionPercentages[2] - univ.minSec3);
+            let penalty = 0;
+            if (sectionPercentages[0] < univ.minSec1 - 20) penalty += 50;
+            if (sectionPercentages[1] < univ.minSec2 - 20) penalty += 50;
+            if (sectionPercentages[2] < univ.minSec3 - 20) penalty += 50;
+            let totalScore = score1 + score2 + score3 - penalty;
+            return { ...univ, score: totalScore };
+        });
+        
+        scored.sort((a,b) => b.score - a.score);
+        let top4 = scored.slice(0, 4);
+        
+        return {
+            title: "🎓 Test nəticələrinə əsasən ən uyğun ali təhsil müəssisələri",
+            isEligible: true,
+            recommendations: top4.map(u => ({
+                name: u.name,
+                field: u.field,
+                desc: u.desc,
+                match: Math.min(100, Math.max(30, Math.round((u.score + 50) / 1.5))) // 30-100 arası
+            }))
+        };
+    }
+
+    function getEducationRecommendation(score) {
+        if (score >= 70) {
+            return {
+                title: "🎓 Peşə təhsili və ixtisas kursları",
+                recommendations: [
+                    "Kompyuter əməliyyatçısı (ofis proqramları, məlumat daxil etmə)",
+                    "Anbar və logistika üzrə peşə kursu",
+                    "Qablaşdırma və qablaşdırma xətti operatoru ixtisası",
+                    "Kuryer xidməti və çatdırılma üzrə təlim",
+                    "Müştəri xidməti və marketinq əsasları"
+                ],
+                institutions: "Peşə liseyləri, Təlim Mərkəzləri (DOST, ABAD, Regional Peşə Təhsil Mərkəzləri)"
+            };
+        } else if (score >= 45) {
+            return {
+                title: "🛠 Sənət və peşə hazırlığı kursları",
+                recommendations: [
+                    "Dərzi köməkçisi (toxuculuq, tikmə, xalçaçılıq) kursları",
+                    "Bağçılıq və çiçəkçilik (landşaft dizaynı) üzrə təlim",
+                    "Təmizlik və ev idarəçiliyi üzrə praktiki kurs",
+                    "Mətbəx işləri (qida hazırlama, tərəvəz doğrama) kursları",
+                    "Sosial yardım və uşaq baxımı köməkçisi təhsili"
+                ],
+                institutions: "Sənət Məktəbləri, Peşə Hazırlıq Kursları, Reabilitasiya Mərkəzləri yanında təhsil proqramları"
+            };
+        } else {
+            return {
+                title: "🧸 Xüsusi təhsil və gündəlik həyat bacarıqları proqramları",
+                recommendations: [
+                    "Gündəlik həyat bacarıqları üzrə fərdi təhsil proqramı",
+                    "Əmək terapiyası əsasları (sadə yığma, qutu qatlama, etiketləmə)",
+                    "İncəsənət və yaradıcılıq terapiyası (rəsm, modelləşdirmə, kollaj)",
+                    "Sosial bacarıqlar və ünsiyyət təlimi",
+                    "Məktəbə hazırlıq (rəngləri, formaları tanıma, əşyaları sıralama)"
+                ],
+                institutions: "Xüsusi Təhsil Müəssisələri, Reabilitasiya Mərkəzləri (AN Mərkəzi, Ümid Mərkəzi), İnklüziv təhsil proqramları"
+            };
+        }
+    }
+
+    function getDetailedCareerRecommendations(score) {
+        if (score >= 70) {
+            return {
+                main: "🌟 Yüksək səviyyə (70-100%)",
+                note: "✅ Bu səviyyədə olan şəxs müstəqil işləyə bilər. Az nəzarət kifayətdir. Aşağıdakı peşələri icra edə bilər:",
+                categories: [
+                    { title: "📦 Qablaşdırma və anbar işləri", professions: ["qablaşdırıcı", "anbar işçisi", "mal yığan", "etiketləyici", "seyfelyaş", "qablaşdırma xətti operatoru"] },
+                    { title: "🏢 Ofis dəstək işləri", professions: ["sənəd dövriyyəçisi", "kargüzar", "arxiv işçisi", "məlumat daxil edən operator", "poçt göndərişlərinin paylayıcısı"] },
+                    { title: "🛒 Ticarət və market işləri", professions: ["mal düzən (şelfmen)", "qiymət etiketi yapışdıran", "kassa köməkçisi", "malların qəbulu işçisi"] }
+                ]
+            };
+        } else if (score >= 45) {
+            return {
+                main: "🟡 Orta səviyyə (45-69%)",
+                note: "✅ Bu səviyyədə olan şəxs nəzarət altında sadə peşələri öyrənə və icra edə bilər. Aşağıdakı peşələr tövsiyə olunur:",
+                categories: [
+                    { title: "🧵 Əl işləri emalatxanası", professions: ["dərzi köməkçisi", "toxucu", "xalçaçı", "tikməçi", "iynəçi", "muncuq işləyən", "qutu yığan"] },
+                    { title: "🌱 Bağçılıq və landşaft", professions: ["bağban köməkçisi", "çiçəkçi", "istixana işçisi", "otaran", "suluqçu"] },
+                    { title: "🧹 Təmizlik və nizam", professions: ["ofis təmizlikçisi", "camaşırxana işçisi", "otaq təmizləyən", "paltar ütüləyən"] },
+                    { title: "🍔 Qida xidməti", professions: ["kafe köməkçisi", "masa silən", "stol düzən", "tərəvəz təmizləyən"] }
+                ]
+            };
+        } else {
+            return {
+                main: "🧸 Dəstək səviyyəsi (0-44%)",
+                note: "⚠️ Bu səviyyədə olan şəxs üçün ilk növbədə gündəlik həyat bacarıqları və təməl iş vərdişləri öyrədilməlidir. Aşağıdakı fəaliyyətlər reabilitasiya proqramı çərçivəsində tətbiq oluna bilər:",
+                categories: [
+                    { title: "🩹 Gündəlik həyat bacarıqları", professions: ["qab-qacaq yuma", "paltar yığışdırma", "süpürmə", "toz alma", "çarpayı düzəltmə", "masa düzmə", "qapı bağlama", "soyunma-geyinmə", "əl yuma", "diş fırçalama"] },
+                    { title: "🎨 İncəsənət və yaradıcılıq", professions: ["rəsm çəkmə", "şəkil boyama", "gildən fiqur düzəltmə", "karandaş yonma", "kağız kəsmə", "kollaj hazırlama"] },
+                    { title: "🧩 Sadə yığma işləri", professions: ["qutu yığma", "məktub zərfləmə", "etiket yapışdırma", "rəngli kağızları ayırma", "boncuk düzmə"] }
+                ]
+            };
+        }
+    }
+
+    function generateDetailed(answers, pName, pAge) {
+        let start = 0, sections = [], grandTotal = 0, grandMax = 0;
+        ALL_SECTIONS.forEach(section => {
+            let secAns = answers.slice(start, start + section.questions.length);
+            let secTotal = secAns.reduce((a,b)=>a+b,0), secMax = section.questions.length*2, secPercent = Math.round(secTotal/secMax*100);
+            let strengths = [], weaknesses = [];
+            section.questions.forEach((q, i) => { 
+                if (secAns[i]===2) strengths.push(q); 
+                else if (secAns[i]===0) weaknesses.push(q); 
+            });
+            sections.push({ name: section.name, total: secTotal, max: secMax, percent: secPercent, strengths, weaknesses });
+            grandTotal += secTotal; grandMax += secMax;
+            start += section.questions.length;
+        });
+        let overallPercent = Math.round(grandTotal/grandMax*100);
+        let levelIcon = overallPercent>=70?'🌟':(overallPercent>=45?'🟡':'🧸');
+        let level = overallPercent>=70?'Yüksək Səviyyə':(overallPercent>=45?'Orta Səviyyə':'Dəstək Səviyyəsi');
+        let levelDesc = overallPercent>=70?`${pName} müstəqil işləyə bilər. Az nəzarət kifayətdir.`:(overallPercent>=45?`${pName} köməklə inkişaf edə bilər. Müntəzəm dəstək tələb olunur.`:`${pName} xüsusi qayğıya və fərdi dəstəyə ehtiyac duyur.`);
+        
+        let careerData = getDetailedCareerRecommendations(overallPercent);
+        let educationData = getEducationRecommendation(overallPercent);
+        let sectionPercentages = sections.map(s => s.percent);
+        let higherEduData = getDynamicHigherEducation(sectionPercentages, overallPercent);
+        
+        let allStrengths = sections.flatMap(s=>s.strengths).slice(0,10);
+        let allWeaknesses = sections.flatMap(s=>s.weaknesses).slice(0,10);
+        return { overallPercent, grandTotal, grandMax, level: `${levelIcon} ${level}`, levelDesc, careerData, educationData, higherEduData, allStrengths, allWeaknesses, sections, sectionPercentages };
+    }
+
+    function submitCurrentTest() {
+        if (activePatientIndex === null) { alert('Pasiyent seçin!'); return; }
+        let totalQ = SECTION1_QUESTIONS.length + SECTION2_QUESTIONS.length + SECTION3_QUESTIONS.length;
+        for (let i=0; i<totalQ; i++) { let sel = document.getElementById(`q_${i}`); if(sel) currentAnswers[i] = parseInt(sel.value); }
+        let patient = patientsArray[activePatientIndex];
+        let res = generateDetailed(currentAnswers, patient.name, patient.age);
+        let finalDate = document.getElementById('testDateInput').value ? new Date(document.getElementById('testDateInput').value).toLocaleString('az-AZ') : new Date().toLocaleString('az-AZ');
+        let testRecord = { 
+            date: finalDate, 
+            totalScore: res.grandTotal, 
+            maxScore: totalQ*2, 
+            percentage: res.overallPercent, 
+            level: res.level, 
+            levelDesc: res.levelDesc, 
+            careerData: res.careerData,
+            educationData: res.educationData,
+            higherEduData: res.higherEduData,
+            strengths: res.allStrengths, 
+            weaknesses: res.allWeaknesses, 
+            sections: res.sections,
+            sectionPercentages: res.sectionPercentages
+        };
+        patientsArray[activePatientIndex].tests.push(testRecord);
+        saveToLocal();
+        displayResult(res, patient, finalDate, totalQ*2);
+        renderHistoryForCurrent();
+        alert('✅ Test qeyd edildi!');
+    }
+    
+    function displayResult(res, patient, date, maxScore) {
+        let sectionsHtml = res.sections.map(s => `<div style="margin:8px 0; padding:8px; background:#FFF8E1; border-radius:20px;"><strong>📊 ${s.name}</strong><br>${s.total}/${s.max} (${s.percent}%)<div class="progress-bar"><div class="progress-fill" style="width:${s.percent}%;"></div></div></div>`).join('');
+        let strengthsHtml = res.allStrengths.map(s => `<span class="strength-item">✓ ${s}</span>`).join('');
+        let weaknessesHtml = res.allWeaknesses.map(w => `<span class="weakness-item">○ ${w}</span>`).join('');
+        
+        let careerHtml = `<div class="level-note"><strong>${res.careerData.main}</strong><br>${res.careerData.note}</div>`;
+        res.careerData.categories.forEach(cat => {
+            careerHtml += `<div class="career-category"><div class="career-title">${cat.title}</div><ul class="profession-list">${cat.professions.map(p => `<li>📌 ${p}</li>`).join('')}</ul></div>`;
+        });
+        
+        let educationHtml = `<div class="education-box">
+            <div class="education-title">${res.educationData.title}</div>
+            <ul style="margin:8px 0 0 20px;">${res.educationData.recommendations.map(rec => `<li>${rec}</li>`).join('')}</ul>
+            <p style="margin-top:10px; font-size:0.85rem;"><strong>🏫 Təhsil müəssisələri:</strong> ${res.educationData.institutions}</p>
+        </div>`;
+        
+        // Ali təhsil bölməsi (şərtli)
+        let higherEduHtml = '';
+        if (res.higherEduData.isEligible) {
+            higherEduHtml = `<div class="higher-edu-box">
+                <div class="higher-edu-title">${res.higherEduData.title}</div>
+                <div style="margin-top:8px;">`;
+            res.higherEduData.recommendations.forEach(uni => {
+                higherEduHtml += `<div class="university-item">
+                    <div class="university-name">🏛 ${uni.name}</div>
+                    <div class="university-field"><strong>İxtisas sahələri:</strong> ${uni.field}</div>
+                    <div class="university-field" style="font-size:0.75rem; color:#555;">${uni.desc}</div>
+                    <div class="university-field" style="font-size:0.7rem; color:#2c6e9e;">Uyğunluq: ${uni.match}%</div>
+                </div>`;
+            });
+            higherEduHtml += `</div><p style="margin-top:10px; font-size:0.8rem;"><strong>📌 Qeyd:</strong> Bu tövsiyələr testin bölmə faizlərinə əsasən avtomatik seçilmişdir.</p></div>`;
+        } else {
+            higherEduHtml = `<div class="warning-box">
+                <strong>⚠️ Ali təhsil tövsiyə edilmir</strong><br>
+                ${res.higherEduData.message}
+            </div>`;
+        }
+        
+        document.getElementById('lastResultArea').innerHTML = `
+            <div class="result-badge" id="resultForExport">
+                <h3 style="font-size:1.2rem;">🎉 ${patient.name} üçün NƏTİCƏ 🎉</h3>
+                <p><strong>📅 Tarix:</strong> ${date} | 🎂 ${patient.age} yaş</p>
+                <div style="background:#fff; padding:12px; border-radius:24px;">
+                    <strong>🏆 ÜMUMİ BAL:</strong> ${res.grandTotal} / ${maxScore} (${res.overallPercent}%)
+                    <div class="progress-bar"><div class="progress-fill" style="width:${res.overallPercent}%;"></div></div>
+                    <p><strong>${res.level}</strong><br>${res.levelDesc}</p>
+                </div>
+                <div class="detail-box">
+                    <strong>⭐ Güclü tərəflər:</strong><br>${strengthsHtml || 'Müəyyən edilməyib'}<br><br>
+                    <strong>🌱 İnkişaf sahələri:</strong><br>${weaknessesHtml || 'Mövcud deyil'}
+                </div>
+                <div style="margin-top:20px;"><strong>💼 PEŞƏ KARYERA TÖVSİYƏLƏRİ:</strong>${careerHtml}</div>
+                <div style="margin-top:20px;"><strong>🎓 PEŞƏ TƏHSİLİ VƏ KURSLAR:</strong>${educationHtml}</div>
+                <div style="margin-top:20px;"><strong>🏛 ALİ TƏHSİL:</strong>${higherEduHtml}</div>
+                <div style="margin-top:20px;"><strong>📈 BÖLMƏLƏR:</strong>${sectionsHtml}</div>
+                <div style="margin-top:15px; background:#FFF9C4; padding:12px; border-radius:16px; text-align:center;">
+                    <strong>📝 Valideynlərə tövsiyə:</strong><br>Uşağınızın güclü tərəflərini dəstəkləyin, inkişaf sahələrində səbirli olun.
+                </div>
+                <div style="margin-top:15px; text-align:center; border-top:1px solid #FFD966; padding-top:12px;">
+                    <strong>İmza:</strong> AN Psixoloji Dəstək və Reabilitasiya Mərkəzinin direktoru Nahidə Axundova
+                </div>
+            </div>`;
+    }
+    
+    // WORD İXRAC (düzəldilmiş ali təhsil bölməsi ilə)
+    function exportToWord(patientIdx, testIdx) {
+        let patient = patientsArray[patientIdx];
+        let test = patient.tests[testIdx];
+        if (!test) { alert('Test məlumatı tapılmadı!'); return; }
+        
+        let sectionsHtml = '';
+        if (test.sections && test.sections.length) {
+            test.sections.forEach(s => {
+                sectionsHtml += `<div style="margin:10px 0; padding:8px; background:#f5f5f5;"><strong>${s.name}</strong><br>Bal: ${s.total}/${s.max} (${s.percent}%)<div style="background:#ddd; height:6px; margin-top:5px;"><div style="background:#4CAF50; width:${s.percent}%; height:6px;"></div></div></div>`;
+            });
+        }
+        
+        let strengthsHtml = test.strengths?.length ? test.strengths.map(s => `✓ ${s}`).join('<br>') : 'Müəyyən edilməyib';
+        let weaknessesHtml = test.weaknesses?.length ? test.weaknesses.map(w => `○ ${w}`).join('<br>') : 'Müəyyən edilməyib';
+        
+        let careerHtml = `<div style="background:#FFF9C4; padding:10px; margin:10px 0;"><strong>${test.careerData.main}</strong><br>${test.careerData.note}</div>`;
+        if (test.careerData && test.careerData.categories) {
+            test.careerData.categories.forEach(cat => {
+                careerHtml += `<div style="margin:12px 0; padding:8px; border-left:3px solid #FF9800; background:#FFF8E1;"><strong>${cat.title}</strong><ul style="margin:5px 0 0 20px;">${cat.professions.map(p => `<li>📌 ${p}</li>`).join('')}</ul></div>`;
+            });
+        }
+        
+        let educationHtml = `<div style="background:#E3F2FD; padding:12px; margin:15px 0; border-left:5px solid #2196F3;">
+            <strong>${test.educationData.title}</strong>
+            <ul>${test.educationData.recommendations.map(rec => `<li>${rec}</li>`).join('')}</ul>
+            <p><strong>🏫 Təhsil müəssisələri:</strong> ${test.educationData.institutions}</p>
+        </div>`;
+        
+        let higherEduHtml = '';
+        if (test.higherEduData.isEligible) {
+            higherEduHtml = `<div style="background:#E8EAF6; padding:12px; margin:15px 0; border-left:5px solid #3F51B5;">
+                <strong>${test.higherEduData.title}</strong>`;
+            test.higherEduData.recommendations.forEach(uni => {
+                higherEduHtml += `<div style="margin:10px 0; padding:5px;"><strong>🏛 ${uni.name}</strong><br>İxtisas: ${uni.field}<br>${uni.desc}</div>`;
+            });
+            higherEduHtml += `<p><strong>📌 Qeyd:</strong> Bu tövsiyələr test cavablarına əsasən avtomatik seçilmişdir.</p></div>`;
+        } else {
+            higherEduHtml = `<div style="background:#FFEBEE; padding:12px; margin:15px 0; border-left:5px solid #F44336;">
+                <strong>⚠️ Ali təhsil tövsiyə edilmir</strong><br>${test.higherEduData.message}
+            </div>`;
+        }
+        
+        let fullHtml = `<!DOCTYPE html>
+        <html>
+        <head><meta charset="UTF-8"><title>${patient.name}_test_nəticəsi</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 30px; line-height: 1.5; }
+            h1 { color: #FF8C42; font-size: 22px; text-align: center; }
+            h2 { color: #2c6e9e; font-size: 18px; border-bottom: 2px solid #FFD966; display: inline-block; }
+            .header { text-align: center; margin-bottom: 25px; }
+            .box { background: #f5f5f5; padding: 15px; border-radius: 10px; margin: 15px 0; }
+            .signature { margin-top: 30px; text-align: center; border-top: 1px solid #ccc; padding-top: 15px; }
+            .footer { margin-top: 20px; text-align: center; font-size: 11px; color: #888; }
+            ul { margin: 5px 0 5px 20px; }
+            .progress-bar { background: #ddd; height: 8px; margin-top: 5px; }
+            .progress-fill { background: #4CAF50; width: ${test.percentage}%; height: 8px; }
+        </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>🧸 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h1>
+                <p><strong>TTAP Pro - Peşə Yönümlü Qiymətləndirmə</strong></p>
+                <hr>
+            </div>
+            <p><strong>👤 Pasiyent:</strong> ${escapeHtml(patient.name)} (${patient.age} yaş)</p>
+            <p><strong>📅 Test tarixi:</strong> ${test.date}</p>
+            <p><strong>🏆 Ümumi bal:</strong> ${test.totalScore} / ${test.maxScore} (${test.percentage}%)</p>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+            <p><strong>📊 Səviyyə:</strong> ${test.level}</p>
+            <p><strong>📝 İzah:</strong> ${test.levelDesc || '---'}</p>
+            
+            <div class="box">
+                <h2>⭐ Güclü tərəflər</h2>
+                <p>${strengthsHtml}</p>
+                <h2>🌱 İnkişaf sahələri</h2>
+                <p>${weaknessesHtml}</p>
+            </div>
+            
+            <h2>💼 PEŞƏ KARYERA TÖVSİYƏLƏRİ</h2>
+            ${careerHtml}
+            
+            <h2>🎓 PEŞƏ TƏHSİLİ VƏ KURSLAR</h2>
+            ${educationHtml}
+            
+            <h2>🏛 ALİ TƏHSİL</h2>
+            ${higherEduHtml}
+            
+            <h2>📈 Bölmələr üzrə nəticələr</h2>
+            ${sectionsHtml}
+            
+            <div class="signature">
+                <strong>İmza:</strong> AN Psixoloji Dəstək və Reabilitasiya Mərkəzinin direktoru Nahidə Axundova
+            </div>
+            <div class="footer">
+                © 2025 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi | Bütün hüquqları qorunur.
+            </div>
+        </body>
+        </html>`;
+        
+        const blob = new Blob([fullHtml], { type: 'application/msword' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `${patient.name.replace(/\s/g, '_')}_test_nəticəsi.doc`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        alert('✅ Word faylı hazırlandı!');
+    }
+    
+    // ŞƏKİL İXRAC (düzəldilmiş ali təhsil bölməsi ilə)
+    async function exportToImage(patientIdx, testIdx) {
+        let patient = patientsArray[patientIdx];
+        let test = patient.tests[testIdx];
+        if (!test) { alert('Test məlumatı tapılmadı!'); return; }
+        
+        let imageDiv = document.createElement('div');
+        imageDiv.style.width = '950px';
+        imageDiv.style.padding = '30px';
+        imageDiv.style.background = 'white';
+        imageDiv.style.fontFamily = 'Arial, sans-serif';
+        imageDiv.style.borderRadius = '20px';
+        
+        let sectionsHtml = '';
+        if (test.sections && test.sections.length) {
+            test.sections.forEach(s => {
+                sectionsHtml += `<div style="margin:12px 0; padding:10px; background:#f5f5f5; border-radius:8px;"><strong>${s.name}</strong><br>Bal: ${s.total}/${s.max} (${s.percent}%)<div style="background:#ddd; height:8px; margin-top:8px; border-radius:4px;"><div style="background:#4CAF50; width:${s.percent}%; height:8px; border-radius:4px;"></div></div></div>`;
+            });
+        }
+        
+        let strengthsHtml = test.strengths?.length ? test.strengths.map(s => `<div style="display:inline-block; background:#E8F5E9; color:#2E7D32; padding:5px 12px; border-radius:25px; margin:4px; font-size:13px;">✓ ${s}</div>`).join('') : 'Müəyyən edilməyib';
+        let weaknessesHtml = test.weaknesses?.length ? test.weaknesses.map(w => `<div style="display:inline-block; background:#FFEBEE; color:#C62828; padding:5px 12px; border-radius:25px; margin:4px; font-size:13px;">○ ${w}</div>`).join('') : 'Mövcud deyil';
+        
+        let careerHtml = `<div style="background:#FFF9C4; padding:15px; margin:15px 0; border-radius:12px;"><strong style="font-size:16px;">${test.careerData.main}</strong><br><span style="font-size:13px;">${test.careerData.note}</span></div>`;
+        if (test.careerData && test.careerData.categories) {
+            test.careerData.categories.forEach(cat => {
+                careerHtml += `<div style="margin:15px 0; padding:12px; border-left:4px solid #FF9800; background:#FFF8E1; border-radius:10px;">
+                    <strong style="font-size:15px;">${cat.title}</strong>
+                    <ul style="margin:10px 0 0 20px; font-size:13px; line-height:1.8;">${cat.professions.map(p => `<li>📌 ${p}</li>`).join('')}</ul>
+                </div>`;
+            });
+        }
+        
+        let educationHtml = `<div style="background:#E3F2FD; padding:15px; margin:15px 0; border-radius:12px; border-left:5px solid #2196F3;">
+            <strong style="font-size:16px;">${test.educationData.title}</strong>
+            <ul style="margin:10px 0 0 20px; font-size:13px;">${test.educationData.recommendations.map(rec => `<li>${rec}</li>`).join('')}</ul>
+            <p style="margin-top:10px; font-size:12px;"><strong>🏫 Təhsil müəssisələri:</strong> ${test.educationData.institutions}</p>
+        </div>`;
+        
+        let higherEduHtml = '';
+        if (test.higherEduData.isEligible) {
+            higherEduHtml = `<div style="background:#E8EAF6; padding:15px; margin:15px 0; border-radius:12px; border-left:5px solid #3F51B5;">
+                <strong style="font-size:16px;">${test.higherEduData.title}</strong>`;
+            test.higherEduData.recommendations.forEach(uni => {
+                higherEduHtml += `<div style="margin:10px 0; padding:8px; background:#fff; border-radius:10px;">
+                    <strong>🏛 ${uni.name}</strong><br>
+                    <span style="font-size:12px;"><strong>İxtisas:</strong> ${uni.field}</span><br>
+                    <span style="font-size:11px; color:#555;">${uni.desc}</span>
+                </div>`;
+            });
+            higherEduHtml += `<p style="margin-top:10px; font-size:11px;"><strong>📌 Qeyd:</strong> Bu tövsiyələr test cavablarına əsasən avtomatik seçilmişdir.</p></div>`;
+        } else {
+            higherEduHtml = `<div style="background:#FFEBEE; padding:15px; margin:15px 0; border-radius:12px; border-left:5px solid #F44336;">
+                <strong style="font-size:16px;">⚠️ Ali təhsil tövsiyə edilmir</strong><br>
+                <span style="font-size:13px;">${test.higherEduData.message}</span>
+            </div>`;
+        }
+        
+        imageDiv.innerHTML = `
+            <div style="text-align:center; margin-bottom:25px;">
+                <h1 style="color:#FF8C42; margin:0; font-size:24px;">🧸 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h1>
+                <p style="font-size:14px; margin:5px 0;"><strong>TTAP Pro - Peşə Yönümlü Qiymətləndirmə</strong></p>
+                <hr style="border:1px solid #FFD966;">
+            </div>
+            <div style="margin-bottom:20px;">
+                <p style="font-size:14px; margin:5px 0;"><strong>👤 Pasiyent:</strong> ${escapeHtml(patient.name)} (${patient.age} yaş)</p>
+                <p style="font-size:14px; margin:5px 0;"><strong>📅 Test tarixi:</strong> ${test.date}</p>
+                <p style="font-size:14px; margin:5px 0;"><strong>🏆 Ümumi bal:</strong> ${test.totalScore} / ${test.maxScore} (${test.percentage}%)</p>
+                <div style="background:#ddd; height:10px; border-radius:5px; margin:8px 0;"><div style="background:#4CAF50; width:${test.percentage}%; height:10px; border-radius:5px;"></div></div>
+                <p style="font-size:14px; margin:5px 0;"><strong>📊 Səviyyə:</strong> ${test.level}</p>
+                <p style="font-size:14px; margin:5px 0;"><strong>📝 İzah:</strong> ${test.levelDesc || '---'}</p>
+            </div>
+            <div style="background:#F0F8FF; padding:15px; border-radius:15px; margin:15px 0;">
+                <p style="font-size:14px; margin:0 0 8px 0;"><strong>⭐ Güclü tərəflər:</strong></p>
+                <div style="margin-bottom:10px;">${strengthsHtml}</div>
+                <p style="font-size:14px; margin:8px 0 8px 0;"><strong>🌱 İnkişaf etdirilməli sahələr:</strong></p>
+                <div>${weaknessesHtml}</div>
+            </div>
+            <div style="margin:20px 0;">
+                <p style="font-size:16px; font-weight:bold; margin:0 0 10px 0;">💼 PEŞƏ KARYERA TÖVSİYƏLƏRİ</p>
+                ${careerHtml}
+            </div>
+            <div style="margin:20px 0;">
+                <p style="font-size:16px; font-weight:bold; margin:0 0 10px 0;">🎓 PEŞƏ TƏHSİLİ VƏ KURSLAR</p>
+                ${educationHtml}
+            </div>
+            <div style="margin:20px 0;">
+                <p style="font-size:16px; font-weight:bold; margin:0 0 10px 0;">🏛 ALİ TƏHSİL</p>
+                ${higherEduHtml}
+            </div>
+            <div style="margin:20px 0;">
+                <p style="font-size:16px; font-weight:bold; margin:0 0 10px 0;">📈 BÖLMƏLƏR ÜZRƏ NƏTİCƏLƏR</p>
+                ${sectionsHtml}
+            </div>
+            <div style="margin-top:25px; background:#FFF9C4; padding:12px; border-radius:12px; text-align:center;">
+                <p style="font-size:13px; margin:0;"><strong>📝 Valideynlərə tövsiyə:</strong><br>Uşağınızın güclü tərəflərini dəstəkləyin, inkişaf sahələrində səbirli olun.</p>
+            </div>
+            <div style="margin-top:20px; text-align:center; border-top:2px solid #FFD966; padding-top:15px;">
+                <p style="font-size:13px; margin:0;"><strong>İmza:</strong> AN Psixoloji Dəstək və Reabilitasiya Mərkəzinin direktoru Nahidə Axundova</p>
+                <p style="font-size:11px; color:#888; margin:8px 0 0 0;">© 2025 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi | Bütün hüquqları qorunur.</p>
+            </div>
+        `;
+        
+        document.body.appendChild(imageDiv);
+        try {
+            const canvas = await html2canvas(imageDiv, { scale: 2, backgroundColor: '#ffffff', logging: false });
+            const link = document.createElement('a');
+            link.download = `${patient.name.replace(/\s/g, '_')}_test_nəticəsi.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            alert('✅ Şəkil hazırlandı!');
+        } catch(e) { 
+            console.error('Şəkil xətası:', e);
+            alert('Şəkil yaradılarkən xəta baş verdi.'); 
+        }
+        document.body.removeChild(imageDiv);
+    }
+    
+    function renderHistoryForCurrent() {
+        if (activePatientIndex === null) return;
+        let patient = patientsArray[activePatientIndex];
+        let tbody = document.querySelector('#testHistoryTable tbody');
+        if (!tbody) return;
+        if (!patient.tests?.length) { tbody.innerHTML = '<tr><td colspan="7">📌 Heç bir test yoxdur</td><tr>'; return; }
+        let rows = '';
+        [...patient.tests].reverse().forEach((test, idx) => {
+            let origIdx = patient.tests.length - 1 - idx;
+            let strengthsText = test.strengths?.slice(0,2).join(', ') || '---';
+            rows += `<tr>
+                        <td style="white-space: nowrap; font-size:0.7rem;">${escapeHtml(test.date)}</td>
+                        <td style="font-size:0.7rem;">${test.totalScore}/${test.maxScore} (${test.percentage}%)</td>
+                        <td style="font-size:0.7rem;">${escapeHtml(test.level?.substring(0,20)||'---')}</td>
+                        <td style="font-size:0.7rem;">${escapeHtml(strengthsText)}</td>
+                        <td><button class="word-btn" onclick="exportToWord(${activePatientIndex}, ${origIdx})">📝 Word</button></td>
+                        <td><button class="image-btn" onclick="exportToImage(${activePatientIndex}, ${origIdx})">📸 Şəkil</button></td>
+                        <td><button class="delete-test-btn" onclick="deleteTestFromHistory(${activePatientIndex}, ${origIdx})">🗑 Sil</button></td>
+                      </tr>`;
+        });
+        tbody.innerHTML = rows;
+    }
+    
+    function deleteTestFromHistory(pIdx, tIdx) {
+        if (confirm('Bu test nəticəsini silmək istədiyinizə əminsiniz?')) {
+            patientsArray[pIdx].tests.splice(tIdx, 1);
+            saveToLocal();
+            if (activePatientIndex === pIdx) { renderHistoryForCurrent(); document.getElementById('lastResultArea').innerHTML = ''; }
+            alert('✅ Test silindi.');
+        }
+    }
+    
+    function cancelTest() {
+        document.getElementById('testPanel').style.display = 'none';
+        activePatientIndex = null;
+        document.getElementById('lastResultArea').innerHTML = '';
+    }
+    
+    function escapeHtml(str) { if(!str) return ''; return String(str).replace(/[&<>]/g, m=> m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
+    
+    window.addEventListener('DOMContentLoaded', () => { loadData(); let tbl = document.getElementById('testHistoryTable'); if(tbl && !tbl.querySelector('tbody')) tbl.appendChild(document.createElement('tbody')); });
+</script>
+</body>
+</html>
