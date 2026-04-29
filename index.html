@@ -248,7 +248,7 @@
         { name: "🗣️ Loqopedik (Nitq & Ünsiyyət)", questions: SECTION6_QUESTIONS, maxScore: SECTION6_QUESTIONS.length*2 }
     ];
 
-    // Peşə karyera tövsiyələri (əvvəlki kod əsasında)
+    // Peşə karyera tövsiyələri
     function getCareerRecommendations(overallPercent) {
         if (overallPercent >= 70) {
             return {
@@ -306,7 +306,7 @@
         }
     }
 
-    // Ali təhsil (əvvəlki kimi, lakin 6 bölməyə uyğun)
+    // Ali təhsil (6 bölmə meyarı)
     const UNIVERSITIES = [
         { name: "Bakı Dövlət Universiteti (BDU)", field: "Psixologiya, Sosial iş", minSec1:65, minSec2:60, minSec3:60, minSec4:55, minSec5:50, minSec6:60, desc: "Akademik hazırlıq tələb edir." },
         { name: "Azərbaycan Dövlət İqtisad Universiteti", field: "Biznes, Marketinq", minSec1:70, minSec2:55, minSec3:60, minSec4:50, minSec5:55, minSec6:50, desc: "Analitik düşüncə." },
@@ -444,24 +444,12 @@
         let parentHtml = `<div class="parent-tip"><strong>👪 Valideynlər üçün tövsiyələr</strong><ul>${report.parentTips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
         document.getElementById('lastResultArea').innerHTML = `<div class="result-badge" id="reportContainer"><h3>📊 ${patient.name} (${patient.age} yaş) - Rəsmi Hesabat</h3><p><strong>📅 Tarix:</strong> ${date}</p><p><strong>🏆 Ümumi bal:</strong> ${report.grandTotal}/${maxScore} (${report.overallPercent}%)</p><div class="progress-bar"><div class="progress-fill" style="width:${report.overallPercent}%;"></div></div><p><strong>${report.level}</strong><br>${report.levelDesc}</p><div class="detail-box"><strong>⭐ Güclü tərəflər:</strong><br>${strengthsHtml || '—'}<br><br><strong>🌱 İnkişaf sahələri:</strong><br>${weaknessesHtml || '—'}</div><div><strong>📈 Bölmə nəticələri:</strong>${sectionsHtml}</div>${careerHtml}${educationHtml}${higherHtml}${parentHtml}<div style="margin-top:20px; text-align:center; border-top:1px solid #FFD966; padding-top:12px;"><strong>Direktor:</strong> Nahidə Axundova (AN Mərkəzi)</div></div>`;
     }
-    // İXRAC: WORD (bütün məlumatlar)
-    function exportToWord(patientIdx, testIdx) {
-        let p = patientsArray[patientIdx], t = p.tests[testIdx];
-        if(!t) return;
-        let sectionsRow = t.sections.map(s=>`<div><strong>${s.name}</strong> ${s.total}/${s.max} (${s.percent}%)<div style="background:#ddd;height:6px;"><div style="background:#4CAF50;width:${s.percent}%;height:6px;"></div></div></div>`).join('');
-        let strengthsText = t.sections.flatMap(s=>s.strengths).slice(0,15).map(s=>`✓ ${s}`).join('<br>');
-        let weaknessesText = t.sections.flatMap(s=>s.weaknesses).slice(0,15).map(w=>`○ ${w}`).join('<br>');
-        let careerCats = t.career.categories.map(c=>`<div><strong>${c.title}</strong><ul>${c.professions.map(p=>`<li>${p}</li>`).join('')}</ul></div>`).join('');
-        let eduList = `<ul>${t.education.recommendations.map(r=>`<li>${r}</li>`).join('')}</ul><p>🏫 ${t.education.institutions}</p>`;
-        let higherHtml = t.higher.isEligible ? `<div><strong>Ali təhsil:</strong> ${t.higher.recommendations.map(u=>u.name).join(', ')}</div>` : `<div>${t.higher.message}</div>`;
-        let parentHtml = `<ul>${t.parentTips.map(tip=>`<li>${tip}</li>`).join('')}</ul>`;
-        let full = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${p.name}_TTAP</title></head><body style="font-family:Arial; margin:30px;"><h1 style="color:#F57C00;">AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h1><h2>TTAP Professional Plus - Nəticə</h2><p><strong>Pasiyent:</strong> ${p.name} (${p.age}) <strong>Tarix:</strong> ${t.date}</p><p><strong>Ümumi bal:</strong> ${t.totalScore}/${t.maxScore} (${t.percentage}%) <strong>Səviyyə:</strong> ${t.level}</p><p>${t.levelDesc}</p><h3>Güclü tərəflər</h3><div>${strengthsText}</div><h3>İnkişaf sahələri</h3><div>${weaknessesText}</div><h3>Bölmələr</h3>${sectionsRow}<h3>💼 Peşə karyera tövsiyələri</h3>${careerCats}<h3>🎓 Peşə təhsili və kurslar</h3>${eduList}<h3>🏛 Ali təhsil</h3>${higherHtml}<h3>👪 Valideyn tövsiyələri</h3>${parentHtml}<hr><p style="text-align:center;">Direktor: Nahidə Axundova | © 2025</p></body></html>`;
-        let blob = new Blob([full], {type:'application/msword'});
-        let link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `${p.name.replace(/\s/g,'_')}_TTAP.doc`; link.click(); URL.revokeObjectURL(link.href);
-        alert('Word faylı hazırdır');
-    }
+    
+    // ========== YENİLƏNMİŞ İXRAC FUNKSİYALARI (APK ÜÇÜN TAM UYĞUN) ==========
+    // Şəkil ixracı: yeni pəncərədə şəkli göstərir, uzun basıb yadda saxlamaq olar
     async function exportToImage(patientIdx, testIdx) {
         let p = patientsArray[patientIdx], t = p.tests[testIdx];
+        if(!t) return;
         let div = document.createElement('div');
         div.style.width = '1000px'; div.style.padding = '25px'; div.style.backgroundColor = '#fff'; div.style.fontFamily = 'Arial';
         let sectionsHtml = t.sections.map(s=>`<div><strong>${s.name}</strong> ${s.total}/${s.max} (${s.percent}%)<div style="background:#ddd;height:6px;"><div style="background:#2E7D32;width:${s.percent}%;height:6px;"></div></div></div>`).join('');
@@ -483,10 +471,36 @@
         document.body.appendChild(div);
         try {
             let canvas = await html2canvas(div, { scale: 2 });
-            let link = document.createElement('a'); link.download = `${p.name}_TTAP.png`; link.href = canvas.toDataURL(); link.click(); alert('Şəkil saxlanıldı');
-        } catch(e){ alert('Xəta: '+e); }
+            let imgData = canvas.toDataURL('image/png');
+            let imgWindow = window.open();
+            imgWindow.document.write(`<html><head><title>${p.name}_TTAP_nəticə</title><style>body{text-align:center; margin:0; padding:20px; background:#eee;} img{max-width:100%; border:2px solid #FFB74D; border-radius:12px;} .info{font-family:sans-serif; margin-top:15px; color:#555;}</style></head><body>
+            <img src="${imgData}" alt="Test nəticəsi" /><div class="info">✅ Şəkil hazırdır. <strong>Şəkili uzun basıb "Şəkili yadda saxla" seçin.</strong><br>⏎ Əgər yadda saxlanmırsa, ekran görüntüsü ala bilərsiniz.</div>
+            <script>window.onload=function(){ setTimeout(()=>{ window.scrollTo(0,0); },100); }<\/script>
+            </body></html>`);
+            alert('📸 Şəkil yeni pəncərədə açıldı. Uzun basıb yadda saxlayın!');
+        } catch(e) { console.error(e); alert('Xəta: '+e); }
         document.body.removeChild(div);
     }
+    
+    // Word ixracı: yeni pəncərədə HTML sənədi göstərir, oradan yükləmək mümkündür
+    function exportToWord(patientIdx, testIdx) {
+        let p = patientsArray[patientIdx], t = p.tests[testIdx];
+        if(!t) return;
+        let sectionsRow = t.sections.map(s=>`<div><strong>${s.name}</strong> ${s.total}/${s.max} (${s.percent}%)<div style="background:#ddd;height:6px;"><div style="background:#4CAF50;width:${s.percent}%;height:6px;"></div></div></div>`).join('');
+        let strengthsText = t.sections.flatMap(s=>s.strengths).slice(0,15).map(s=>`✓ ${s}`).join('<br>');
+        let weaknessesText = t.sections.flatMap(s=>s.weaknesses).slice(0,15).map(w=>`○ ${w}`).join('<br>');
+        let careerCats = t.career.categories.map(c=>`<div><strong>${c.title}</strong><ul>${c.professions.map(p=>`<li>${p}</li>`).join('')}</ul></div>`).join('');
+        let eduList = `<ul>${t.education.recommendations.map(r=>`<li>${r}</li>`).join('')}</ul><p>🏫 ${t.education.institutions}</p>`;
+        let higherHtml = t.higher.isEligible ? `<div><strong>Ali təhsil:</strong> ${t.higher.recommendations.map(u=>u.name).join(', ')}</div>` : `<div>${t.higher.message}</div>`;
+        let parentHtml = `<ul>${t.parentTips.map(tip=>`<li>${tip}</li>`).join('')}</ul>`;
+        let fullHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${p.name}_TTAP</title></head><body style="font-family:Arial; margin:30px;"><h1 style="color:#F57C00;">AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h1><h2>TTAP Professional Plus - Nəticə</h2><p><strong>Pasiyent:</strong> ${p.name} (${p.age}) <strong>Tarix:</strong> ${t.date}</p><p><strong>Ümumi bal:</strong> ${t.totalScore}/${t.maxScore} (${t.percentage}%) <strong>Səviyyə:</strong> ${t.level}</p><p>${t.levelDesc}</p><h3>Güclü tərəflər</h3><div>${strengthsText}</div><h3>İnkişaf sahələri</h3><div>${weaknessesText}</div><h3>Bölmələr</h3>${sectionsRow}<h3>💼 Peşə karyera tövsiyələri</h3>${careerCats}<h3>🎓 Peşə təhsili və kurslar</h3>${eduList}<h3>🏛 Ali təhsil</h3>${higherHtml}<h3>👪 Valideyn tövsiyələri</h3>${parentHtml}<hr><p style="text-align:center;">Direktor: Nahidə Axundova | © 2025</p></body></html>`;
+        let win = window.open();
+        win.document.write(fullHtml);
+        win.document.close();
+        alert('📄 Word sənədi yeni pəncərədə açıldı. Orada "Fayl → Yadda saxla" və ya "…" menyusundan endirə bilərsiniz.');
+    }
+    // ====================================================
+    
     function renderHistoryForCurrent() {
         if(activePatientIndex===null) return;
         let p = patientsArray[activePatientIndex];
@@ -505,7 +519,7 @@
     }
     function deleteTest(pIdx, tIdx){ if(confirm('Silmək?')){ patientsArray[pIdx].tests.splice(tIdx,1); save(); if(activePatientIndex===pIdx) renderHistoryForCurrent(); } }
     function cancelTest(){ document.getElementById('testPanel').style.display='none'; activePatientIndex=null; }
-    function escapeHtml(str){ return String(str).replace(/[&<>]/g, m=> m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
+    function escapeHtml(str){ return String(str).replace(/[&<>]/g, m=> m==='&'?'&amp;': m==='<'?'&lt;':'&gt;'); }
     window.addEventListener('DOMContentLoaded', ()=>{ loadData(); let t = document.getElementById('testHistoryTable'); if(t&&!t.querySelector('tbody')) t.appendChild(document.createElement('tbody')); });
 </script>
 </body>
