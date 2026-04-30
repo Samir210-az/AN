@@ -201,16 +201,16 @@ sensor-motor və <strong>loqopedik (nitq)</strong> bölmələri.</p>
         <h3>📜 Keçmiş testlər</h3>
         <div style="overflow-x: auto;">
             <table id="testHistoryTable">
-                <thead><tr><th>📅 Tarix</th><th>🏆 Bal</th><th>📊 Səviyyə</th><th>⭐ Güclər</th><th>📄 HTML</th><th>📸 Şəkil</th><th>🗑️</th></tr></thead>
+                <thead><tr><th>📅 Tarix</th><th>🏆 Bal</th><th>📊 Səviyyə</th><th>⭐ Güclər</th><th>📄 HTML</th><th>📸 Şəkil</th><th>🗑️</th><tr></thead>
                 <tbody></tbody>
-            </table>
+            <table>
         </div>
     </div>
-    <div class="copyright">🧸 © 2026 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi | Direktor: Nahidə Axundova</div>
+    <div class="copyright">🧸 © 2025 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi | Direktor: Nahidə Axundova</div>
 </div>
 
 <script>
-    // ========== 6 BÖLMƏ (LOQOPEDİK DAXİL) ==========
+    // ========== 6 BÖLMƏ ==========
     const SECTION1_QUESTIONS = [
         "Tapşırığı sona qədər yerinə yetirir","10-15 dəq fasiləsiz işləyir","Əşyaları düzgün sıralayır",
         "Müstəqil işləyir","Kömək istəməyi bacarır","Göz kontaktı saxlayır",
@@ -250,33 +250,34 @@ sensor-motor və <strong>loqopedik (nitq)</strong> bölmələri.</p>
         { name: "🗣️ Loqopedik (Nitq & Ünsiyyət)", questions: SECTION6_QUESTIONS, maxScore: SECTION6_QUESTIONS.length*2 }
     ];
 
-    // Köməkçi funksiya: cümləni -ma/-mə şəkilçisi ilə dəyişir (zəif cəhətlər üçün)
-    function toMasdar(phrase) {
-        // Son sözü tapıb feilə -maq əlavə edirik - sadə qayda
-        if(phrase.includes(" edir")) return phrase.replace(" edir", " etmə");
-        if(phrase.endsWith("ir")) return phrase.slice(0, -2) + "mə";
-        if(phrase.endsWith("r")) return phrase.slice(0, -1) + "ma";
-        if(phrase.endsWith("yir")) return phrase.slice(0, -3) + "ma";
-        if(phrase.endsWith("yir")) return phrase.slice(0, -3) + "mə";
-        if(phrase.endsWith("ur")) return phrase.slice(0, -2) + "ma";
-        if(phrase.endsWith("ür")) return phrase.slice(0, -2) + "mə";
-        // Xüsusi hallar
-        if(phrase === "Göz kontaktı saxlayır") return "Göz kontaktı saxlama";
-        if(phrase === "Sosial qaydalara uyğun hərəkət edir") return "Sosial qaydalara uyğun hərəkət etmə";
-        if(phrase === "Təlimatları bir dəfədən sonra başa düşür") return "Təlimatları bir dəfədən sonra başa düşmə";
-        if(phrase === "Kömək istəməyi bacarır") return "Kömək istəməyi bacarma";
-        if(phrase === "Müstəqil işləyir") return "Müstəqil işləmə";
-        if(phrase === "Tapşırığı sona qədər yerinə yetirir") return "Tapşırığı sona qədər yerinə yetirmə";
-        if(phrase === "Əşyaları düzgün sıralayır") return "Əşyaları düzgün sıralama";
-        if(phrase === "10-15 dəq fasiləsiz işləyir") return "10-15 dəq fasiləsiz işləmə";
-        if(phrase === "Vizual tapşırığı dəqiq yerinə yetirir") return "Vizual tapşırığı dəqiq yerinə yetirmə";
-        if(phrase.includes("bacarır")) return phrase.replace("bacarır", "bacarma");
-        if(phrase.includes("bilir")) return phrase.replace("bilir", "bilmə");
-        if(phrase.endsWith("yır")) return phrase.slice(0, -3) + "ma";
-        if(phrase.endsWith("ir")) return phrase.slice(0, -2) + "mə";
-        return phrase + "ma"; // fallback
+    // Köməkçi funksiya: cümlənin sonunu -ma/-mə ilə bitirmə
+    function toActionForm(text) {
+        let t = text.trim();
+        if (t.length < 3) return t;
+        let sonluqlar = ["ir", "r", "ur", "ür", "ar", "ər"];
+        for (let s of sonluqlar) {
+            if (t.endsWith(s)) {
+                let root = t.slice(0, -s.length);
+                if (root.length > 0) {
+                    let lastVowel = root.slice(-1);
+                    if ("aıou".includes(lastVowel)) return root + "ma";
+                    else return root + "mə";
+                }
+            }
+        }
+        if (t.endsWith("ır") || t.endsWith("ir") || t.endsWith("ur") || t.endsWith("ür")) {
+            let root = t.slice(0, -2);
+            if ("aıou".includes(root.slice(-1))) return root + "ma";
+            else return root + "mə";
+        }
+        if (t.endsWith("yir")) {
+            let root = t.slice(0, -3);
+            return root + "mə";
+        }
+        return t + "mə";
     }
 
+    // Peşə karyera tövsiyələri
     function getCareerRecommendations(overallPercent) {
         if (overallPercent >= 70) {
             return {
@@ -406,12 +407,16 @@ onclick="startTestForPatient(${idx})">📝 Test</button><button class="danger" o
 
 (activePatientIndex>idx) activePatientIndex--; } }
     function addNewPatient() {
-        let name = document.getElementById('patientName').value.trim(), age = document.getElementById('patientAge').value.trim();
-        if(!name||!age) return alert('Ad və yaş daxil edin');
-        if(isNaN(age)||age<1||age>110) return alert('Yaş 1-110');
-        patientsArray.push({ name, age: parseInt(age), tests: [] });
-        save(); renderPatientsList();
-        document.getElementById('patientName').value = ''; document.getElementById('patientAge').value = '';
+        let name = document.getElementById('patientName').value.trim();
+        let age = document.getElementById('patientAge').value.trim();
+        if(!name) { alert('Ad daxil edin!'); return; }
+        if(!age) { alert('Yaş daxil edin!'); return; }
+        if(isNaN(age) || age<1 || age>110) { alert('Yaş 1-110 arası olmalıdır!'); return; }
+        patientsArray.push({ name: name, age: parseInt(age), tests: [] });
+        save();
+        renderPatientsList();
+        document.getElementById('patientName').value = '';
+        document.getElementById('patientAge').value = '';
         alert(`✅ ${name} əlavə olundu`);
     }
     function startTestForPatient(idx) {
@@ -455,8 +460,8 @@ value="1">1 - Bəzən bacarır</option><option value="2">2 - Həmişə bacarır<
             let secTotal = secAns.reduce((a,b)=>a+b,0), max = sec.questions.length*2, percent = Math.round((secTotal/max)*100);
             let strengths = [], weaknesses = [];
             sec.questions.forEach((q,i)=>{ 
-                if(secAns[i]===2) strengths.push(q); 
-                else if(secAns[i]===0) weaknesses.push(toMasdar(q));  // -ma/-mə şəkilçisi
+                if(secAns[i]===2) strengths.push(toActionForm(q)); 
+                else if(secAns[i]===0) weaknesses.push(toActionForm(q)); 
             });
             sections.push({ name: sec.name, total: secTotal, max, percent, strengths, weaknesses });
             grandTotal += secTotal; grandMax += max;
@@ -524,7 +529,7 @@ class="detail-box"><strong>⭐ Güclü tərəflər:</strong><br>${strengthsHtml 
 align:center; border-top:1px solid #FFD966; padding-top:12px;"><strong>Direktor:</strong> Nahidə Axundova </div></div>`;
     }
     
-    // HTML çıxarışı (bütün məlumatlar, inkişaf etdirilməli sahələr düzəlişi ilə)
+    // HTML IXRAC (bütün məlumatlar)
     function exportToHTML(patientIdx, testIdx) {
         let p = patientsArray[patientIdx], t = p.tests[testIdx];
         if(!t) return;
@@ -612,7 +617,7 @@ ${t.higher.recommendations.map(u=>`<div style="margin:8px 0;"><strong>${u.name}<
         alert('📄 HTML hesabat yeni pəncərədə açıldı. Orada "Fayl → Yadda saxla" və ya "…" menyusundan endirə bilərsiniz.');
     }
     
-    // Şəkil çıxarışı (bütün məlumatlar, inkişaf etdirilməli sahələr düzəlişi ilə)
+    // ŞƏKİL IXRACI (bütün məlumatlar)
     async function exportToImage(patientIdx, testIdx) {
         let p = patientsArray[patientIdx], t = p.tests[testIdx];
         if(!t) return;
@@ -688,7 +693,7 @@ radius:5px;"></div></div>
             <div><strong>👪 Valideyn tövsiyələri:</strong>${parentFull}</div>
             <div style="margin-top:25px; text-align:center; border-top:2px solid #FFD966; padding-top:15px;">
                 <p><strong>Direktor:</strong> Nahidə Axundova </p>
-                <p style="font-size:11px; color:#888;">© 2025 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi | Bütün hüquqları qorunur.</p>
+                <p style="font-size:11px; color:#888;">© 2026 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi | Bütün hüquqları qorunur.</p>
             </div>
         `;
         
