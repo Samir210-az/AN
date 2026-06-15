@@ -1,0 +1,22 @@
+{
+  "name": "AN Psixoloji",
+  "short_name": "AN",
+  "description": "AN Psixoloji tətbiqi",
+  "start_url": "/AN/",
+  "display": "standalone",
+  "background_color": "#1a3a6b",
+  "theme_color": "#1a3a6b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://samir210-az.github.io/AN/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://samir210-az.github.io/AN/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
