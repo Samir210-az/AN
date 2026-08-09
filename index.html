@@ -178,9 +178,6 @@
 <script>
 (function(){
   document.addEventListener('DOMContentLoaded', function(){
-    if(window.LICENSE && LICENSE.init){
-      LICENSE.init('#dynamicQuestions', 'select', 'change');
-    }
     var tapEl = document.getElementById('anpLogoTap');
     if(tapEl){
       var tapCount = 0, tapTimer = null;
@@ -190,6 +187,17 @@
         if(tapCount >= 5){ tapCount = 0; location.href = 'admin.html'; return; }
         tapTimer = setTimeout(function(){ tapCount = 0; }, 900);
       });
+    }
+    /* "Nəticəni yadda saxla" funksiyasının özünü sarıyırıq — klik hadisəsinin
+       vaxtlamasından asılı olmayan, etibarlı qapı üsulu */
+    if(window.LICENSE && typeof window.submitCurrentTest === 'function'){
+      var _origSubmit = window.submitCurrentTest;
+      window.submitCurrentTest = function(){
+        if(LICENSE.isVerified()){ return _origSubmit.apply(this, arguments); }
+        var args = arguments;
+        var self = this;
+        window.LICENSE._openGate(function(){ _origSubmit.apply(self, args); });
+      };
     }
   });
 })();
@@ -226,7 +234,7 @@
             <input type="datetime-local" id="testDateInput" style="width: auto; min-width: 200px;">
         </div>
         <div id="dynamicQuestions"></div>
-        <button onclick="window.submitCurrentTest()" style="margin:20px 0;">💾 Nəticəni yadda saxla</button>
+        <button id="anpSubmitBtn" onclick="window.submitCurrentTest()" style="margin:20px 0;">💾 Nəticəni yadda saxla</button>
         <div id="lastResultArea"></div>
         <h3>📜 Keçmiş testlər</h3>
         <div style="overflow-x: auto;">
