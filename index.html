@@ -175,11 +175,30 @@
     </script>
 <script src="licenses-data.js"></script>
 <script src="license-check.js" data-tool="ttap"></script>
+<script>
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    if(window.LICENSE && LICENSE.init){
+      LICENSE.init('#dynamicQuestions', 'select', 'change');
+    }
+    var tapEl = document.getElementById('anpLogoTap');
+    if(tapEl){
+      var tapCount = 0, tapTimer = null;
+      tapEl.addEventListener('click', function(){
+        tapCount++;
+        clearTimeout(tapTimer);
+        if(tapCount >= 5){ tapCount = 0; location.href = 'admin.html'; return; }
+        tapTimer = setTimeout(function(){ tapCount = 0; }, 900);
+      });
+    }
+  });
+})();
+</script>
 </head>
 <body>
 <div class="container">
     <div class="welcome-emoji">🧸📋✨</div>
-    <h2>🧸 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h2>
+    <h2 id="anpLogoTap" style="cursor:default">🧸 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h2>
     <p style="font-size:0.9rem;"><strong>✨ TTAP Professional Plus – Çoxsahəli Peşə Yönümlü Qiymətləndirmə ✨</strong><br>İş bacarıqları, sosial, koqnitiv, gündəlik həyat, sensor-motor və <strong>loqopedik (nitq)</strong> bölmələri.</p>
 
     <div style="background:#FFF0D4; border-radius: 48px; padding: 16px 20px; margin-bottom: 28px;">
