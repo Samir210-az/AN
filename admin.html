@@ -30,6 +30,7 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--paper);co
 .rc-btn.approve{background:var(--teal);color:#fff}
 .rc-btn.revoke{background:var(--cream);color:var(--ink-2)}
 .rc-btn.wa{background:#faf0dd;color:var(--gold-2)}
+.back-link{background:var(--bordo);color:#fff;text-decoration:none;border-radius:10px;padding:10px 16px;font-size:.88rem;font-weight:700}
 .empty-note{text-align:center;padding:40px;color:var(--ink-2)}
 h2{margin:0}
 </style>
@@ -51,6 +52,7 @@ h2{margin:0}
       <span class="admin-count" id="regActiveCount" style="background:var(--teal)">0 aktiv</span>
       <span class="admin-count" id="regPendingCount" style="background:#b34242">0 gözləyir</span>
     </div>
+    <a href="index.html" class="back-link">← Testə qayıt</a>
     <input id="adminSearch" type="text" placeholder="Ad, iş yeri və ya nömrə axtar..." oninput="renderTable()">
   </div>
   <div class="reg-grid" id="regBody"></div>
@@ -79,6 +81,7 @@ let allRegs = [];
 function checkPin(){
   const v = document.getElementById('pinInput').value.trim();
   if(v !== ADMIN_PIN){ document.getElementById('pinErr').textContent = 'Yanlış PIN.'; return; }
+  try{ localStorage.setItem('anp_admin_'+TOOL_ID,'1'); }catch(e){}
   document.getElementById('pinScreen').style.display='none';
   document.getElementById('adminMain').style.display='block';
   loadRegs();
