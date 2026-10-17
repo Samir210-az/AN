@@ -110,7 +110,7 @@
     var el=document.createElement('div'); el.id='anpVerifyOverlay'; el.className='anp-overlay';
     el.innerHTML = '<div class="anp-modal">'
       + '<button class="anp-close" type="button">×</button>'
-      + '<div id="anpGateMark" style="text-align:center;margin-bottom:10px;line-height:0"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#6A0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>'
+      + '<div id="anpGateMark" style="text-align:center;margin-bottom:10px;line-height:0"><img src="logo.png" alt="AN Psixoloji Dəstək və Reabilitasiya Mərkəzi" style="height:64px;width:auto;max-width:100%"></div>'
       + '<div class="anp-tabs"><button type="button" class="anp-tab active" id="anpTabReg">Qeydiyyat</button><button type="button" class="anp-tab" id="anpTabLogin">Daxil ol</button></div>'
       + '<div id="anpStep1">'
       + '<p class="anp-muted">Bu aləti istifadə etmək üçün bir dəfə qeydiyyatdan keç.</p>'

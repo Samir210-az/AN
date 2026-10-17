@@ -165,9 +165,41 @@
         .welcome-emoji { font-size: 2rem; text-align: center; }
         .ic { width: 1.1em; height: 1.1em; vertical-align: -0.18em; margin-right: .4em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
         .ic-lg { width: 2.4rem; height: 2.4rem; margin: 0; color: #6A0000; }
+
+        /* AN brend rəngləri */
+        :root { --bordo:#6A0000; --bordo-bright:#B00001; --gold:#D2A55D; --gold-dark:#94713A; --teal:#2A9D8F; --cream:#FEF3E8; --line:#F1E4D8; --ink:#3A2A20; }
+        body {
+            background:
+                radial-gradient(circle at 10% 6%, rgba(210,165,93,.30), transparent 42%),
+                radial-gradient(circle at 94% 96%, rgba(106,0,0,.16), transparent 48%),
+                linear-gradient(160deg, #FFFBF8, #F6E8D6);
+            background-attachment: fixed;
+            color: var(--ink);
+        }
+        .container { border-radius: 32px; border: 1px solid var(--line); border-top: 5px solid var(--gold); box-shadow: 0 24px 50px rgba(106,0,0,.12); }
+        #anpLogoTap { display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; padding:6px 0 10px; }
+        .brand-logo { width: 190px; max-width: 60%; height: auto; display:block; }
+        h2 { background: none; color: var(--bordo); -webkit-text-fill-color: var(--bordo); border-left: 0; padding-left: 0; font-size: 1.25rem; letter-spacing: .01em; }
+        h3 { color: var(--bordo); border-bottom: 3px solid var(--gold); }
+        .copyright { background: var(--cream); color: var(--gold-dark); border: 1px solid var(--line); }
+        input, select { border: 2px solid #E9D3AE; background: #FFFDF9; }
+        input:focus, select:focus { outline: none; border-color: var(--bordo); box-shadow: 0 0 0 3px rgba(106,0,0,.12); }
+        button { background: linear-gradient(135deg, var(--bordo-bright), var(--bordo)); box-shadow: 0 3px 8px rgba(106,0,0,.22); }
+        button.secondary { background: linear-gradient(135deg, #E6B05A, var(--gold-dark)); }
+        button.html-btn { background: linear-gradient(135deg, #3bbdad, #1f7a6f); }
+        button.image-btn { background: linear-gradient(135deg, #E6B05A, var(--gold-dark)); }
+        .card { background: var(--cream); border-left: 8px solid var(--gold); }
+        .patient-name { color: var(--bordo); background: #F8E6D2; }
+        .test-card { background: #FFFBF8; border-left-color: var(--teal); }
+        .test-question { color: var(--bordo); }
+        th { background: #F8E6D2; color: var(--bordo); }
+        th, td { border-bottom-color: var(--line); }
+        .detail-box { background: var(--cream); border-left-color: var(--gold); }
+        .section-header { background: linear-gradient(135deg, #F8E6D2, #EBCB92); color: var(--bordo); }
+        .ic-lg { color: var(--bordo); }
     </style>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a3a6b">
+    <meta name="theme-color" content="#6A0000">
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
@@ -224,7 +256,7 @@
 </defs></svg>
 <div class="container">
     <div id="anpLogoTap" style="cursor:default">
-    <div class="welcome-emoji"><svg class="ic ic-lg"><use href="#i-clipboard"/></svg></div>
+    <img class="brand-logo" src="logo.png" width="240" height="179" alt="AN Psixoloji Dəstək və Reabilitasiya Mərkəzi">
     <h2 style="margin:0">AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h2>
     </div>
     <p style="font-size:0.9rem;"><strong>TTAP Professional Plus – Çoxsahəli Peşə Yönümlü Qiymətləndirmə</strong><br>İş bacarıqları, sosial, koqnitiv, gündəlik həyat, sensor-motor və <strong>loqopedik (nitq)</strong> bölmələri.</p>
