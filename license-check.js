@@ -79,7 +79,7 @@
     });
   })();
 
-  var pendingCb=null, regMode=true;
+  var pendingCb=null, regMode=true, locked=false;
   var CSS = '.anp-overlay{position:fixed;inset:0;background:rgba(20,20,20,.6);backdrop-filter:blur(3px);display:none;place-items:center;z-index:99999;padding:20px}'
     + '.anp-overlay.show{display:grid}'
     + '.anp-modal{background:#fff;border-radius:18px;padding:30px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative;font-family:inherit;color:#2a1c1c}'
@@ -127,8 +127,11 @@
       + '</div>'
       + '</div>';
     document.body.appendChild(el);
-    el.querySelector('.anp-close').onclick = closeModal;
-    el.addEventListener('click', function(e){ if(e.target===el) closeModal(); });
+    if(locked){ el.querySelector('.anp-close').style.display='none'; }
+    else {
+      el.querySelector('.anp-close').onclick = closeModal;
+      el.addEventListener('click', function(e){ if(e.target===el) closeModal(); });
+    }
     el.querySelector('#anpTabReg').onclick = function(){ setMode(true); };
     el.querySelector('#anpTabLogin').onclick = function(){ setMode(false); };
     el.querySelector('#anpSubmit').onclick = submit;
@@ -209,6 +212,7 @@
     clearSession();
     approved=false;
     renderWidget();
+    if(locked) openVerifyModal();
   }
 
   function buildWidget(){
@@ -259,6 +263,17 @@
       }, true);
     },
     isVerified: isVerified,
-    _openGate: openVerifyModal
+    _openGate: openVerifyModal,
+    requireGate: function(){
+      locked = true;
+      if(approved) return;
+      var s = getSession();
+      if(!s){ openVerifyModal(); return; }
+      var timer = setTimeout(function(){ if(!approved) openVerifyModal(); }, 3500);
+      watchApproval(phoneKey(s.phone), function(ok){
+        clearTimeout(timer);
+        if(!ok) openVerifyModal();
+      });
+    }
   };
 })();

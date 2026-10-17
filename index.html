@@ -199,6 +199,7 @@
         window.LICENSE._openGate(function(){ _origSubmit.apply(self, args); });
       };
     }
+    if(window.LICENSE && LICENSE.requireGate){ LICENSE.requireGate(); }
   });
 })();
 </script>
