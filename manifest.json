@@ -2,7 +2,7 @@
   "name": "AN Psixoloji",
   "short_name": "AN",
   "description": "AN Psixoloji tətbiqi",
-  "start_url": "/AN/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#1a3a6b",
   "theme_color": "#1a3a6b",

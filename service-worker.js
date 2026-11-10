@@ -1,5 +1,5 @@
 const CACHE_NAME = 'an-v3';
-const urlsToCache = ['/AN/', '/AN/index.html'];
+const urlsToCache = ['./', './index.html'];
 self.addEventListener('install', e => {
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(urlsToCache)));
